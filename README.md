@@ -1,2 +1,2 @@
 # Averti
-Propedeutic project - averti groep
+Propedeutic project - averti group
