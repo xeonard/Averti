@@ -1,0 +1,263 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../fonts/fontawesome-webfont.eot?v=4.2.0');
+    src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal
+}
+body, html{
+	font-family: 'FontAwesome';
+}
+.nav a {
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #ff6f3a;
+
+}
+
+.nav li {
+  display: inline;
+  padding: 0px;
+}
+
+.jumbotron {
+  background-image:url('http://dubaifurniture.co/wp-content/uploads/2014/05/q8.jpg');
+  height: 550px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jumbotron h1 {
+  color: #fff;
+  font-size: 48px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.jumbotron p {
+  font-size: 20px;
+  color: #fff;
+}
+
+.jumbotron .container{
+    position:relative;
+    top:50px;
+}
+html, body{
+    height:100%;
+	background-image: url(../Images/bg.jpg);
+	background-size: cover;
+}
+
+.home{
+	position:relative;
+	display:block;
+	width: 100%;
+	height: 100%;
+	background-image: url(../Images/slide1.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	margin:0px;
+	padding:0px;
+	
+}
+.dates{
+	position: absolute;
+    top: 35px;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #f9f9f5;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 0 1px #000;	
+}
+.buttons {
+    position: absolute;
+    bottom: 100px;
+    width: 710px;
+    left: 50%;
+    margin: 0 0 0 -355px;
+}
+.buttons a {
+    position: relative;
+    float: left;
+    display: block;
+    text-decoration: none;
+    width: 350px;
+    height: 65px;
+    color: #f9f9f5;
+    font-size: 26px;
+    text-transform: uppercase;
+    background: transparent;
+    border: 2px solid #f9f9f5;
+    color: #f9f9f5;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 57px;
+}
+.buttons a:hover {
+    background: #f9f9f5;
+    color: #242424;
+}
+
+.Question{
+	  margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+	top:50px;
+}
+
+.Question h4{
+    text-align: center;
+}
+
+.Question p{
+    text-align: center;
+}
+
+.Question img{
+    align-items: center;
+}
+
+.information .container{
+    padding-top: 100px;
+}
+
+
+.general .picture{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 520px;
+    display: block;
+    z-index: 9;
+	background-image: url(../Images/about.jpg);
+	background-size: cover;
+}
+
+.general h1 {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    color: #f9f9f5;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)
+}
+
+.general .content{
+	top:40px;
+	height:1000px;
+	width:60%;
+	position: relative;
+	font-size: 18px;
+	margin-left:20%;
+}
+.times .picture{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 520px;
+    display: block;
+    z-index: 9;
+	background-image: url(../Images/time.jpg);
+	background-size: cover;
+}
+.times h1 {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    color: #f9f9f5;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)
+}
+.times .content{
+	top:25px;
+	width:60%;
+	position: relative;
+	font-size: 18px;
+	margin-left:20%;
+	height: 780px;
+}
+.age .picture{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 520px;
+    display: block;
+    z-index: 9;
+	background-image: url(../Images/age.jpg);
+	background-size: cover;
+}
+.age h1 {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    color: #f9f9f5;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)
+}
+.age .content{
+	top:25px;
+	width:60%;
+	position: relative;
+	font-size: 18px;
+	margin-left:20%;
+	height:700px;
+}
+.cashless .picture{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 520px;
+    display: block;
+    z-index: 9;
+	background-image: url(../Images/age.jpg);
+	background-size: cover;
+}
+.cashless h1 {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    color: #f9f9f5;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)
+}
+.cashless .content{
+	top:25px;
+	width:60%;
+	position: relative;
+	font-size: 18px;
+	margin-left:20%;
+	height:900px;
+}
+.end{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 520px;
+    display: block;
+    z-index: 9;
+	background-image: url(../Images/end.jpg);
+	background-size: cover;
+}
+.learn-more h1{
+	text-align: center;
+    bottom: 40px;
+    left: 10%;
+    color: #000;
+    z-index: 99;
+	text-shadow: 0 1px 2px rgba(6, 0, 0, 0.4);
+	padding-bottom: 50px;
+}
+
+.head h1{
+	position:relative;
+	top: 200px;	
+	left:150px;
+}
