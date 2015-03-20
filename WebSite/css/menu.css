@@ -1,13 +1,3 @@
-@font-face {
-    font-family: 'FontAwesome';
-    src: url('../fonts/fontawesome-webfont.eot?v=4.2.0');
-    src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
-    font-weight: normal;
-    font-style: normal
-}
-body, html{
-	font-family: 'FontAwesome';
-}
 .nav a {
   color: #FFFFFF;
   font-size: 11px;
@@ -19,32 +9,9 @@ body, html{
 
 .nav li {
   display: inline;
-  padding: 0px;
+  padding: 0px; 
 }
 
-.jumbotron {
-  background-image:url('http://dubaifurniture.co/wp-content/uploads/2014/05/q8.jpg');
-  height: 550px;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.jumbotron h1 {
-  color: #fff;
-  font-size: 48px;  
-  font-family: 'Shift', sans-serif;
-  font-weight: bold;
-}
-
-.jumbotron p {
-  font-size: 20px;
-  color: #fff;
-}
-
-.jumbotron .container{
-    position:relative;
-    top:50px;
-}
 html, body{
     height:100%;
 	background-image: url(../Images/bg.jpg);
@@ -260,4 +227,118 @@ html, body{
 	position:relative;
 	top: 200px;	
 	left:150px;
+}
+
+.login{
+	position: fixed;
+	width: 340px;
+	height: 280px;
+	top: 50%;
+	left: 50%;
+	margin-top: -140px;
+	margin-left: -170px;
+	background: #fff;
+	visibility: hidden;
+	border-radius: 15px;
+}
+
+form {
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+label {
+    color: #555;
+    display: inline-block;
+    margin-left: 18px;
+    padding-top: 10px;
+    font-size: 14px;
+}
+
+p a {
+    font-size: 11px;
+    color: #aaa;
+    float: right;
+    margin-top: -13px;
+    margin-right: 20px;
+}
+p a:hover {
+    color: #555;
+	-webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    transition: all .4s ease;
+}
+input {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+    outline: none;
+}
+input[type=text],
+input[type=password] {
+    color: #777;
+    padding-left: 10px;
+    margin: 10px;
+    margin-top: 12px;
+    margin-left: 18px;
+    width: 290px;
+    height: 35px;
+	border: 1px solid #c7d0d2;
+    border-radius: 2px;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+
+#lower {
+    background: #F5DEB3;
+    width: 100%;
+    height: 69px;
+    margin-top: 20px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+.check {
+    margin-left: 3px;
+}
+input[type=submit], input[type=button], input[type=reset] {
+	margin-left: 10px;
+	margin-right: 10px;
+    margin-top: 20px;
+    width: 80px;
+    height: 30px;
+	font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6f3a), to(#FF8C00));
+    background-image: -moz-linear-gradient(top left 90deg, #ff6f3a 0%, #ff6f3a 100%);
+    background-image: linear-gradient(top left 90deg, #ff6f3a 0%, #ff6f3a 100%);
+    border-radius: 30px;
+    border: 1px solid #ff6f3a;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .5);
+    cursor: pointer;
+}
+
+input[type=submit], input[type=button]{
+	float:left;
+}
+input[type=reset]{
+	float:right;	
+}
+input[type=text]:hover,
+input[type=password]:hover {
+    border: 1px solid #b6bfc0;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+    border: 1px solid #a8c9e4;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
+}
+input[type=submit]:hover, input[type=button]:hover , input[type=reset]{
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FF8C00), to(#ff6f3a));
+    background-image: -moz-linear-gradient(top left 90deg, #FF8C00 0%, #FF8C00 100%);
+    background-image: linear-gradient(top left 90deg, #FF8C00 0%, #FF8C00 100%);
+}
+input[type=submit]:active, input[type=button]:active, input[type=reset] {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6f3a), to(#ff6f3a));
+    background-image: -moz-linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
+    background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
