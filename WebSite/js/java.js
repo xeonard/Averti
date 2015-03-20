@@ -1,11 +1,14 @@
 
 $(document).ready(function(){
+	$('.login').hide();
+	//Method for showing the log in form
   $('#login').click(function(){
-	$('.login').css("visibility", "visible");
-  })
+	$('.login').show("slow");
+  });
   
-  $('#close').click(function(){
-	$('.login').css("visibility", "hidden");
-  })
+  	//method for closing the log in form
+  $('.btnClose').click(function(){
+	$('.login').hide("slow");
+  });
 });
 

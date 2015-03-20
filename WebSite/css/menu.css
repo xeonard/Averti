@@ -12,6 +12,10 @@
   padding: 0px; 
 }
 
+.nav a:hover{
+	cursor: pointer;
+}
+
 html, body{
     height:100%;
 	background-image: url(../Images/bg.jpg);
@@ -238,7 +242,7 @@ html, body{
 	margin-top: -140px;
 	margin-left: -170px;
 	background: #fff;
-	visibility: hidden;
+
 	border-radius: 15px;
 }
 
@@ -255,19 +259,7 @@ label {
     font-size: 14px;
 }
 
-p a {
-    font-size: 11px;
-    color: #aaa;
-    float: right;
-    margin-top: -13px;
-    margin-right: 20px;
-}
-p a:hover {
-    color: #555;
-	-webkit-transition: all .4s ease;
-    -moz-transition: all .4s ease;
-    transition: all .4s ease;
-}
+
 input {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 12px;
@@ -294,9 +286,6 @@ input[type=password] {
     margin-top: 20px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
-}
-.check {
-    margin-left: 3px;
 }
 input[type=submit], input[type=button], input[type=reset] {
 	margin-left: 10px;
@@ -332,13 +321,9 @@ input[type=password]:focus {
     border: 1px solid #a8c9e4;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
-input[type=submit]:hover, input[type=button]:hover , input[type=reset]{
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover{
     background-image: -webkit-gradient(linear, left top, left bottom, from(#FF8C00), to(#ff6f3a));
-    background-image: -moz-linear-gradient(top left 90deg, #FF8C00 0%, #FF8C00 100%);
-    background-image: linear-gradient(top left 90deg, #FF8C00 0%, #FF8C00 100%);
 }
-input[type=submit]:active, input[type=button]:active, input[type=reset] {
+input[type=submit]:active, input[type=button]:active, input[type=reset]:active {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6f3a), to(#ff6f3a));
-    background-image: -moz-linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
-    background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
