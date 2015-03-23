@@ -242,9 +242,21 @@ html, body{
 	margin-top: -140px;
 	margin-left: -170px;
 	background: #fff;
-
 	border-radius: 15px;
 }
+
+.signup{
+	position: fixed;
+	width: 340px;
+	height: 350px;
+	top: 40%;
+	left: 50%;
+	margin-top: -140px;
+	margin-left: -170px;
+	background: #fff;
+	border-radius: 15px;
+}
+
 
 form {
     margin: 0 auto;
@@ -254,23 +266,23 @@ form {
 label {
     color: #555;
     display: inline-block;
-    margin-left: 18px;
+    margin-left: 10px;
     padding-top: 10px;
     font-size: 14px;
 }
-
 
 input {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 12px;
     outline: none;
 }
+
 input[type=text],
 input[type=password] {
     color: #777;
     padding-left: 10px;
     margin: 10px;
-    margin-top: 12px;
+    margin-top: 15px;
     margin-left: 18px;
     width: 290px;
     height: 35px;
@@ -279,11 +291,20 @@ input[type=password] {
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
 }
 
-#lower {
+.login #lower {
     background: #F5DEB3;
     width: 100%;
     height: 69px;
     margin-top: 20px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+.signup #lower {
+    background: #F5DEB3;
+    width: 100%;
+    height: 69px;
+    margin-top: 0px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
 }

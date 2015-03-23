@@ -1,3 +1,4 @@
+<!-DOCTYPE html->
 <html>
 <head>
 	<title>Averti Festival</title>
@@ -20,20 +21,7 @@
 
 
                       <li class="navbar-right">
-                      	<a href="#">Sign Up</a>
-                      	<div class="login">
-      							<form>
-      								<label for="username">Username</label>
-      								<input type="text" id="username" name="username">
-      								<label for="password">Password</label>
-      								<input type="text" id="password" name="password">
-      								<div id="lower">
-      									<input type="submit" value="Login">
-      									<input type="button" value="Sign Up"  onclick="window.location.href='#'">
-      									<input type="reset" value="Close" id="close">
-      								</div>
-      							</form>
-      						</div>
+                      	<a id="signup">Sign Up</a>
                       </li>
                       <li class="navbar-right">
                       	<a id="login">Log In</a>
@@ -51,7 +39,7 @@
       							</form>
       						</div>
                       </li>
-                      <li class="navbar-right"><a href="#">Help</a></li>
+                      <li class="navbar-right"><a href="profile.html">Profile</a></li>
                   </ul>
               </div>
           </nav>
@@ -98,16 +86,34 @@
    				<p>Contact us by <a href="mailto:averti@gmail.com" target="_top">E-Mail</a>!</p>
    				<p><img src="Images/dimalogo.png" height="100"></p>
    		</div>
-      <div class="login">
-      	<form>
-      		<label for="username">Username</label>
-      		<input type="text" id="username" name="username">
-      		<label for="password">Password</label>
-      		<input type="text" id="password" name="password">
-      		<div id="lower">
-      			<input type="submit" value="Login">
-      		</div>
-      	</form>
-      </div>  
-</body>
+   		
+   		<!--sign up form-->
+   		<div class="signup">
+      		<form>
+      			<label for="email">Email</label>
+      			<input type="text" id="email" name="email">
+      			<label for="username">Username</label>
+      			<input type="text" id="username" name="username">
+      			<label for="password">Password</label>
+      			<input type="text" id="password" name="password">
+      				<div id="lower">
+      					<input type="submit" value="Sign Up" onclick="window.location.href='profile.html'">
+      					<input type="reset" value="Close" class="btnCloseSignUp">
+      				</div>
+      		</form>
+      	</div>
+      	
+      	<!--login form-->
+        <div class="login">
+      		<form>
+      			<label for="username">Username</label>
+      			<input type="text" id="username" name="username">
+      			<label for="password">Password</label>
+      			<input type="text" id="password" name="password">
+      				<div id="lower">
+      					<input type="submit" value="Login" onclick="window.location.href='profile.html'">
+      					<input type="reset" value="Close" class="btnCloseLogin">
+      				</div>
+      		</form>
+      	</div>
 </html>

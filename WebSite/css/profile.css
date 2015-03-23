@@ -1,0 +1,117 @@
+/*navigation*/
+.nav a {
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #ff6f3a;
+
+}
+
+.nav li {
+  display: inline;
+  padding: 0px; 
+}
+
+.nav a:hover{
+	cursor: pointer;
+}
+
+html, body{
+    height:100%;
+	background-image: url(../Images/bgprofile.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+/*box*/
+.profile{
+	background: rgba(0, 0, 0, 0.6);
+	width:80%;
+	height:90%;
+	margin-left:10%;
+	margin-top:5%;
+	border-radius: 10px;
+}
+
+.photo{
+	float: left;
+	padding-top: 10px;
+	font: 16px/22px 'Source Sans Pro', 'Helvetica', 'Arial', sans-serif;
+	line-height: 30px;	
+	text-align: right;
+	letter-spacing: 3px;
+	position: fixed;
+}
+
+.photo ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	float: right;
+}
+
+.photo a {
+text-decoration: none;
+color: white;
+}
+
+.photo nav ul li a { 
+	padding-top:50px;
+display: block;
+margin-bottom: 10px;
+width: 100%;
+padding: 0px 8.5px;
+}
+
+.photo a:hover {
+color: white;
+background: rgb(255, 255, 255);
+background: rgba(255, 255, 255, 0.5); 
+}
+
+.vertical{
+	width:.09em;
+	height: 90%; 
+	background: white; 
+	border-radius: 10px; 
+	position: absolute; 
+	margin-left: 260px;
+	margin-top: 0px;	
+	background: rgb(255, 255, 255);
+	background: rgba(255, 255, 255, 0.5); 	
+}
+
+.map{
+	margin-left: 350px;
+	padding-top: 100px;
+	display: none;
+}
+
+.profinfo{
+	margin-left: 350px;
+	padding-top: 10px;
+	
+	color:white;
+}
+
+/*footer*/
+.Question{
+	  margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+	top:50px;
+}
+
+.Question h4{
+    text-align: center;
+}
+
+.Question p{
+    text-align: center;
+}
+
+.Question img{
+    align-items: center;
+}
