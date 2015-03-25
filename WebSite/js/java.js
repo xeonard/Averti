@@ -29,13 +29,30 @@ $(document).ready(function(){
 	//show map on profile page
   $('.btnmap').click(function(){
 	 $('.map').show(); 
+	 $('.editinfo').hide();
 	 $('.profinfo').hide();
+	 $('.chat').hide();
   });
 	
 	//show profile info on profile page
-	$('.btnprofinfo').click(function(){
+  $('.btnprofinfo').click(function(){
 	 $('.map').hide(); 
 	 $('.profinfo').show();
+	 $('.editinfo').hide();
+	 $('.chat').hide();
+  });
+
+  $('.btneditinfo').click(function(){
+	 $('.map').hide(); 
+	 $('.profinfo').hide();
+	 $('.editinfo').show();
+	 $('.chat').hide();
+  });
+  $('.btnchat').click(function(){
+	 $('.map').hide(); 
+	 $('.profinfo').hide();
+	 $('.editinfo').hide();
+	 $('.chat').show();
   });
 });
 

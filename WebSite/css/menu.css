@@ -187,7 +187,7 @@ html, body{
     height: 520px;
     display: block;
     z-index: 9;
-	background-image: url(../Images/age.jpg);
+	background-image: url(../Images/cashless.jpg);
 	background-size: cover;
 }
 .cashless h1 {
@@ -243,6 +243,7 @@ html, body{
 	margin-left: -170px;
 	background: #fff;
 	border-radius: 15px;
+	z-index: 100;
 }
 
 .signup{
@@ -255,6 +256,7 @@ html, body{
 	margin-left: -170px;
 	background: #fff;
 	border-radius: 15px;
+	z-index: 100;
 }
 
 

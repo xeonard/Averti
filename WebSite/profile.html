@@ -19,26 +19,6 @@
                       <li><a href="learnmore.html">Learn More</a></li>
                       <li><a href="#">Payment</a></li>
 
-
-                      <li class="navbar-right">
-                      	<a id="signup">Sign Up</a>
-                      </li>
-                      <li class="navbar-right">
-                      	<a id="login">Log In</a>
-                        	<div class="login">
-      							<form>
-      								<label for="username">Username</label>
-      								<input type="text" id="username" name="username">
-      								<label for="password">Password</label>
-      								<input type="text" id="password" name="password">
-      								<div id="lower">
-      									<input type="submit" value="Login">
-      									<input type="button" value="Sign Up"  onclick="window.location.href='#'">
-      									<input type="reset" value="Close" class="btnClose">
-      								</div>
-      							</form>
-      						</div>
-                      </li>
                       <li class="navbar-right"><a href="profile.html">Profile</a></li>
                   </ul>
               </div>
@@ -51,8 +31,9 @@
   			<nav id="nav_profile"> 
 				<ul>
 					<li><a href="#" class="btnprofinfo">Profile information</a></li>
-					<li><a href="#">Edit information</a></li>
+					<li><a href="#" class="btneditinfo">Edit information</a></li>
 					<li><a href="#" class="btnmap">Map of the event</a></li>
+					<li><a href="#" class="btnchat">Chat</a></li>
 				</ul>
 	</nav>
   		</div>
@@ -61,6 +42,7 @@
   		<div class="map">
   			<img src="Images/map.png" alt="Map of the event" height="600px;">
   		</div>
+  		
   		<div class="profinfo">
   			<img src="Images/profpic.png" alt="Profile Picture" height="200px"> <br> <br>
   			<p>Name: Dmytro</p>
@@ -73,7 +55,33 @@
   			<p>Paypal id: 123456789</p>
   			<p>Camping information: reserved camping spot #28A</p>
   		</div>
+  		
+  		<div class="editinfo">
+  			<img src="Images/profpic.png" alt="Profile Picture" height="200px"> <br> <br>
+  			<form>
+      			<label for="name">Name</label>
+      			<input type="text" id="name" name="name"><br>
+      			<label for="lastname">Last Name</label>
+      			<input type="text" id="lastname" name="lastname"><br>
+      			<label for="email">Email</label>
+      			<input type="text" id="email" name="email"><br>
+      			<label for="address">Address</label>
+      			<input type="text" id="address" name="address"><br>
+      			<label for="telephone">Telephone number</label>
+      			<input type="text" id="telephone" name="telephone"><br>
+      			<label for="sex">Sex</label>
+      			<input type="radio" id="sex" name="sex" value="Male"><br>
+      			<label for="paypall">Paypall id</label>
+      			<input type="text" id="paypall" name="paypall"><br>
+      			<input type="submit" value="Submit">
+      			<input type="submit" value="Upload picture">
+      		</form>
+  		</div>
+  		<div class="chat">
+   			<a class="twitter-timeline" href="https://twitter.com/bunindmytro" data-widget-id="580666679291691008">Tweets by @bunindmytro</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	   </div>
    </div>  
+   
    <br>
    <div class="Question">
  		<p><img src="Images/dimalogo.png" height="100"></p>

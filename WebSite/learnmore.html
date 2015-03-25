@@ -3,28 +3,34 @@
 <head>
 	<title>Averti Festival</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="css/menu.css" >
-    <link rel="javascript" href="java.js">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/java.js"></script>
+	<script src="js/bootstrap.js"></script>
 </head>
 <body>
   <div class="website" >
 	<div class="nav">
       <div class="container" >
-        <nav class="navbar navbar-default navbar-fixed-top" style=" background:#ff6f3a;">
-            <div class="container" >
-                <ul  class="nav nav-pills">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html">Learn More</a></li>
-                    <li><a href="#">Payment</a></li>
-                    <li class="navbar-right"><a href="#">Sign Up</a></li>
-                    <li class="navbar-right"><a href="#">Log In</a></li>
-                    <li class="navbar-right"><a href="#">Help</a></li>
-                </ul>
-            </div>
-        </nav>
+        <nav class="navbar navbar-default navbar-fixed-top" style="background:#ff6f3a;">
+              <div class="container" >
+                  <ul  class="nav nav-pills">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="learnmore.html">Learn More</a></li>
+                      <li><a href="#">Payment</a></li>
+
+
+                      <li class="navbar-right">
+                      	<a id="signup">Sign Up</a>
+                      </li>
+                      <li class="navbar-right">
+                      	<a id="login">Log In</a>
+                      </li>
+                      <li class="navbar-right"><a href="profile.html">Profile</a></li>
+                  </ul>
+              </div>
+          </nav>
       </div>
      </div>
     </div>
@@ -35,12 +41,13 @@
  	</div>
  	<div class="content">
  	    <h3>_______</h3>
- 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam neque accusantium maiores, tempora esse illo voluptatem suscipit expedita dolorum harum, aut laborum laboriosam odit asperiores incidunt est rerum sequi pariatur!</p>
- 		<p>Voluptatem, aliquam aut dicta cum iusto incidunt impedit, minima aspernatur accusantium earum, quod similique. Ad odit autem, delectus sint, architecto pariatur soluta illum voluptatem reprehenderit, libero harum ipsam omnis, incidunt.</p>
- 		<p>Vel velit dolorem maxime neque, odio, minus dicta ex repudiandae saepe laudantium et rem, odit sunt quos, nulla harum facere iusto. Tempore voluptatem itaque ullam aliquid aut, eveniet aliquam similique!</p>
- 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsa similique debitis atque culpa, nisi. Sapiente, neque! Fugit deserunt exercitationem reiciendis culpa excepturi doloribus eum, minus possimus architecto, natus nobis.</p>
- 		<p>Dignissimos doloribus neque provident ipsam, repudiandae omnis aliquid libero placeat. Amet vero exercitationem atque. Fuga nemo consequuntur blanditiis placeat cupiditate, reprehenderit, ex aperiam, rerum architecto, quo voluptas dolorem totam dolorum.</p>
- 		<p>Odio deserunt ad officia voluptates dolores harum eaque nesciunt neque earum odit nihil veniam cumque, saepe ea hic ut laborum natus laudantium repellendus omnis accusamus aspernatur? Quaerat nisi est vitae.</p>
+ 		<p>The Averti Festival takes place from Friday 14th to Sunday 16th August 2015 at Park Kuierpad.</p>
+ 		
+ 		<p>The event includes night concert and team games during the day. First day you will spend in forest with BBQ and live music. Paintball tournament will be held during the second day. And you will have a chance to enjoy water sport activities during the last day.</p>
+ 		
+ 		<p>Music activities are also different each day. During second the rock concert will be held. On third day you will listen to pop music. </p>
+ 		
+ 		<p>Teams will be devided by colours. Each team will be fighting for a prize.</p>
  	</div>
  </div>
  <div class="times">
@@ -49,10 +56,9 @@
  	</div>
  	<div class="content">
  		<h3>_______</h3>
- 		<p>The opening hours of the festival site are:</p>
- 		<p>Friday, June 1: 02.00 PM - 04.00 AM</p>
- 		<p>Sunday, June 2: 10.00 AM - 01.00 AM</p>
- 		<p>Campsite opens at Friday morning at 10.00 AM and closes Monday morning at 12.00 noon. There’s no point in arriving earlier, and unfortunately it is not possible to stay longer either. Campsite A is for people staying over in their own tent.</p>
+ 		<p>Festival starts on Friday, August 14: 04.00 PM</p>
+ 		<p>And ends on Sunday, August 16: 12.00 PM</p>
+ 		<p>Campsite opens at Friday morning at 10.00 AM and closes Monday morning at 12.00 noon. There's no point in arriving earlier, and unfortunately it is not possible to stay longer either. Campsite A is for people staying over in their own tent.</p>
  	</div>
  </div>
  <div class="age">
@@ -61,7 +67,7 @@
  	</div>
  	<div class="content">
  		<h3>_______</h3>
- 		<p>There is no minimum age limit for visiting the Best Kept Secret festival, but the organisation has a minimum age recommendation of 16 years. If you are younger, then make sure you are accompanied by an adult. The normal entrance fee applies for youngsters and children. There are no special facilities for children or babies on the festival site.</p>
+ 		<p>The organisation has a minimum age recommendation of 18 years.</p>
  	</div>
  </div>
   <div class="cashless">
@@ -86,4 +92,35 @@
    				<p>Contact us by <a href="mailto:averti@gmail.com" target="_top">E-Mail</a>!</p>
    				<p><img src="Images/dimalogo.png" height="100"></p>
    		</div>
+   		
+   		   		
+   		<!--sign up form-->
+   		<div class="signup">
+      		<form>
+      			<label for="email">Email</label>
+      			<input type="text" id="email" name="email">
+      			<label for="username">Username</label>
+      			<input type="text" id="username" name="username">
+      			<label for="password">Password</label>
+      			<input type="text" id="password" name="password">
+      				<div id="lower">
+      					<input type="submit" value="Sign Up" onclick="window.location.href='profile.html'">
+      					<input type="reset" value="Close" class="btnCloseSignUp">
+      				</div>
+      		</form>
+      	</div>
+      	
+      	<!--login form-->
+        <div class="login">
+      		<form>
+      			<label for="username">Username</label>
+      			<input type="text" id="username" name="username">
+      			<label for="password">Password</label>
+      			<input type="text" id="password" name="password">
+      				<div id="lower">
+      					<input type="submit" value="Login" onclick="window.location.href='profile.html'">
+      					<input type="reset" value="Close" class="btnCloseLogin">
+      				</div>
+      		</form>
+      	</div>
 </body>
