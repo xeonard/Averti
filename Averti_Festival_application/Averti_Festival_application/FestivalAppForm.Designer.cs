@@ -50,7 +50,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnGoToDetails = new System.Windows.Forms.Button();
             this.tabDBView = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cbxDTSelectArticle = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.cbxDTSelectCampSpot = new System.Windows.Forms.ComboBox();
@@ -81,13 +80,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
             this.tabCheckIn.SuspendLayout();
             this.tabDBView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControl
@@ -320,14 +320,6 @@
             this.tabDBView.TabIndex = 2;
             this.tabDBView.Text = "Database view";
             this.tabDBView.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 197);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(628, 269);
-            this.dataGridView1.TabIndex = 10;
             // 
             // cbxDTSelectArticle
             // 
@@ -624,6 +616,14 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Select Event";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(11, 197);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(479, 269);
+            this.dataGridView1.TabIndex = 10;
+            // 
             // FestivalAppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -641,9 +641,9 @@
             this.tabCheckIn.PerformLayout();
             this.tabDBView.ResumeLayout(false);
             this.tabDBView.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabEvent.ResumeLayout(false);
             this.tabEvent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
