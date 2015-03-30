@@ -201,22 +201,24 @@ input[type=text]{
 
 /*tickets page*/
 
-/*head*/
-
-
 
 .head h1{
 	padding: 10px;	
 	font-size: 50px;
 	margin-left: 40%;
 	margin-top: 15%;
+    left: 10%;
+    color: #ff6f3a;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9)
 }
 
 .buytable{
 	width: 400px;
 	height:auto;
 	background-color: #ff6f3a;
-	margin-left: 35%;
+	margin-left: 38%;
 	border: 5px solid #ff6f3a;
 	border-radius: 15px;
 	padding: 10px;
@@ -225,8 +227,8 @@ input[type=text]{
 	color: #fff;
 }
 
-.divideline{
-	height:	
+.eventinfo{	
+	font-size: 17px;
 }
 
 .headline{
@@ -238,6 +240,7 @@ input[type=text]{
 .table{
 	color: #000;	
 }
+
 .table input[type=submit]{
 	margin-left: 0px;
 	margin-right: 0px;
