@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\Net_library\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Phidget21.NET">
+      <HintPath>..\..\..\..\ProP group Q\programs\MyFirstAppWithRFID\MyFirstAppWithRFID\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Phidget21.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

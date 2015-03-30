@@ -197,3 +197,64 @@ input[type=text]{
 .Question img{
     align-items: center;
 }
+
+
+/*tickets page*/
+
+
+.head h1{
+	padding: 10px;	
+	font-size: 50px;
+	margin-left: 40%;
+	margin-top: 15%;
+    left: 10%;
+    color: #ff6f3a;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9)
+}
+
+.buytable{
+	width: 400px;
+	height:auto;
+	background-color: #ff6f3a;
+	margin-left: 38%;
+	border: 5px solid #ff6f3a;
+	border-radius: 15px;
+	padding: 10px;
+	margin-top:10px;
+	padding:20px;
+	color: #fff;
+}
+
+.eventinfo{	
+	font-size: 17px;
+}
+
+.headline{
+	height:26px;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.table{
+	color: #000;	
+}
+
+.table input[type=submit]{
+	margin-left: 0px;
+	margin-right: 0px;
+    margin-top: 0px;
+    width: 70px;
+    height: 20px;
+	font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6f3a), to(#FF8C00));
+    background-image: -moz-linear-gradient(top left 90deg, #ff6f3a 0%, #ff6f3a 100%);
+    background-image: linear-gradient(top left 90deg, #ff6f3a 0%, #ff6f3a 100%);
+    border-radius: 30px;
+    border: 1px solid #ff6f3a;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .5);
+    cursor: pointer;	
+}
