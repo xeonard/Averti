@@ -207,7 +207,7 @@ html, body{
 	margin-left:20%;
 	height:900px;
 }
-.end{
+.end .picture{
 	position: relative;
     float: left;
     width: 100%;
@@ -217,6 +217,24 @@ html, body{
 	background-image: url(../Images/end.jpg);
 	background-size: cover;
 }
+.end h1 {
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    color: #f9f9f5;
+    z-index: 99;
+    font-size: 90px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4)
+}
+.end .content{
+	top:25px;
+	width:60%;
+	position: relative;
+	font-size: 18px;
+	margin-left:20%;
+	height:1200px;
+}
+
 .learn-more h1{
 	text-align: center;
     bottom: 40px;

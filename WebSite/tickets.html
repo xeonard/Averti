@@ -5,7 +5,7 @@
 	<title>Averti Festival</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/menu.css" >
+    <link rel="stylesheet" href="css/profile.css" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/java.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -18,12 +18,11 @@
                   <ul  class="nav nav-pills">
                       <li><a href="index.html">Home</a></li>
                       <li><a href="learnmore.html">Learn More</a></li>
-                      <li><a href="#">Payment</a></li>
+                      <li><a href="tickets.html">Tickets</a></li>
+Koningsdag or King’s Day is a national holiday in the Kingdom of the Netherlands. Celebrated on 27 April (the 26th if the 27th falls on a Sunday), the date marks the birth of King Willem-Alexander.
 
 
-                      <li class="navbar-right"><a href="#">Sign Up</a></li>
-                      <li class="navbar-right"><a href="#">Log In</a></li>
-                      <li class="navbar-right"><a href="#">Help</a></li>
+                      <li class="navbar-right"><a href="profile.html">Profile</a></li>
                   </ul>
               </div>
           </nav>
@@ -32,15 +31,58 @@
     	<h1>Tickets</h1>
     </div>
     
-    <div class="ticketpic">
-    	<ul>
-    		<li class="tickets">
-    			<a href="">Festival tickets</a>
-    		</li>
-    		<li class="camping">
-    			<a href="">Ticket+camping</a>
-    		</li>
-    	</ul>
+    <div class="buytable">
+    	<div class="eventinfo">
+    		<div class="headline"><h3>Event information</h3></div>
+    		<p>Event name:    Averti Festival</p>
+    		<p>Location:      Park Kuierpad, Valkenswaard, Netherlands</p>
+    		<p>Date:          14th August 2015 - 16th August 2015</p>
+    		<div class="divideline"></div>
+    	</div>
+    	<div class="table">
+    		<table class="table table-striped">
+    			<tr>
+    				<th>Ticket</th>
+    				<th>Price</th>
+    				<th>Amount</th>
+    				<th>Buy</th>
+  				</tr>
+  				<tr>
+    				<td>Normal Ticket</td>
+    				<td>€55</td>
+    				<td>
+   						<select name="amount" class="small" style="margin-top: -4px;">
+    						<option value="1">1</option>
+    						<option value="2">2</option>
+    						<option value="3">3</option>
+    						<option value="4">4</option>
+    						<option value="5">5</option>
+    						<option value="6">6</option>
+    					</select>
+    				</td>
+    				<td>
+    					<input type="submit" value="Buy" class="btnBuy">
+    				</td>
+  				</tr>
+  				<tr>
+    				<td>Ticket+camping</td>
+    				<td>€85</td>
+    				<td>
+   						<select name="amount" class="small" style="margin-top: -4px;">
+    						<option value="1">1</option>
+    						<option value="2">2</option>
+    						<option value="3">3</option>
+    						<option value="4">4</option>
+    						<option value="5">5</option>
+    						<option value="6">6</option>
+    					</select>
+    				</td>
+    				<td>
+    					<input type="submit" value="Buy" class="btnBuy">
+    				</td>
+  				</tr>
+    		</table>
+    	</div>
     </div>
 </body>
 </html>
