@@ -81,6 +81,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnCheckTicket = new System.Windows.Forms.Button();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -231,6 +232,7 @@
             // 
             // tabCheckIn
             // 
+            this.tabCheckIn.Controls.Add(this.btnCheckTicket);
             this.tabCheckIn.Controls.Add(this.btnCheckInSubmit);
             this.tabCheckIn.Controls.Add(this.rbtnCheckOut);
             this.tabCheckIn.Controls.Add(this.rbtnCheckIn);
@@ -294,7 +296,7 @@
             // 
             // btnGoToDetails
             // 
-            this.btnGoToDetails.Location = new System.Drawing.Point(405, 154);
+            this.btnGoToDetails.Location = new System.Drawing.Point(509, 157);
             this.btnGoToDetails.Name = "btnGoToDetails";
             this.btnGoToDetails.Size = new System.Drawing.Size(75, 23);
             this.btnGoToDetails.TabIndex = 6;
@@ -624,6 +626,16 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Select Event";
             // 
+            // btnCheckTicket
+            // 
+            this.btnCheckTicket.Location = new System.Drawing.Point(405, 157);
+            this.btnCheckTicket.Name = "btnCheckTicket";
+            this.btnCheckTicket.Size = new System.Drawing.Size(98, 23);
+            this.btnCheckTicket.TabIndex = 12;
+            this.btnCheckTicket.Text = "Check Ticket";
+            this.btnCheckTicket.UseVisualStyleBackColor = true;
+            this.btnCheckTicket.Click += new System.EventHandler(this.btnCheckTicket_Click);
+            // 
             // FestivalAppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -704,6 +716,7 @@
         private System.Windows.Forms.ComboBox cbxDTInfoType;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnCheckTicket;
 
 
     }

@@ -16,24 +16,28 @@ namespace AvertiFestivalApplication
     public partial class LogInForm : Form
     {
         private RFID RfidLogin;
-
+        private DBHandler db;
         public LogInForm()
         {
             InitializeComponent();
 
-             try
-            { 
+            db = new DBHandler();
+            try
+            {
                 RfidLogin = new RFID();
                 RfidLogin.open();
                 RfidLogin.waitForAttachment(3000);
                 RfidLogin.Antenna = true;
                 RfidLogin.LED = true;
                 RfidLogin.Tag += new TagEventHandler(ProcessThisTag);
+
             }
             catch (PhidgetException)
-             {
-                 MessageBox.Show("No RFID connection");  
-             }
+            {
+                MessageBox.Show("No RFID connection");
+            }
+
+                 
         }
 
         private void ProcessThisTag(object sender, TagEventArgs e)

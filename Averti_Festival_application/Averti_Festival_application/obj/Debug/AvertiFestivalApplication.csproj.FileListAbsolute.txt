@@ -21,3 +21,5 @@ D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_applica
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\MySql.Data.dll
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
+C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
+C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml

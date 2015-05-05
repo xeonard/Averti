@@ -13,6 +13,9 @@ namespace AvertiFestivalApplication
 {
     public partial class FestivalAppForm : Form
     {
+
+        DBHandler db = new DBHandler();
+
         public FestivalAppForm()
         {
             InitializeComponent();
@@ -28,6 +31,11 @@ namespace AvertiFestivalApplication
         private static void LogInThread()
         {
             Application.Run(new LogInForm());
+        }
+
+        private void btnCheckTicket_Click(object sender, EventArgs e)
+        {
+            db.CheckTicket(this.tbxCheckInID.Text);
         }
     }
 }

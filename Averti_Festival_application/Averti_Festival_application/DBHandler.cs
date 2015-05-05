@@ -26,7 +26,7 @@ namespace AvertiFestivalApplication
         public String GetAllNames()
         {
             //another test method
-            String sql = "SELECT name FROM Person";
+            String sql = "SELECT * FROM Tickets";
             MySqlCommand command = new MySqlCommand(sql, connection);
             String names = String.Empty;
 
@@ -38,12 +38,12 @@ namespace AvertiFestivalApplication
 
                 while (reader.Read())
                 {
-                    names += reader[1] + "/n";
+                    names += reader["ticketNr"] + "\n";
                 }
             }
             catch
             {
-                throw new Exception("Error with DB");
+                return("Error with DB");
             }
             finally
             {
@@ -58,6 +58,47 @@ namespace AvertiFestivalApplication
             //test method?
 
             return true;
+        }
+
+
+        /// <summary>
+        /// To check the state of the ticket
+        /// </summary>
+        /// <returns>-1 if the ticket isn't found in the db.
+        /// 1 if the ticket is found and the person isn't inside
+        /// 2 if the ticket is found and the person is already in</returns>
+        public int CheckTicket(String ticket)
+        {
+            String sql = ("SELECT status FROM person WHERE ticketNr = '" + ticket + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection); 
+            
+            String temp = String.Empty;
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if(reader.Read())
+                {
+
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return(-1);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return -1;
         }
     }
 }
