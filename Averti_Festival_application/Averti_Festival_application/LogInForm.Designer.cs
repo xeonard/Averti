@@ -1,4 +1,4 @@
-﻿namespace Averti_Festival_application
+﻿namespace AvertiFestivalApplication
 {
     partial class LogInForm
     {
@@ -36,6 +36,7 @@
             // 
             // btnLogin
             // 
+            this.btnLogin.Enabled = false;
             this.btnLogin.Location = new System.Drawing.Point(48, 128);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
@@ -52,6 +53,7 @@
             this.btnQuit.TabIndex = 1;
             this.btnQuit.Text = "Quit";
             this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
             // tbxLoginID
             // 

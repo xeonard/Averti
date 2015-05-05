@@ -7,7 +7,7 @@
     <ProjectGuid>{90DCD2BD-B7D4-4B29-B50F-0B8BD6D06AC0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Averti_Festival_application</RootNamespace>
+    <RootNamespace>AvertiFestivalApplication</RootNamespace>
     <AssemblyName>Averti_Festival_application</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -79,6 +79,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

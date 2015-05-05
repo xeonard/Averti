@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Averti_Festival_application
+namespace AvertiFestivalApplication
 {
     static class Program
     {
@@ -16,8 +16,8 @@ namespace Averti_Festival_application
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FestivalAppForm());
-            //Application.Run(new LogInForm());
+            //Application.Run(new FestivalAppForm());
+            Application.Run(new LogInForm());
         }
     }
 }

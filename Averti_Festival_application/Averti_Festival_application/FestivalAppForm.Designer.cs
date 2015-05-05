@@ -1,4 +1,4 @@
-﻿namespace Averti_Festival_application
+﻿namespace AvertiFestivalApplication
 {
     partial class FestivalAppForm
     {
@@ -633,6 +633,7 @@
             this.Name = "FestivalAppForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Averti Festival ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FestivalAppForm_FormClosing);
             this.TabControl.ResumeLayout(false);
             this.tabSales.ResumeLayout(false);
             this.tabSales.PerformLayout();
