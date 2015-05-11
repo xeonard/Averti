@@ -43,6 +43,7 @@
             this.tbxSTCustomerID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabCheckIn = new System.Windows.Forms.TabPage();
+            this.btnCheckTicket = new System.Windows.Forms.Button();
             this.btnCheckInSubmit = new System.Windows.Forms.Button();
             this.rbtnCheckOut = new System.Windows.Forms.RadioButton();
             this.rbtnCheckIn = new System.Windows.Forms.RadioButton();
@@ -81,7 +82,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnCheckTicket = new System.Windows.Forms.Button();
+            this.lbStatus = new System.Windows.Forms.Label();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -232,6 +233,7 @@
             // 
             // tabCheckIn
             // 
+            this.tabCheckIn.Controls.Add(this.lbStatus);
             this.tabCheckIn.Controls.Add(this.btnCheckTicket);
             this.tabCheckIn.Controls.Add(this.btnCheckInSubmit);
             this.tabCheckIn.Controls.Add(this.rbtnCheckOut);
@@ -246,6 +248,16 @@
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
             this.tabCheckIn.UseVisualStyleBackColor = true;
+            // 
+            // btnCheckTicket
+            // 
+            this.btnCheckTicket.Location = new System.Drawing.Point(405, 157);
+            this.btnCheckTicket.Name = "btnCheckTicket";
+            this.btnCheckTicket.Size = new System.Drawing.Size(98, 23);
+            this.btnCheckTicket.TabIndex = 12;
+            this.btnCheckTicket.Text = "Check Ticket";
+            this.btnCheckTicket.UseVisualStyleBackColor = true;
+            this.btnCheckTicket.Click += new System.EventHandler(this.btnCheckTicket_Click);
             // 
             // btnCheckInSubmit
             // 
@@ -288,11 +300,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(275, 160);
+            this.label1.Location = new System.Drawing.Point(216, 157);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 13);
+            this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "ID";
+            this.label1.Text = "Ticket Number";
             // 
             // btnGoToDetails
             // 
@@ -626,15 +638,14 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Select Event";
             // 
-            // btnCheckTicket
+            // lbStatus
             // 
-            this.btnCheckTicket.Location = new System.Drawing.Point(405, 157);
-            this.btnCheckTicket.Name = "btnCheckTicket";
-            this.btnCheckTicket.Size = new System.Drawing.Size(98, 23);
-            this.btnCheckTicket.TabIndex = 12;
-            this.btnCheckTicket.Text = "Check Ticket";
-            this.btnCheckTicket.UseVisualStyleBackColor = true;
-            this.btnCheckTicket.Click += new System.EventHandler(this.btnCheckTicket_Click);
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Location = new System.Drawing.Point(296, 74);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(60, 13);
+            this.lbStatus.TabIndex = 13;
+            this.lbStatus.Text = "Ticket info:";
             // 
             // FestivalAppForm
             // 
@@ -717,6 +728,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnCheckTicket;
+        private System.Windows.Forms.Label lbStatus;
 
 
     }

@@ -26,7 +26,7 @@ namespace AvertiFestivalApplication
         public String GetAllNames()
         {
             //another test method
-            String sql = "SELECT * FROM Tickets";
+            String sql = "SELECT * FROM Person";
             MySqlCommand command = new MySqlCommand(sql, connection);
             String names = String.Empty;
 
@@ -38,7 +38,7 @@ namespace AvertiFestivalApplication
 
                 while (reader.Read())
                 {
-                    names += reader["ticketNr"] + "\n";
+                    names += reader["Name"] + "\n";
                 }
             }
             catch
@@ -63,13 +63,17 @@ namespace AvertiFestivalApplication
 
         /// <summary>
         /// To check the state of the ticket
-        /// </summary>
-        /// <returns>-1 if the ticket isn't found in the db.
+        /// -1 if the ticket isn't found in the db.
         /// 1 if the ticket is found and the person isn't inside
-        /// 2 if the ticket is found and the person is already in</returns>
+        /// 2 if the ticket is found and the person is already in
+        /// 3 if the ticket is found and the person left the event
+        /// </summary>
+        /// <returns></returns>
         public int CheckTicket(String ticket)
         {
-            String sql = ("SELECT status FROM person WHERE ticketNr = '" + ticket + "'");
+            String sql = ("SELECT status FROM person WHERE personalID = " + 
+                "(SELECT personalID FROM transaction WHERE transactionID = " +
+                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticket)+"))");
             MySqlCommand command = new MySqlCommand(sql, connection); 
             
             String temp = String.Empty;
@@ -82,7 +86,20 @@ namespace AvertiFestivalApplication
 
                 if(reader.Read())
                 {
-
+                    // check status
+                    temp = Convert.ToString(reader["status"]);
+                    if (temp == "arrived")
+                    {
+                        return 2;
+                    }
+                    else if (temp == "not arrived")
+                    {
+                        return 1;
+                    }
+                    else 
+                    {
+                        return 3;
+                    }
                 }
                 else
                 {
@@ -97,8 +114,71 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
-
-            return -1;
         }
+
+        public int CheckRFID(string RFID)
+        {
+            String sql = ("SELECT * FROM person WHERE rfid = '" + RFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection); 
+            
+             try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if(reader.Read())
+                {
+                    return Convert.ToInt32(reader["personalID"]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+          
+        }
+
+
+        public int PasswordLogin(int personalID, string password)
+        {
+            
+            String sql = ("SELECT * FROM person WHERE personalID = " + personalID 
+                + " AND password = '" + password + "'"); // password = 8 chars
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader["personalID"]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
     }
 }

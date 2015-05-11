@@ -35,7 +35,21 @@ namespace AvertiFestivalApplication
 
         private void btnCheckTicket_Click(object sender, EventArgs e)
         {
-            db.CheckTicket(this.tbxCheckInID.Text);
+            switch (db.CheckTicket(this.tbxCheckInID.Text))
+            {
+                case -1:
+                    lbStatus.Text = "Ticket info: invalid ticket"; 
+                    break;
+                case 1:
+                    lbStatus.Text = "Ticket info: visitor hasnt arrived";
+                    break;
+                case 2:
+                    lbStatus.Text = "Ticket info: visitor has arrived";
+                    break;
+                case 3:
+                    lbStatus.Text = "Ticket info: visitor left";
+                    break;
+            }
         }
     }
 }

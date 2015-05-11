@@ -30,7 +30,6 @@ namespace AvertiFestivalApplication
                 RfidLogin.Antenna = true;
                 RfidLogin.LED = true;
                 RfidLogin.Tag += new TagEventHandler(ProcessThisTag);
-
             }
             catch (PhidgetException)
             {
@@ -50,21 +49,25 @@ namespace AvertiFestivalApplication
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
-            try
+            if (db.CheckRFID(tbxLoginID.Text) != -1)
             {
-             Thread thread = new Thread(new ThreadStart(FestivalThread));
-             thread.Start();
-             RfidLogin.Antenna = false;
-             RfidLogin.LED = false;
-             RfidLogin.close();
-             this.Close();
-             
-            }
-            catch(Exception) { MessageBox.Show("Error with Login"); }
-            
-        }
 
+
+                try
+                {
+                    Thread thread = new Thread(new ThreadStart(FestivalThread));
+                    thread.Start();
+                    this.Close();
+
+                }
+                catch (Exception) { MessageBox.Show("Error with Login"); }
+
+            }
+            else
+            {
+                MessageBox.Show("There is no such rfid");
+            }
+        }
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -74,5 +77,40 @@ namespace AvertiFestivalApplication
         {
             Application.Run(new FestivalAppForm());
         }
+
+        private void btnNormalLog_Click(object sender, EventArgs e)
+        {
+            if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
+            {
+
+
+                try
+                {
+                    Thread thread = new Thread(new ThreadStart(FestivalThread));
+                    thread.Start();
+                    this.Close();
+
+                }
+                catch (Exception) { MessageBox.Show("Error with Login"); }
+
+            }
+            else
+            {
+                MessageBox.Show("Login incorrect");
+            }
+        }
+
+        private void LogInForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogInForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            RfidLogin.Antenna = false;
+            RfidLogin.LED = false;
+            RfidLogin.close();
+        }
+    
     }
 }
