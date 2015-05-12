@@ -17,9 +17,12 @@ namespace AvertiFestivalApplication
     {
         private RFID RfidLogin;
         private DBHandler db;
+
         public LogInForm()
         {
             InitializeComponent();
+
+            tbPass.UseSystemPasswordChar = true; 
 
             db = new DBHandler();
             try
@@ -42,10 +45,11 @@ namespace AvertiFestivalApplication
         private void ProcessThisTag(object sender, TagEventArgs e)
         {
             this.tbxLoginID.Text = e.Tag;
+
             if (this.tbxLoginID.Text != string.Empty)
             {
                 btnLogin.Enabled = true; 
-            };
+            }
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -60,7 +64,10 @@ namespace AvertiFestivalApplication
                     this.Close();
 
                 }
-                catch (Exception) { MessageBox.Show("Error with Login"); }
+                catch (Exception) 
+                { 
+                    MessageBox.Show("Error with Login"); 
+                }
 
             }
             else
@@ -70,7 +77,7 @@ namespace AvertiFestivalApplication
         }
         private void btnQuit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+           //Application.Exit(); was this really necessary?
         }
 
         public static void FestivalThread()
@@ -107,9 +114,13 @@ namespace AvertiFestivalApplication
 
         private void LogInForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            RfidLogin.Antenna = false;
-            RfidLogin.LED = false;
-            RfidLogin.close();
+            //check if there is no rfid attached
+            if (RfidLogin.Attached)
+            {
+                RfidLogin.Antenna = false;
+                RfidLogin.LED = false;
+                RfidLogin.close();
+            }
         }
     
     }
