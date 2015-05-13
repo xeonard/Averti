@@ -124,5 +124,32 @@ namespace AvertiFestivalApplication
         {
 
         }
+
+        private void btnETSelectEvent_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnETNewEvent_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabEvent_Click(object sender, EventArgs e)
+        {
+            List<string> eventsq = db.GetEvents();
+
+            List<Event> events = new List<Event>();
+            for (int i = 0; i < eventsq.Count -1; i = i+2)
+            {
+                Event newevent = new Event(eventsq[i+1],Convert.ToInt32(eventsq[i]));
+                events.Add(newevent);
+            }
+            foreach (var item in events)
+            {
+                this.cmbxEventSelectEvent.Items.Add(item.Name);   
+            }
+            
+        }
     }
 }

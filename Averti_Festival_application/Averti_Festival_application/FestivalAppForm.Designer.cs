@@ -42,12 +42,7 @@
             this.tbxSTCustomerID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabCheckIn = new System.Windows.Forms.TabPage();
-//<<<<<<< HEAD
-          //  this.btnStartRfid = new System.Windows.Forms.Button();
-         //   this.lbStatus = new System.Windows.Forms.Label();
-//=======
             this.lbAssigned = new System.Windows.Forms.Label();
-//>>>>>>> origin/master
             this.btnCheckTicket = new System.Windows.Forms.Button();
             this.btnCheckInSubmit = new System.Windows.Forms.Button();
             this.tbxCheckInID = new System.Windows.Forms.TextBox();
@@ -122,7 +117,7 @@
             this.tabSales.Controls.Add(this.label9);
             this.tabSales.Location = new System.Drawing.Point(4, 22);
             this.tabSales.Name = "tabSales";
-            this.tabSales.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabSales.Padding = new System.Windows.Forms.Padding(3);
             this.tabSales.Size = new System.Drawing.Size(776, 535);
             this.tabSales.TabIndex = 0;
             this.tabSales.Text = "Sales";
@@ -233,7 +228,7 @@
             this.tabCheckIn.Controls.Add(this.btnGoToDetails);
             this.tabCheckIn.Location = new System.Drawing.Point(4, 22);
             this.tabCheckIn.Name = "tabCheckIn";
-            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(3);
             this.tabCheckIn.Size = new System.Drawing.Size(776, 535);
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
@@ -458,6 +453,7 @@
             this.tabEvent.Text = "Event";
             this.tabEvent.ToolTipText = "Create, change or delete an event";
             this.tabEvent.UseVisualStyleBackColor = true;
+            this.tabEvent.Click += new System.EventHandler(this.tabEvent_Click);
             // 
             // btnCancel
             // 
@@ -537,6 +533,7 @@
             this.btnETNewEvent.TabIndex = 9;
             this.btnETNewEvent.Text = "New Event";
             this.btnETNewEvent.UseVisualStyleBackColor = true;
+            this.btnETNewEvent.Click += new System.EventHandler(this.btnETNewEvent_Click);
             // 
             // btnETSelectEvent
             // 
@@ -546,6 +543,7 @@
             this.btnETSelectEvent.TabIndex = 8;
             this.btnETSelectEvent.Text = "Select Event";
             this.btnETSelectEvent.UseVisualStyleBackColor = true;
+            this.btnETSelectEvent.Click += new System.EventHandler(this.btnETSelectEvent_Click);
             // 
             // cmbxEventSelectEvent
             // 

@@ -240,5 +240,35 @@ namespace AvertiFestivalApplication
             }
             
         }
+        public List<string> GetEvents(){
+                    //another test method
+            String sql = "SELECT * FROM Event";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            List<String> eventid = new List<string>();
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    eventid.Add(reader["eventid"].ToString());
+                    eventid.Add(reader["eventname"].ToString());
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return eventid;
+        }
+
     }
 }
