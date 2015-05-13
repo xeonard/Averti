@@ -22,7 +22,7 @@ namespace AvertiFestivalApplication
         {
             InitializeComponent();
 
-            tbPass.UseSystemPasswordChar = true; 
+            tbPass.UseSystemPasswordChar = true;
 
             db = new DBHandler();
             try
@@ -77,7 +77,7 @@ namespace AvertiFestivalApplication
         }
         private void btnQuit_Click(object sender, EventArgs e)
         {
-           //Application.Exit(); was this really necessary?
+           Application.Exit(); //was this really necessary?
         }
 
         public static void FestivalThread()
