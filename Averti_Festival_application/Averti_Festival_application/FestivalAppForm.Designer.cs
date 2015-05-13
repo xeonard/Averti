@@ -42,12 +42,12 @@
             this.tbxSTCustomerID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabCheckIn = new System.Windows.Forms.TabPage();
-<<<<<<< HEAD
+//<<<<<<< HEAD
           //  this.btnStartRfid = new System.Windows.Forms.Button();
-            this.lbStatus = new System.Windows.Forms.Label();
-=======
+         //   this.lbStatus = new System.Windows.Forms.Label();
+//=======
             this.lbAssigned = new System.Windows.Forms.Label();
->>>>>>> origin/master
+//>>>>>>> origin/master
             this.btnCheckTicket = new System.Windows.Forms.Button();
             this.btnCheckInSubmit = new System.Windows.Forms.Button();
             this.tbxCheckInID = new System.Windows.Forms.TextBox();
