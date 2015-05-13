@@ -53,14 +53,6 @@ namespace AvertiFestivalApplication
             return names;
         }
 
-        public Boolean CheckRfid(String rfid)
-        {
-            //test method?
-
-            return true;
-        }
-
-
         /// <summary>
         /// To check the state of the ticket
         /// -1 if the ticket isn't found in the db.
@@ -115,10 +107,15 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-
-        public int CheckRFID(string RFID)
+        
+        /// <summary>
+        /// Gets a persons personalId from a rfid tag
+        /// </summary>
+        /// <param name="rFID"></param>
+        /// <returns></returns>
+        public int CheckRFID(string rFID)
         {
-            String sql = ("SELECT * FROM person WHERE rfid = '" + RFID + "'");
+            String sql = ("SELECT * FROM person WHERE rfid = '" + rFID + "'");
             MySqlCommand command = new MySqlCommand(sql, connection); 
             
              try
@@ -147,7 +144,12 @@ namespace AvertiFestivalApplication
           
         }
 
-
+        /// <summary>
+        /// Checks the db for a matching personalId and password
+        /// </summary>
+        /// <param name="personalID"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public int PasswordLogin(int personalID, string password)
         {
             
@@ -178,6 +180,11 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
+        }
+
+        public void AssignRFID(String ticketNR, String rFID)
+        {
+
         }
 
     }

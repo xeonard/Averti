@@ -42,6 +42,7 @@
             this.tbxSTCustomerID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabCheckIn = new System.Windows.Forms.TabPage();
+            this.btnStartRfid = new System.Windows.Forms.Button();
             this.lbStatus = new System.Windows.Forms.Label();
             this.btnCheckTicket = new System.Windows.Forms.Button();
             this.btnCheckInSubmit = new System.Windows.Forms.Button();
@@ -235,6 +236,7 @@
             // 
             // tabCheckIn
             // 
+            this.tabCheckIn.Controls.Add(this.btnStartRfid);
             this.tabCheckIn.Controls.Add(this.lbStatus);
             this.tabCheckIn.Controls.Add(this.btnCheckTicket);
             this.tabCheckIn.Controls.Add(this.btnCheckInSubmit);
@@ -251,6 +253,16 @@
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
             this.tabCheckIn.UseVisualStyleBackColor = true;
+            // 
+            // btnStartRfid
+            // 
+            this.btnStartRfid.Location = new System.Drawing.Point(426, 199);
+            this.btnStartRfid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStartRfid.Name = "btnStartRfid";
+            this.btnStartRfid.Size = new System.Drawing.Size(56, 19);
+            this.btnStartRfid.TabIndex = 14;
+            this.btnStartRfid.Text = "Start RFID";
+            this.btnStartRfid.UseVisualStyleBackColor = true;
             // 
             // lbStatus
             // 
@@ -282,6 +294,7 @@
             this.btnCheckInSubmit.TabIndex = 11;
             this.btnCheckInSubmit.Text = "Submit";
             this.btnCheckInSubmit.UseVisualStyleBackColor = true;
+            this.btnCheckInSubmit.Click += new System.EventHandler(this.btnCheckInSubmit_Click);
             // 
             // rbtnCheckOut
             // 

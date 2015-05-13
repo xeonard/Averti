@@ -17,6 +17,7 @@ namespace AvertiFestivalApplication
     {
         private RFID RfidLogin;
         private DBHandler db;
+        private int id;
 
         public LogInForm()
         {
@@ -89,8 +90,6 @@ namespace AvertiFestivalApplication
         {
             if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
             {
-
-
                 try
                 {
                     Thread thread = new Thread(new ThreadStart(FestivalThread));
