@@ -17,7 +17,6 @@ namespace AvertiFestivalApplication
     {
         private RFID RfidLogin;
         private DBHandler db;
-        private int id;
 
         public LogInForm()
         {

@@ -26,3 +26,15 @@ C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
+C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
