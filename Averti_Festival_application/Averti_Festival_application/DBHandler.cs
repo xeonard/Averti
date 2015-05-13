@@ -182,10 +182,63 @@ namespace AvertiFestivalApplication
             }
         }
 
-        public void AssignRFID(String ticketNR, String rFID)
+        public bool AssignRFID(String ticketNR, String rFID)
         {
 
+
+            String sql = ("UPDATE person SET rfid = '"+ rFID+"' WHERE personalID = "
+                + "(SELECT personalID FROM transaction WHERE transactionID = " +
+                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR)+"))"); 
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                if (command.ExecuteNonQuery() == 1)
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
         }
 
+        public string GetName(string rFID)
+        {
+
+            String sql = ("SELECT name FROM person WHERE rfid = '" + rFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToString(reader[0]);
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace AvertiFestivalApplication
 
         private void FestivalAppForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            StopRFID();
             Thread thread = new Thread(new ThreadStart(LogInThread));
             thread.Start();
         }
@@ -53,20 +53,20 @@ namespace AvertiFestivalApplication
             switch (db.CheckTicket(this.tbxCheckInID.Text))
             {
                 case -1:
-                    lbStatus.Text = "Ticket info: invalid ticket"; 
+                   // lbStatus.Text = "Ticket info: invalid ticket"; 
                     tabCheckIn.BackColor = Color.Red;
                     break;
                 case 1:
-                    lbStatus.Text = "Ticket info: visitor hasnt arrived";
+                  //  lbStatus.Text = "Ticket info: visitor hasnt arrived";
                     tabCheckIn.BackColor = Color.Green;
                     StartRFID();
                     break;
                 case 2:
-                    lbStatus.Text = "Ticket info: visitor has arrived";
+                   // lbStatus.Text = "Ticket info: visitor has arrived";
                     tabCheckIn.BackColor = Color.Red;
                     break;
                 case 3:
-                    lbStatus.Text = "Ticket info: visitor left";
+                  //  lbStatus.Text = "Ticket info: visitor left";
                     tabCheckIn.BackColor = Color.Green;
                     StartRFID();
                     break;
@@ -107,7 +107,12 @@ namespace AvertiFestivalApplication
 
         private void ProcessThisTag(Object sender, TagEventArgs e) 
         {
-            db.AssignRFID(this.tbxCheckInID.Text, e.Tag);
+            if (db.AssignRFID(this.tbxCheckInID.Text, e.Tag))
+            {
+                lbAssigned.Text = "RFID: Assigned to " + db.GetName(e.Tag);
+                lbAssigned.Visible = true;
+            }
+            //this.StopRFID();
         }
 
         private void cbxDTInfoType_SelectedIndexChanged(object sender, EventArgs e)

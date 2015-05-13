@@ -30,7 +30,7 @@ namespace AvertiFestivalApplication
             {
                 RfidLogin = new RFID();
                 RfidLogin.open();
-                RfidLogin.waitForAttachment(3000);
+                RfidLogin.waitForAttachment(1500);
                 RfidLogin.Antenna = true;
                 RfidLogin.LED = true;
                 RfidLogin.Tag += new TagEventHandler(ProcessThisTag);
@@ -79,6 +79,7 @@ namespace AvertiFestivalApplication
         private void btnQuit_Click(object sender, EventArgs e)
         {
            Application.Exit(); //was this really necessary?
+
         }
 
         public static void FestivalThread()
