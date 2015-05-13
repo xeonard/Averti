@@ -92,6 +92,7 @@
             this.tbPass.Name = "tbPass";
             this.tbPass.Size = new System.Drawing.Size(87, 20);
             this.tbPass.TabIndex = 5;
+            this.tbPass.Text = "password";
             // 
             // tbPersID
             // 
@@ -99,6 +100,7 @@
             this.tbPersID.Name = "tbPersID";
             this.tbPersID.Size = new System.Drawing.Size(87, 20);
             this.tbPersID.TabIndex = 6;
+            this.tbPersID.Text = "1";
             // 
             // label1
             // 
