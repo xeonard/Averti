@@ -42,7 +42,7 @@
             this.tbxSTCustomerID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabCheckIn = new System.Windows.Forms.TabPage();
-            this.btnStartRfid = new System.Windows.Forms.Button();
+          //  this.btnStartRfid = new System.Windows.Forms.Button();
             this.lbStatus = new System.Windows.Forms.Label();
             this.btnCheckTicket = new System.Windows.Forms.Button();
             this.btnCheckInSubmit = new System.Windows.Forms.Button();
