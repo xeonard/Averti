@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Article.cs" />
     <Compile Include="DBHandler.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="LogInForm.cs">
       <SubType>Form</SubType>
     </Compile>
