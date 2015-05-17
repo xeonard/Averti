@@ -23,7 +23,20 @@ namespace AvertiFestivalApplication
         {
             InitializeComponent();
 
-            TabControl.TabPages.Remove(tabSales);
+        //    TabControl.TabPages.Remove(tabSales);
+
+            //code for sales page
+            try
+            {
+                foreach (Article a in db.GetArticles())
+                {
+                    this.cbxSTArticles.Items.Add(a.Name);
+                }
+            }
+            catch(NullReferenceException)
+            {
+                MessageBox.Show("There is no Articles in database");
+            }
         }
 
         public FestivalAppForm(String personalID)
@@ -123,6 +136,45 @@ namespace AvertiFestivalApplication
         private void cbxDTSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+<<<<<<< HEAD
+        private void btnSTAddToOrder_Click(object sender, EventArgs e)
+        {
+            foreach(Article a in db.GetArticles())
+            {
+                if (a.Name == db.GetArticles()[this.cbxSTArticles.SelectedIndex].Name && this.NUDSTArticleAmount.Value >0)
+                {
+                    lbOrder.Items.Add(a.Name + " | Amount: " + this.NUDSTArticleAmount.Value + " | Amount in stock: " + a.Stock);
+                }
+            }
+=======
+        private void btnETSelectEvent_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnETNewEvent_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabEvent_Click(object sender, EventArgs e)
+        {
+            List<string> eventsq = db.GetEvents();
+
+            List<Event> events = new List<Event>();
+            for (int i = 0; i < eventsq.Count -1; i = i+2)
+            {
+                Event newevent = new Event(eventsq[i+1],Convert.ToInt32(eventsq[i]));
+                events.Add(newevent);
+            }
+            foreach (var item in events)
+            {
+                this.cmbxEventSelectEvent.Items.Add(item.Name);   
+            }
+            
+>>>>>>> origin/master
         }
     }
 }

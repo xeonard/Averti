@@ -240,5 +240,74 @@ namespace AvertiFestivalApplication
             }
             
         }
+        public List<string> GetEvents(){
+                    //another test method
+            String sql = "SELECT * FROM Event";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            List<String> eventid = new List<string>();
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    eventid.Add(reader["eventid"].ToString());
+                    eventid.Add(reader["eventname"].ToString());
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return eventid;
+        }
+
+        //gets a list of 
+        public List<Article> GetArticles()
+        {
+            String sql = "SELECT * FROM article";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            List<Article> temp;
+            temp = new List<Article>();
+
+            try
+            {
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+
+                int id;
+                string sort;
+                string name;
+                int stock;
+
+                while (reader.Read())
+                {
+                    id = Convert.ToInt32(reader["ArticleID"]);
+                    sort = Convert.ToString(reader["SoortArticle"]);
+                    stock = Convert.ToInt32(reader["Stock"]);
+                    name = Convert.ToString(reader["Name"]);
+
+                    temp.Add(new Article(id, sort, name, stock));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return temp;
+        }
     }
 }
