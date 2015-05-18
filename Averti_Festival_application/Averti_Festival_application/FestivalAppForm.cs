@@ -37,6 +37,8 @@ namespace AvertiFestivalApplication
             {
                 MessageBox.Show("There is no Articles in database");
             }
+
+            dataGridView1.DataSource = db.GetDatatable("event");
         }
 
         public FestivalAppForm(String personalID)
@@ -110,12 +112,19 @@ namespace AvertiFestivalApplication
 
         private void StopRFID()
         {
-            if (RfidCheckin.Attached)
-            {
-                RfidCheckin.Antenna = false;
-                RfidCheckin.LED = false;
-                RfidCheckin.close();
-            }
+            //try
+            //{
+                if (RfidCheckin.Attached)
+                {
+                    RfidCheckin.Antenna = false;
+                    RfidCheckin.LED = false;
+                    RfidCheckin.close();
+                }
+            //}
+            //catch
+            //{
+
+            //}
         }
 
         private void ProcessThisTag(Object sender, TagEventArgs e) 
@@ -176,6 +185,65 @@ namespace AvertiFestivalApplication
             }
             
 
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cbxDTInfoType_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            if(cbxDTInfoType.SelectedIndex==1)
+            {
+                lblPersonID.Visible = true;
+                tbxDTPErsonID.Visible = true;
+                lblSelectEvent.Visible = false;
+                cbxDTSelectEvent.Visible = false;
+                lblSelectCSpot.Visible = false;
+                cbxDTSelectCampSpot.Visible = false;
+                lblSelectArticle.Visible = false;
+                cbxDTSelectArticle.Visible = false ;
+            }
+            else 
+                if(cbxDTInfoType.SelectedIndex==0)
+                {
+                    lblSelectEvent.Visible = true;
+                    cbxDTSelectEvent.Visible = true;
+                    lblPersonID.Visible = false;
+                    tbxDTPErsonID.Visible = false;
+                    lblSelectCSpot.Visible = false;
+                    cbxDTSelectCampSpot.Visible = false;
+                    lblSelectArticle.Visible = false;
+                    cbxDTSelectArticle.Visible = false;
+                }
+                else if(cbxDTInfoType.SelectedIndex == 2)
+                {
+                    lblSelectCSpot.Visible = true;
+                    cbxDTSelectCampSpot.Visible = true;
+                    lblSelectEvent.Visible = false;
+                    cbxDTSelectEvent.Visible = false;
+                    lblPersonID.Visible = false;
+                    tbxDTPErsonID.Visible = false;
+                    lblSelectArticle.Visible = false;
+                    cbxDTSelectArticle.Visible = false;
+                }
+                else if(cbxDTInfoType.SelectedIndex == 3)
+                {
+                    lblSelectArticle.Visible = true;
+                    cbxDTSelectArticle.Visible = true;
+                    lblSelectCSpot.Visible = false;
+                    cbxDTSelectCampSpot.Visible = false;
+                    lblSelectEvent.Visible = false;
+                    cbxDTSelectEvent.Visible = false;
+                    lblPersonID.Visible = false;
+                    tbxDTPErsonID.Visible = false;
+                }
         }
     }
 }
