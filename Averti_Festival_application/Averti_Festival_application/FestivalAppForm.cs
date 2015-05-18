@@ -101,6 +101,7 @@ namespace AvertiFestivalApplication
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             StartRFID();
+            lbUnassigned.Visible = false;
             tabCheckIn.BackColor = this.BackColor;
 
             RfidCheckin.Tag -= new TagEventHandler(ProcessThisTag);
@@ -128,29 +129,14 @@ namespace AvertiFestivalApplication
 
         private void StopRFID()
         {
-<<<<<<< HEAD
-            
-=======
-            //try
-            //{
->>>>>>> f612155cf2a94670a6bb2b44e57738cb1951fd26
+
                 if (RfidCheckin.Attached)
                 {
                     RfidCheckin.Antenna = false;
                     RfidCheckin.LED = false;
                     RfidCheckin.close();
                 }
-<<<<<<< HEAD
-            
-           
 
-=======
-            //}
-            //catch
-            //{
-
-            //}
->>>>>>> f612155cf2a94670a6bb2b44e57738cb1951fd26
         }
 
         private void ProcessThisTag(Object sender, TagEventArgs e) 
@@ -227,11 +213,12 @@ namespace AvertiFestivalApplication
 
         }
 
-<<<<<<< HEAD
+
         private void btnGoToDetails_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("" + "" + "" );
-=======
+            MessageBox.Show("" + "" + "");
+        }
+
         private void label17_Click(object sender, EventArgs e)
         {
             
@@ -289,7 +276,6 @@ namespace AvertiFestivalApplication
                     lblPersonID.Visible = false;
                     tbxDTPErsonID.Visible = false;
                 }
->>>>>>> f612155cf2a94670a6bb2b44e57738cb1951fd26
         }
     }
 }
