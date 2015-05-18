@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace AvertiFestivalApplication
 {
@@ -331,6 +332,28 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
             return temp;
+        }
+
+        public DataTable GetDatatable(string table)
+        {
+            String sql = "SELECT * FROM "+ table;
+            MySqlDataAdapter a = new MySqlDataAdapter(sql, connection);
+
+            try
+            {
+                connection.Open();
+                DataTable t = new DataTable();
+                a.Fill(t);
+                return t;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }
