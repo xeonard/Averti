@@ -138,17 +138,18 @@ namespace AvertiFestivalApplication
 
         }
 
-<<<<<<< HEAD
+
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
-            foreach(Article a in db.GetArticles())
+            foreach (Article a in db.GetArticles())
             {
-                if (a.Name == db.GetArticles()[this.cbxSTArticles.SelectedIndex].Name && this.NUDSTArticleAmount.Value >0)
+                if (a.Name == db.GetArticles()[this.cbxSTArticles.SelectedIndex].Name && this.NUDSTArticleAmount.Value > 0)
                 {
                     lbOrder.Items.Add(a.Name + " | Amount: " + this.NUDSTArticleAmount.Value + " | Amount in stock: " + a.Stock);
                 }
             }
-=======
+        }
+
         private void btnETSelectEvent_Click(object sender, EventArgs e)
         {
 
@@ -174,7 +175,7 @@ namespace AvertiFestivalApplication
                 this.cmbxEventSelectEvent.Items.Add(item.Name);   
             }
             
->>>>>>> origin/master
+
         }
     }
 }
