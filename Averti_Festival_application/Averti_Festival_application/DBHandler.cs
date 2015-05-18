@@ -186,7 +186,7 @@ namespace AvertiFestivalApplication
         {
 
 
-            String sql = ("UPDATE person SET rfid = '"+ rFID+"' WHERE personalID = "
+            String sql = ("UPDATE person SET rfid = '"+ rFID+"', status = 'arrived'  WHERE personalID = "
                 + "(SELECT personalID FROM transaction WHERE transactionID = " +
                 "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR)+"))"); 
             MySqlCommand command = new MySqlCommand(sql, connection);
@@ -208,7 +208,30 @@ namespace AvertiFestivalApplication
             }
             return false;
         }
+        public bool UnassignRFID(string rFID)
+        {
+            String sql = ("UPDATE person SET rfid = NULL, status = 'left' WHERE rfid = '"  + rFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
 
+            try
+            {
+                connection.Open();
+
+                if (command.ExecuteNonQuery() == 1)
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+
+
+        }
         public string GetName(string rFID)
         {
 

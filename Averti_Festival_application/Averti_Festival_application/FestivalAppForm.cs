@@ -23,6 +23,7 @@ namespace AvertiFestivalApplication
         {
             InitializeComponent();
 
+            RfidCheckin = new RFID();
         //    TabControl.TabPages.Remove(tabSales);
 
             //code for sales page
@@ -63,44 +64,59 @@ namespace AvertiFestivalApplication
 
         private void btnCheckTicket_Click(object sender, EventArgs e)
         {
-            switch (db.CheckTicket(this.tbxCheckInID.Text))
-            {
-                case -1:
-                   // lbStatus.Text = "Ticket info: invalid ticket"; 
-                    tabCheckIn.BackColor = Color.Red;
-                    break;
-                case 1:
-                  //  lbStatus.Text = "Ticket info: visitor hasnt arrived";
-                    tabCheckIn.BackColor = Color.Green;
-                    StartRFID();
-                    break;
-                case 2:
-                   // lbStatus.Text = "Ticket info: visitor has arrived";
-                    tabCheckIn.BackColor = Color.Red;
-                    break;
-                case 3:
-                  //  lbStatus.Text = "Ticket info: visitor left";
-                    tabCheckIn.BackColor = Color.Green;
-                    StartRFID();
-                    break;
-            }
+                switch (db.CheckTicket(this.tbxCheckInID.Text))
+                {
+                    case -1:
+                        // lbStatus.Text = "Ticket info: invalid ticket"; 
+                        tabCheckIn.BackColor = Color.Red;
+                        RfidCheckin.Tag -= new TagEventHandler(ProcessThisTag);
+                        break;
+                    case 1:
+                        //  lbStatus.Text = "Ticket info: visitor hasnt arrived";
+                        tabCheckIn.BackColor = Color.Green;
+                        StartRFID();
+                        RfidCheckin.Tag += new TagEventHandler(ProcessThisTag);
+                        RfidCheckin.Tag -= new TagEventHandler(RemoveThisTag);
+                        break;                        
+
+                    case 2:
+                        // lbStatus.Text = "Ticket info: visitor has arrived";
+                        tabCheckIn.BackColor = Color.Red;
+                        RfidCheckin.Tag -= new TagEventHandler(ProcessThisTag);
+                        break;
+                    case 3:
+                        //  lbStatus.Text = "Ticket info: visitor left";
+                        tabCheckIn.BackColor = Color.Green;
+                        StartRFID();
+                        RfidCheckin.Tag -= new TagEventHandler(RemoveThisTag);
+                        RfidCheckin.Tag += new TagEventHandler(ProcessThisTag);
+
+
+                        break;
+                }
         }
 
-        private void btnCheckInSubmit_Click(object sender, EventArgs e)
+        private void btnCheckOut_Click(object sender, EventArgs e)
         {
+            StartRFID();
+            tabCheckIn.BackColor = this.BackColor;
 
+            RfidCheckin.Tag -= new TagEventHandler(ProcessThisTag);
+            RfidCheckin.Tag += new TagEventHandler(RemoveThisTag);
+           
+            
         }
 
         private void StartRFID()
         {
             try
             {
-                RfidCheckin = new RFID();
+                this.StopRFID();
                 RfidCheckin.open();
                 RfidCheckin.waitForAttachment(1500);
                 RfidCheckin.Antenna = true;
                 RfidCheckin.LED = true;
-                RfidCheckin.Tag += new TagEventHandler(ProcessThisTag);
+
             }
             catch (PhidgetException)
             {
@@ -110,12 +126,16 @@ namespace AvertiFestivalApplication
 
         private void StopRFID()
         {
-            if (RfidCheckin.Attached)
-            {
-                RfidCheckin.Antenna = false;
-                RfidCheckin.LED = false;
-                RfidCheckin.close();
-            }
+            
+                if (RfidCheckin.Attached)
+                {
+                    RfidCheckin.Antenna = false;
+                    RfidCheckin.LED = false;
+                    RfidCheckin.close();
+                }
+            
+           
+
         }
 
         private void ProcessThisTag(Object sender, TagEventArgs e) 
@@ -123,11 +143,25 @@ namespace AvertiFestivalApplication
             if (db.AssignRFID(this.tbxCheckInID.Text, e.Tag))
             {
                 lbAssigned.Text = "RFID: Assigned to " + db.GetName(e.Tag);
+                tabCheckIn.BackColor = this.BackColor;
+                lbUnassigned.Visible = false;
                 lbAssigned.Visible = true;
+
+
+            }
+            
+        }
+
+        private void RemoveThisTag(Object sender, TagEventArgs e)
+        {
+           if (db.UnassignRFID(e.Tag))
+            {
+                lbAssigned.Visible = false;
+
+                lbUnassigned.Visible = true;
             }
             //this.StopRFID();
         }
-
         private void cbxDTInfoType_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -176,6 +210,11 @@ namespace AvertiFestivalApplication
             }
             
 
+        }
+
+        private void btnGoToDetails_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("" + "" + "" );
         }
     }
 }
