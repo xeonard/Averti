@@ -1,0 +1,1190 @@
+[33mcommit 4c6fc15a1e9dc98bcf2ea5d8fdbe34213fddac0d[m
+Merge: 0cf1e97 4d71530
+Author: dbunin <bunind@live.com>
+Date:   Fri May 15 11:02:40 2015 +0300
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+    	Averti_Festival_application/Averti_Festival_application.v12.suo
+    	Averti_Festival_application/Averti_Festival_application/FestivalAppForm.Designer.cs
+    	Averti_Festival_application/Averti_Festival_application/FestivalAppForm.cs
+    	Averti_Festival_application/Averti_Festival_application/bin/Debug/Averti_Festival_application.exe
+    	Averti_Festival_application/Averti_Festival_application/bin/Debug/Averti_Festival_application.pdb
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csproj.FileListAbsolute.txt
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csproj.GenerateResource.Cache
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csprojResolveAssemblyReference.cache
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/Averti_Festival_application.exe
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/Averti_Festival_application.pdb
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+    	Averti_Festival_application/Averti_Festival_application/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+
+[1mdiff --cc Averti_Festival_application/Averti_Festival_application/AvertiFestivalApplication.csproj[m
+[1mindex ed44d1f,465ad67..dec35f0[m
+[1m--- a/Averti_Festival_application/Averti_Festival_application/AvertiFestivalApplication.csproj[m
+[1m+++ b/Averti_Festival_application/Averti_Festival_application/AvertiFestivalApplication.csproj[m
+[36m@@@ -67,8 -67,8 +67,9 @@@[m
+      <Reference Include="System.Xml" />[m
+    </ItemGroup>[m
+    <ItemGroup>[m
+[32m +    <Compile Include="Article.cs" />[m
+      <Compile Include="DBHandler.cs" />[m
+[32m+     <Compile Include="Event.cs" />[m
+      <Compile Include="LogInForm.cs">[m
+        <SubType>Form</SubType>[m
+      </Compile>[m
+[1mdiff --cc Averti_Festival_application/Averti_Festival_application/DBHandler.cs[m
+[1mindex 51cd7bd,6202470..6f42999[m
+[1m--- a/Averti_Festival_application/Averti_Festival_application/DBHandler.cs[m
+[1m+++ b/Averti_Festival_application/Averti_Festival_application/DBHandler.cs[m
+[36m@@@ -182,49 -182,93 +182,132 @@@[m [mnamespace AvertiFestivalApplicatio[m
+              }[m
+          }[m
+  [m
+[31m-         public void AssignRFID(String ticketNR, String rFID)[m
+[32m+         public bool AssignRFID(String ticketNR, String rFID)[m
+          {[m
+  [m
+[32m+ [m
+[32m+             String sql = ("UPDATE person SET rfid = '"+ rFID+"' WHERE personalID = "[m
+[32m+                 + "(SELECT personalID FROM transaction WHERE transactionID = " +[m
+[32m+                 "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR)+"))"); [m
+[32m+             MySqlCommand command = new MySqlCommand(sql, connection);[m
+[32m+ [m
+[32m+             try[m
+[32m+             {[m
+[32m+                 connection.Open();[m
+[32m+ [m
+[32m+                 if (command.ExecuteNonQuery() == 1)[m
+[32m+                     return true;[m
+[32m+             }[m
+[32m+             catch[m
+[32m+             {[m
+[32m+                 return false;[m
+[32m+             }[m
+[32m+             finally[m
+[32m+             {[m
+[32m+                 connection.Close();[m
+[32m+             }[m
+[32m+             return false;[m
+[32m+         }[m
+[32m+ [m
+[32m+         public string GetName(string rFID)[m
+[32m+         {[m
+[32m+ [m
+[32m+             String sql = ("SELECT name FROM person WHERE rfid = '" + rFID + "'");[m
+[32m+             MySqlCommand command = new MySqlCommand(sql, connection);[m
+[32m+ [m
+[32m+             try[m
+[32m+             {[m
+[32m+                 connection.Open();[m
+[32m+ [m
+[32m+                 MySqlDataReader reader = command.ExecuteReader();[m
+[32m+ [m
+[32m+                 if (reader.Read())[m
+[32m+                 {[m
+[32m+                     return Convert.ToString(reader[0]);[m
+[32m+                 }[m
+[32m+                 else[m
+[32m+                 {[m
+[32m+                     return string.Empty;[m
+[32m+                 }[m
+[32m+             }[m
+[32m+             catch[m
+[32m+             {[m
+[32m+                 return string.Empty;[m
+[32m+             }[m
+[32m+             finally[m
+[32m+             {[m
+[32m+                 connection.Close();[m
+[32m+             }[m
+[32m+             [m
+[32m+         }[m
+[32m+         public List<string> GetEvents(){[m
+[32m+                     //another test method[m
+[32m+             String sql = "SELECT * FROM Event";[m
+[32m+             MySqlCommand command = new MySqlCommand(sql, connection);[m
+[32m+             List<String> eventid = new List<string>();[m
+[32m+ [m
+[32m+             try[m
+[32m+             {[m
+[32m+                 connection.Open();[m
+[32m+ [m
+[32m+                 MySqlDataReader reader = command.ExecuteReader();[m
+[32m+ [m
+[32m+                 while (reader.Read())[m
+[32m+                 {[m
+[32m+                     eventid.Add(reader["eventid"].ToString());[m
+[32m+                     eventid.Add(reader["eventname"].ToString());[m
+[32m+                 }[m
+[32m+             }[m
+[32m+             catch[m
+[32m+             {[m
+[32m+                 return null;[m
+[32m+             }[m
+[32m+             finally[m
+[32m+             {[m
+[32m+                 connection.Close();[m
+[32m+             }[m
+[32m+ [m
+[32m+             return eventid;[m
+          }[m
+  [m
+[32m +        //gets a list of [m
+[32m +        public List<Article> GetArticles()[m
+[32m +        {[m
+[32m +            String sql = "SELECT * FROM article";[m
+[32m +            MySqlCommand command = new MySqlCommand(sql, connection);[m
+[32m +[m
+[32m +            List<Article> temp;[m
+[32m +            temp = new List<Article>();[m
+[32m +[m
+[32m +            try[m
+[32m +            {[m
+[32m +                connection.Open();[m
+[32m +                MySqlDataReader reader = command.ExecuteReader();[m
+[32m +[m
+[32m +                int id;[m
+[32m +                string sort;[m
+[32m +                string name;[m
+[32m +                int stock;[m
+[32m +[m
+[32m +                while (reader.Read())[m
+[32m +                {[m
+[32m +                    id = Convert.ToInt32(reader["ArticleID"]);[m
+[32m +                    sort = Convert.ToString(reader["SoortArticle"]);[m
+[32m +                    stock = Convert.ToInt32(reader["Stock"]);[m
+[32m +                    name = Convert.ToString(reader["Name"]);[m
+[32m +[m
+[32m +                    temp.Add(new Article(id, sort, name, stock));[m
+[32m +                }[m
+[32m +            }[m
+[32m +            catch[m
+[32m +            {[m
+[32m +                return null;[m
+[32m +            }[m
+[32m +            finally[m
+[32m +            {[m
+[32m +                connection.Close();[m
+[32m +            }[m
+[32m +            return temp;[m
+[32m +        }[m
+      }[m
+  }[m
+[1mdiff --cc Averti_Festival_application/Averti_Festival_application/FestivalAppForm.Designer.cs[m
+[1mindex b98f52a,460719e..6409c41[m
+[1m--- a/Averti_Festival_application/Averti_Festival_application/FestivalAppForm.Designer.cs[m
+[1m+++ b/Averti_Festival_application/Averti_Festival_application/FestivalAppForm.Designer.cs[m
+[36m@@@ -41,11 -42,9 +41,13 @@@[m
+              this.tbxSTCustomerID = new System.Windows.Forms.TextBox();[m
+              this.label9 = new System.Windows.Forms.Label();[m
+              this.tabCheckIn = new System.Windows.Forms.TabPage();[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.lbStatus = new System.Windows.Forms.Label();[m
+[32m++=======[m
+[32m+             this.lbAssigned = new System.Windows.Forms.Label();[m
+[32m++>>>>>>> origin/master[m
+              this.btnCheckTicket = new System.Windows.Forms.Button();[m
+              this.btnCheckInSubmit = new System.Windows.Forms.Button();[m
+[31m-             this.rbtnCheckOut = new System.Windows.Forms.RadioButton();[m
+[31m-             this.rbtnCheckIn = new System.Windows.Forms.RadioButton();[m
+              this.tbxCheckInID = new System.Windows.Forms.TextBox();[m
+              this.label1 = new System.Windows.Forms.Label();[m
+              this.btnGoToDetails = new System.Windows.Forms.Button();[m
+[36m@@@ -99,10 -97,9 +101,16 @@@[m
+              this.TabControl.Controls.Add(this.tabEvent);[m
+              this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;[m
+              this.TabControl.Location = new System.Drawing.Point(0, 0);[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.TabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.TabControl.Name = "TabControl";[m
+[32m +            this.TabControl.SelectedIndex = 0;[m
+[32m +            this.TabControl.Size = new System.Drawing.Size(1176, 862);[m
+[32m++=======[m
+[32m+             this.TabControl.Name = "TabControl";[m
+[32m+             this.TabControl.SelectedIndex = 0;[m
+[32m+             this.TabControl.Size = new System.Drawing.Size(784, 561);[m
+[32m++>>>>>>> origin/master[m
+              this.TabControl.TabIndex = 0;[m
+              // [m
+              // tabSales[m
+[36m@@@ -118,11 -115,10 +126,18 @@@[m
+              this.tabSales.Controls.Add(this.btnSTSeeDetails);[m
+              this.tabSales.Controls.Add(this.tbxSTCustomerID);[m
+              this.tabSales.Controls.Add(this.label9);[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tabSales.Location = new System.Drawing.Point(4, 29);[m
+[32m +            this.tabSales.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabSales.Name = "tabSales";[m
+[32m +            this.tabSales.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabSales.Size = new System.Drawing.Size(1168, 829);[m
+[32m++=======[m
+[32m+             this.tabSales.Location = new System.Drawing.Point(4, 22);[m
+[32m+             this.tabSales.Name = "tabSales";[m
+[32m+             this.tabSales.Padding = new System.Windows.Forms.Padding(3);[m
+[32m+             this.tabSales.Size = new System.Drawing.Size(776, 535);[m
+[32m++>>>>>>> origin/master[m
+              this.tabSales.TabIndex = 0;[m
+              this.tabSales.Text = "Sales";[m
+              this.tabSales.ToolTipText = "All transactions are to be made here.";[m
+[36m@@@ -130,20 -126,18 +145,32 @@@[m
+              // [m
+              // btnSTCancel[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnSTCancel.Location = new System.Drawing.Point(307, 699);[m
+[32m +            this.btnSTCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnSTCancel.Name = "btnSTCancel";[m
+[32m +            this.btnSTCancel.Size = new System.Drawing.Size(148, 35);[m
+[32m++=======[m
+[32m+             this.btnSTCancel.Location = new System.Drawing.Point(205, 454);[m
+[32m+             this.btnSTCancel.Name = "btnSTCancel";[m
+[32m+             this.btnSTCancel.Size = new System.Drawing.Size(99, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnSTCancel.TabIndex = 11;[m
+              this.btnSTCancel.Text = "Cancel Order";[m
+              this.btnSTCancel.UseVisualStyleBackColor = true;[m
+              // [m
+              // btnSTCompleteOrder[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnSTCompleteOrder.Location = new System.Drawing.Point(17, 699);[m
+[32m +            this.btnSTCompleteOrder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnSTCompleteOrder.Name = "btnSTCompleteOrder";[m
+[32m +            this.btnSTCompleteOrder.Size = new System.Drawing.Size(148, 35);[m
+[32m++=======[m
+[32m+             this.btnSTCompleteOrder.Location = new System.Drawing.Point(11, 454);[m
+[32m+             this.btnSTCompleteOrder.Name = "btnSTCompleteOrder";[m
+[32m+             this.btnSTCompleteOrder.Size = new System.Drawing.Size(99, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnSTCompleteOrder.TabIndex = 10;[m
+              this.btnSTCompleteOrder.Text = "Complete Order";[m
+              this.btnSTCompleteOrder.UseVisualStyleBackColor = true;[m
+[36m@@@ -151,19 -145,25 +178,41 @@@[m
+              // lblSTNewWalletCredit[m
+              // [m
+              this.lblSTNewWalletCredit.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.lblSTNewWalletCredit.Location = new System.Drawing.Point(12, 600);[m
+[32m +            this.lblSTNewWalletCredit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.lblSTNewWalletCredit.Name = "lblSTNewWalletCredit";[m
+[32m +            this.lblSTNewWalletCredit.Size = new System.Drawing.Size(214, 20);[m
+[32m +            this.lblSTNewWalletCredit.TabIndex = 9;[m
+[32m +            this.lblSTNewWalletCredit.Text = "Wallet Credit after purchase: ";[m
+[32m +            // [m
+[32m +            // btnSTAddToOrder[m
+[32m +            // [m
+[32m +            this.btnSTAddToOrder.Location = new System.Drawing.Point(343, 166);[m
+[32m +            this.btnSTAddToOrder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnSTAddToOrder.Name = "btnSTAddToOrder";[m
+[32m +            this.btnSTAddToOrder.Size = new System.Drawing.Size(112, 35);[m
+[32m++=======[m
+[32m+             this.lblSTNewWalletCredit.Location = new System.Drawing.Point(8, 390);[m
+[32m+             this.lblSTNewWalletCredit.Name = "lblSTNewWalletCredit";[m
+[32m+             this.lblSTNewWalletCredit.Size = new System.Drawing.Size(144, 13);[m
+[32m+             this.lblSTNewWalletCredit.TabIndex = 9;[m
+[32m+             this.lblSTNewWalletCredit.Text = "Wallet Credit after purchase: ";[m
+[32m+             // [m
+[32m+             // richTextBox1[m
+[32m+             // [m
+[32m+             this.richTextBox1.Location = new System.Drawing.Point(11, 169);[m
+[32m+             this.richTextBox1.Name = "richTextBox1";[m
+[32m+             this.richTextBox1.Size = new System.Drawing.Size(293, 199);[m
+[32m+             this.richTextBox1.TabIndex = 8;[m
+[32m+             this.richTextBox1.Text = "";[m
+[32m+             // [m
+[32m+             // btnSTAddToOrder[m
+[32m+             // [m
+[32m+             this.btnSTAddToOrder.Location = new System.Drawing.Point(229, 108);[m
+[32m+             this.btnSTAddToOrder.Name = "btnSTAddToOrder";[m
+[32m+             this.btnSTAddToOrder.Size = new System.Drawing.Size(75, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnSTAddToOrder.TabIndex = 7;[m
+              this.btnSTAddToOrder.Text = "Add to order";[m
+              this.btnSTAddToOrder.UseVisualStyleBackColor = true;[m
+[36m@@@ -171,95 -170,86 +220,159 @@@[m
+              // [m
+              // NUDSTArticleAmount[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.NUDSTArticleAmount.Location = new System.Drawing.Point(238, 171);[m
+[32m +            this.NUDSTArticleAmount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";[m
+[32m +            this.NUDSTArticleAmount.Size = new System.Drawing.Size(57, 26);[m
+[32m++=======[m
+[32m+             this.NUDSTArticleAmount.Location = new System.Drawing.Point(159, 111);[m
+[32m+             this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";[m
+[32m+             this.NUDSTArticleAmount.Size = new System.Drawing.Size(38, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.NUDSTArticleAmount.TabIndex = 6;[m
+              // [m
+              // cbxSTArticles[m
+              // [m
+              this.cbxSTArticles.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cbxSTArticles.Location = new System.Drawing.Point(17, 169);[m
+[32m +            this.cbxSTArticles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cbxSTArticles.Name = "cbxSTArticles";[m
+[32m +            this.cbxSTArticles.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cbxSTArticles.Location = new System.Drawing.Point(11, 110);[m
+[32m+             this.cbxSTArticles.Name = "cbxSTArticles";[m
+[32m+             this.cbxSTArticles.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cbxSTArticles.TabIndex = 5;[m
+              this.cbxSTArticles.Text = "Select An Article";[m
+              // [m
+              // lblCostumerWallet[m
+              // [m
+              this.lblCostumerWallet.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.lblCostumerWallet.Location = new System.Drawing.Point(12, 108);[m
+[32m +            this.lblCostumerWallet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.lblCostumerWallet.Name = "lblCostumerWallet";[m
+[32m +            this.lblCostumerWallet.Size = new System.Drawing.Size(107, 20);[m
+[32m++=======[m
+[32m+             this.lblCostumerWallet.Location = new System.Drawing.Point(8, 70);[m
+[32m+             this.lblCostumerWallet.Name = "lblCostumerWallet";[m
+[32m+             this.lblCostumerWallet.Size = new System.Drawing.Size(73, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.lblCostumerWallet.TabIndex = 4;[m
+              this.lblCostumerWallet.Text = "Wallet Credit: ";[m
+              // [m
+              // btnSTSeeDetails[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnSTSeeDetails.Location = new System.Drawing.Point(324, 34);[m
+[32m +            this.btnSTSeeDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnSTSeeDetails.Name = "btnSTSeeDetails";[m
+[32m +            this.btnSTSeeDetails.Size = new System.Drawing.Size(112, 35);[m
+[32m++=======[m
+[32m+             this.btnSTSeeDetails.Location = new System.Drawing.Point(216, 22);[m
+[32m+             this.btnSTSeeDetails.Name = "btnSTSeeDetails";[m
+[32m+             this.btnSTSeeDetails.Size = new System.Drawing.Size(75, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnSTSeeDetails.TabIndex = 3;[m
+              this.btnSTSeeDetails.Text = "See Details";[m
+              this.btnSTSeeDetails.UseVisualStyleBackColor = true;[m
+              // [m
+              // tbxSTCustomerID[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxSTCustomerID.Location = new System.Drawing.Point(145, 41);[m
+[32m +            this.tbxSTCustomerID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxSTCustomerID.Name = "tbxSTCustomerID";[m
+[32m +            this.tbxSTCustomerID.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             this.tbxSTCustomerID.Location = new System.Drawing.Point(97, 27);[m
+[32m+             this.tbxSTCustomerID.Name = "tbxSTCustomerID";[m
+[32m+             this.tbxSTCustomerID.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxSTCustomerID.TabIndex = 1;[m
+              // [m
+              // label9[m
+              // [m
+              this.label9.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label9.Location = new System.Drawing.Point(52, 41);[m
+[32m +            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label9.Name = "label9";[m
+[32m +            this.label9.Size = new System.Drawing.Size(56, 20);[m
+[32m++=======[m
+[32m+             this.label9.Location = new System.Drawing.Point(34, 27);[m
+[32m+             this.label9.Name = "label9";[m
+[32m+             this.label9.Size = new System.Drawing.Size(38, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label9.TabIndex = 0;[m
+              this.label9.Text = "FRID :";[m
+              // [m
+              // tabCheckIn[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tabCheckIn.Controls.Add(this.lbStatus);[m
+[32m++=======[m
+[32m+             this.tabCheckIn.Controls.Add(this.lbAssigned);[m
+[32m++>>>>>>> origin/master[m
+              this.tabCheckIn.Controls.Add(this.btnCheckTicket);[m
+              this.tabCheckIn.Controls.Add(this.btnCheckInSubmit);[m
+[31m-             this.tabCheckIn.Controls.Add(this.rbtnCheckOut);[m
+[31m-             this.tabCheckIn.Controls.Add(this.rbtnCheckIn);[m
+              this.tabCheckIn.Controls.Add(this.tbxCheckInID);[m
+              this.tabCheckIn.Controls.Add(this.label1);[m
+              this.tabCheckIn.Controls.Add(this.btnGoToDetails);[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tabCheckIn.Location = new System.Drawing.Point(4, 29);[m
+[32m +            this.tabCheckIn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabCheckIn.Name = "tabCheckIn";[m
+[32m +            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabCheckIn.Size = new System.Drawing.Size(1168, 829);[m
+[32m++=======[m
+[32m+             this.tabCheckIn.Location = new System.Drawing.Point(4, 22);[m
+[32m+             this.tabCheckIn.Name = "tabCheckIn";[m
+[32m+             this.tabCheckIn.Padding = new System.Windows.Forms.Padding(3);[m
+[32m+             this.tabCheckIn.Size = new System.Drawing.Size(776, 535);[m
+[32m++>>>>>>> origin/master[m
+              this.tabCheckIn.TabIndex = 1;[m
+              this.tabCheckIn.Text = "Check In/Out";[m
+              this.tabCheckIn.UseVisualStyleBackColor = true;[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            // lbStatus[m
+[32m +            // [m
+[32m +            this.lbStatus.AutoSize = true;[m
+[32m +            this.lbStatus.Location = new System.Drawing.Point(444, 114);[m
+[32m +            this.lbStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.lbStatus.Name = "lbStatus";[m
+[32m +            this.lbStatus.Size = new System.Drawing.Size(85, 20);[m
+[32m +            this.lbStatus.TabIndex = 13;[m
+[32m +            this.lbStatus.Text = "Ticket info:";[m
+[32m +            // [m
+[32m +            // btnCheckTicket[m
+[32m +            // [m
+[32m +            this.btnCheckTicket.Location = new System.Drawing.Point(608, 241);[m
+[32m +            this.btnCheckTicket.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnCheckTicket.Name = "btnCheckTicket";[m
+[32m +            this.btnCheckTicket.Size = new System.Drawing.Size(147, 35);[m
+[32m++=======[m
+[32m+             // lbAssigned[m
+[32m+             // [m
+[32m+             this.lbAssigned.AutoSize = true;[m
+[32m+             this.lbAssigned.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));[m
+[32m+             this.lbAssigned.Location = new System.Drawing.Point(202, 60);[m
+[32m+             this.lbAssigned.Name = "lbAssigned";[m
+[32m+             this.lbAssigned.Size = new System.Drawing.Size(418, 39);[m
+[32m+             this.lbAssigned.TabIndex = 13;[m
+[32m+             this.lbAssigned.Text = "RFID: Assigned to ********";[m
+[32m+             this.lbAssigned.Visible = false;[m
+[32m+             // [m
+[32m+             // btnCheckTicket[m
+[32m+             // [m
+[32m+             this.btnCheckTicket.Location = new System.Drawing.Point(405, 157);[m
+[32m+             this.btnCheckTicket.Name = "btnCheckTicket";[m
+[32m+             this.btnCheckTicket.Size = new System.Drawing.Size(98, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnCheckTicket.TabIndex = 12;[m
+              this.btnCheckTicket.Text = "Check Ticket";[m
+              this.btnCheckTicket.UseVisualStyleBackColor = true;[m
+[36m@@@ -267,63 -257,35 +380,89 @@@[m
+              // [m
+              // btnCheckInSubmit[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnCheckInSubmit.Location = new System.Drawing.Point(486, 441);[m
+[32m +            this.btnCheckInSubmit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnCheckInSubmit.Name = "btnCheckInSubmit";[m
+[32m +            this.btnCheckInSubmit.Size = new System.Drawing.Size(112, 35);[m
+[32m++=======[m
+[32m+             this.btnCheckInSubmit.Location = new System.Drawing.Point(324, 287);[m
+[32m+             this.btnCheckInSubmit.Name = "btnCheckInSubmit";[m
+[32m+             this.btnCheckInSubmit.Size = new System.Drawing.Size(75, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnCheckInSubmit.TabIndex = 11;[m
+              this.btnCheckInSubmit.Text = "Submit";[m
+              this.btnCheckInSubmit.UseVisualStyleBackColor = true;[m
+              this.btnCheckInSubmit.Click += new System.EventHandler(this.btnCheckInSubmit_Click);[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            // rbtnCheckOut[m
+[32m +            // [m
+[32m +            this.rbtnCheckOut.AutoSize = true;[m
+[32m +            this.rbtnCheckOut.Location = new System.Drawing.Point(486, 360);[m
+[32m +            this.rbtnCheckOut.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.rbtnCheckOut.Name = "rbtnCheckOut";[m
+[32m +            this.rbtnCheckOut.Size = new System.Drawing.Size(105, 24);[m
+[32m +            this.rbtnCheckOut.TabIndex = 10;[m
+[32m +            this.rbtnCheckOut.TabStop = true;[m
+[32m +            this.rbtnCheckOut.Text = "CheckOut";[m
+[32m +            this.rbtnCheckOut.UseVisualStyleBackColor = true;[m
+[32m +            // [m
+[32m +            // rbtnCheckIn[m
+[32m +            // [m
+[32m +            this.rbtnCheckIn.AutoSize = true;[m
+[32m +            this.rbtnCheckIn.Location = new System.Drawing.Point(486, 325);[m
+[32m +            this.rbtnCheckIn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.rbtnCheckIn.Name = "rbtnCheckIn";[m
+[32m +            this.rbtnCheckIn.Size = new System.Drawing.Size(93, 24);[m
+[32m +            this.rbtnCheckIn.TabIndex = 9;[m
+[32m +            this.rbtnCheckIn.TabStop = true;[m
+[32m +            this.rbtnCheckIn.Text = "CheckIn";[m
+[32m +            this.rbtnCheckIn.UseVisualStyleBackColor = true;[m
+[32m +            // [m
+[32m +            // tbxCheckInID[m
+[32m +            // [m
+[32m +            this.tbxCheckInID.Location = new System.Drawing.Point(449, 241);[m
+[32m +            this.tbxCheckInID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxCheckInID.Name = "tbxCheckInID";[m
+[32m +            this.tbxCheckInID.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             // tbxCheckInID[m
+[32m+             // [m
+[32m+             this.tbxCheckInID.Location = new System.Drawing.Point(299, 157);[m
+[32m+             this.tbxCheckInID.Name = "tbxCheckInID";[m
+[32m+             this.tbxCheckInID.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxCheckInID.TabIndex = 8;[m
+              // [m
+              // label1[m
+              // [m
+              this.label1.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label1.Location = new System.Drawing.Point(324, 241);[m
+[32m +            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label1.Name = "label1";[m
+[32m +            this.label1.Size = new System.Drawing.Size(111, 20);[m
+[32m++=======[m
+[32m+             this.label1.Location = new System.Drawing.Point(216, 157);[m
+[32m+             this.label1.Name = "label1";[m
+[32m+             this.label1.Size = new System.Drawing.Size(77, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label1.TabIndex = 7;[m
+              this.label1.Text = "Ticket Number";[m
+              // [m
+              // btnGoToDetails[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnGoToDetails.Location = new System.Drawing.Point(764, 241);[m
+[32m +            this.btnGoToDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnGoToDetails.Name = "btnGoToDetails";[m
+[32m +            this.btnGoToDetails.Size = new System.Drawing.Size(112, 35);[m
+[32m++=======[m
+[32m+             this.btnGoToDetails.Location = new System.Drawing.Point(509, 157);[m
+[32m+             this.btnGoToDetails.Name = "btnGoToDetails";[m
+[32m+             this.btnGoToDetails.Size = new System.Drawing.Size(75, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnGoToDetails.TabIndex = 6;[m
+              this.btnGoToDetails.Text = "Go to details";[m
+              this.btnGoToDetails.UseVisualStyleBackColor = true;[m
+[36m@@@ -341,10 -303,9 +480,16 @@@[m
+              this.tabDBView.Controls.Add(this.label11);[m
+              this.tabDBView.Controls.Add(this.cbxDTInfoType);[m
+              this.tabDBView.Controls.Add(this.label10);[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tabDBView.Location = new System.Drawing.Point(4, 29);[m
+[32m +            this.tabDBView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabDBView.Name = "tabDBView";[m
+[32m +            this.tabDBView.Size = new System.Drawing.Size(1168, 829);[m
+[32m++=======[m
+[32m+             this.tabDBView.Location = new System.Drawing.Point(4, 22);[m
+[32m+             this.tabDBView.Name = "tabDBView";[m
+[32m+             this.tabDBView.Size = new System.Drawing.Size(776, 535);[m
+[32m++>>>>>>> origin/master[m
+              this.tabDBView.TabIndex = 2;[m
+              this.tabDBView.Text = "Database view";[m
+              this.tabDBView.UseVisualStyleBackColor = true;[m
+[36m@@@ -352,10 -313,9 +497,16 @@@[m
+              // dataGridView1[m
+              // [m
+              this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.dataGridView1.Location = new System.Drawing.Point(17, 302);[m
+[32m +            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.dataGridView1.Name = "dataGridView1";[m
+[32m +            this.dataGridView1.Size = new System.Drawing.Size(942, 414);[m
+[32m++=======[m
+[32m+             this.dataGridView1.Location = new System.Drawing.Point(11, 197);[m
+[32m+             this.dataGridView1.Name = "dataGridView1";[m
+[32m+             this.dataGridView1.Size = new System.Drawing.Size(628, 269);[m
+[32m++>>>>>>> origin/master[m
+              this.dataGridView1.TabIndex = 10;[m
+              // [m
+              // cbxDTSelectArticle[m
+[36m@@@ -366,20 -326,18 +517,32 @@@[m
+              "Camping",[m
+              "Sales"});[m
+              this.cbxDTSelectArticle.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cbxDTSelectArticle.Location = new System.Drawing.Point(199, 201);[m
+[32m +            this.cbxDTSelectArticle.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cbxDTSelectArticle.Name = "cbxDTSelectArticle";[m
+[32m +            this.cbxDTSelectArticle.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cbxDTSelectArticle.Location = new System.Drawing.Point(133, 131);[m
+[32m+             this.cbxDTSelectArticle.Name = "cbxDTSelectArticle";[m
+[32m+             this.cbxDTSelectArticle.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cbxDTSelectArticle.TabIndex = 9;[m
+              this.cbxDTSelectArticle.Text = "Articles";[m
+              // [m
+              // label14[m
+              // [m
+              this.label14.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label14.Location = new System.Drawing.Point(12, 206);[m
+[32m +            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label14.Name = "label14";[m
+[32m +            this.label14.Size = new System.Drawing.Size(102, 20);[m
+[32m++=======[m
+[32m+             this.label14.Location = new System.Drawing.Point(8, 134);[m
+[32m+             this.label14.Name = "label14";[m
+[32m+             this.label14.Size = new System.Drawing.Size(69, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label14.TabIndex = 8;[m
+              this.label14.Text = "Select Article";[m
+              // [m
+[36m@@@ -391,20 -349,18 +554,32 @@@[m
+              "Camping",[m
+              "Sales"});[m
+              this.cbxDTSelectCampSpot.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cbxDTSelectCampSpot.Location = new System.Drawing.Point(199, 160);[m
+[32m +            this.cbxDTSelectCampSpot.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cbxDTSelectCampSpot.Name = "cbxDTSelectCampSpot";[m
+[32m +            this.cbxDTSelectCampSpot.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cbxDTSelectCampSpot.Location = new System.Drawing.Point(133, 104);[m
+[32m+             this.cbxDTSelectCampSpot.Name = "cbxDTSelectCampSpot";[m
+[32m+             this.cbxDTSelectCampSpot.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cbxDTSelectCampSpot.TabIndex = 7;[m
+              this.cbxDTSelectCampSpot.Text = "Camp Nrs";[m
+              // [m
+              // label13[m
+              // [m
+              this.label13.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label13.Location = new System.Drawing.Point(12, 165);[m
+[32m +            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label13.Name = "label13";[m
+[32m +            this.label13.Size = new System.Drawing.Size(159, 20);[m
+[32m++=======[m
+[32m+             this.label13.Location = new System.Drawing.Point(8, 107);[m
+[32m+             this.label13.Name = "label13";[m
+[32m+             this.label13.Size = new System.Drawing.Size(106, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label13.TabIndex = 6;[m
+              this.label13.Text = "Select Camping Spot";[m
+              // [m
+[36m@@@ -416,38 -372,34 +591,62 @@@[m
+              "Camping",[m
+              "Sales"});[m
+              this.cbxDTSelectEvent.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cbxDTSelectEvent.Location = new System.Drawing.Point(199, 119);[m
+[32m +            this.cbxDTSelectEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cbxDTSelectEvent.Name = "cbxDTSelectEvent";[m
+[32m +            this.cbxDTSelectEvent.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cbxDTSelectEvent.Location = new System.Drawing.Point(133, 77);[m
+[32m+             this.cbxDTSelectEvent.Name = "cbxDTSelectEvent";[m
+[32m+             this.cbxDTSelectEvent.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cbxDTSelectEvent.TabIndex = 5;[m
+              this.cbxDTSelectEvent.Text = "Events";[m
+              // [m
+              // label12[m
+              // [m
+              this.label12.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label12.Location = new System.Drawing.Point(12, 122);[m
+[32m +            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label12.Name = "label12";[m
+[32m +            this.label12.Size = new System.Drawing.Size(99, 20);[m
+[32m++=======[m
+[32m+             this.label12.Location = new System.Drawing.Point(8, 80);[m
+[32m+             this.label12.Name = "label12";[m
+[32m+             this.label12.Size = new System.Drawing.Size(68, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label12.TabIndex = 4;[m
+              this.label12.Text = "Select Event";[m
+              // [m
+              // tbxDTPErsonID[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxDTPErsonID.Location = new System.Drawing.Point(199, 79);[m
+[32m +            this.tbxDTPErsonID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxDTPErsonID.Name = "tbxDTPErsonID";[m
+[32m +            this.tbxDTPErsonID.Size = new System.Drawing.Size(180, 26);[m
+[32m++=======[m
+[32m+             this.tbxDTPErsonID.Location = new System.Drawing.Point(133, 51);[m
+[32m+             this.tbxDTPErsonID.Name = "tbxDTPErsonID";[m
+[32m+             this.tbxDTPErsonID.Size = new System.Drawing.Size(121, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxDTPErsonID.TabIndex = 3;[m
+              // [m
+              // label11[m
+              // [m
+              this.label11.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label11.Location = new System.Drawing.Point(12, 82);[m
+[32m +            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label11.Name = "label11";[m
+[32m +            this.label11.Size = new System.Drawing.Size(80, 20);[m
+[32m++=======[m
+[32m+             this.label11.Location = new System.Drawing.Point(8, 54);[m
+[32m+             this.label11.Name = "label11";[m
+[32m+             this.label11.Size = new System.Drawing.Size(54, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label11.TabIndex = 2;[m
+              this.label11.Text = "Person ID";[m
+              // [m
+[36m@@@ -459,19 -411,17 +658,31 @@@[m
+              "Camping",[m
+              "Sales"});[m
+              this.cbxDTInfoType.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cbxDTInfoType.Location = new System.Drawing.Point(199, 38);[m
+[32m +            this.cbxDTInfoType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cbxDTInfoType.Name = "cbxDTInfoType";[m
+[32m +            this.cbxDTInfoType.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cbxDTInfoType.Location = new System.Drawing.Point(133, 24);[m
+[32m+             this.cbxDTInfoType.Name = "cbxDTInfoType";[m
+[32m+             this.cbxDTInfoType.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cbxDTInfoType.TabIndex = 1;[m
+              // [m
+              // label10[m
+              // [m
+              this.label10.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label10.Location = new System.Drawing.Point(12, 49);[m
+[32m +            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label10.Name = "label10";[m
+[32m +            this.label10.Size = new System.Drawing.Size(140, 20);[m
+[32m++=======[m
+[32m+             this.label10.Location = new System.Drawing.Point(8, 32);[m
+[32m+             this.label10.Name = "label10";[m
+[32m+             this.label10.Size = new System.Drawing.Size(96, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label10.TabIndex = 0;[m
+              this.label10.Text = "Select Type of info";[m
+              // [m
+[36m@@@ -496,10 -446,9 +707,16 @@@[m
+              this.tabEvent.Controls.Add(this.label4);[m
+              this.tabEvent.Controls.Add(this.label3);[m
+              this.tabEvent.Controls.Add(this.label2);[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tabEvent.Location = new System.Drawing.Point(4, 29);[m
+[32m +            this.tabEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tabEvent.Name = "tabEvent";[m
+[32m +            this.tabEvent.Size = new System.Drawing.Size(1168, 829);[m
+[32m++=======[m
+[32m+             this.tabEvent.Location = new System.Drawing.Point(4, 22);[m
+[32m+             this.tabEvent.Name = "tabEvent";[m
+[32m+             this.tabEvent.Size = new System.Drawing.Size(776, 535);[m
+[32m++>>>>>>> origin/master[m
+              this.tabEvent.TabIndex = 3;[m
+              this.tabEvent.Text = "Event";[m
+              this.tabEvent.ToolTipText = "Create, change or delete an event";[m
+[36m@@@ -507,89 -457,79 +725,149 @@@[m
+              // [m
+              // btnCancel[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnCancel.Location = new System.Drawing.Point(384, 692);[m
+[32m +            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnCancel.Name = "btnCancel";[m
+[32m +            this.btnCancel.Size = new System.Drawing.Size(152, 35);[m
+[32m++=======[m
+[32m+             this.btnCancel.Location = new System.Drawing.Point(256, 450);[m
+[32m+             this.btnCancel.Name = "btnCancel";[m
+[32m+             this.btnCancel.Size = new System.Drawing.Size(101, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnCancel.TabIndex = 19;[m
+              this.btnCancel.Text = "Cancel";[m
+              this.btnCancel.UseVisualStyleBackColor = true;[m
+              // [m
+              // btnETSave[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnETSave.Location = new System.Drawing.Point(36, 692);[m
+[32m +            this.btnETSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnETSave.Name = "btnETSave";[m
+[32m +            this.btnETSave.Size = new System.Drawing.Size(152, 35);[m
+[32m++=======[m
+[32m+             this.btnETSave.Location = new System.Drawing.Point(24, 450);[m
+[32m+             this.btnETSave.Name = "btnETSave";[m
+[32m+             this.btnETSave.Size = new System.Drawing.Size(101, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnETSave.TabIndex = 18;[m
+              this.btnETSave.Text = "Save";[m
+              this.btnETSave.UseVisualStyleBackColor = true;[m
+              // [m
+              // richTbxETDescription[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.richTbxETDescription.Location = new System.Drawing.Point(163, 466);[m
+[32m +            this.richTbxETDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.richTbxETDescription.Name = "richTbxETDescription";[m
+[32m +            this.richTbxETDescription.Size = new System.Drawing.Size(370, 150);[m
+[32m++=======[m
+[32m+             this.richTbxETDescription.Location = new System.Drawing.Point(109, 303);[m
+[32m+             this.richTbxETDescription.Name = "richTbxETDescription";[m
+[32m+             this.richTbxETDescription.Size = new System.Drawing.Size(248, 99);[m
+[32m++>>>>>>> origin/master[m
+              this.richTbxETDescription.TabIndex = 17;[m
+              this.richTbxETDescription.Text = "";[m
+              // [m
+              // dtpETEventDate[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.dtpETEventDate.Location = new System.Drawing.Point(163, 315);[m
+[32m +            this.dtpETEventDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.dtpETEventDate.Name = "dtpETEventDate";[m
+[32m +            this.dtpETEventDate.Size = new System.Drawing.Size(298, 26);[m
+[32m++=======[m
+[32m+             this.dtpETEventDate.Location = new System.Drawing.Point(109, 205);[m
+[32m+             this.dtpETEventDate.Name = "dtpETEventDate";[m
+[32m+             this.dtpETEventDate.Size = new System.Drawing.Size(200, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.dtpETEventDate.TabIndex = 16;[m
+              // [m
+              // tbxETLocation[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxETLocation.Location = new System.Drawing.Point(163, 385);[m
+[32m +            this.tbxETLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxETLocation.Name = "tbxETLocation";[m
+[32m +            this.tbxETLocation.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             this.tbxETLocation.Location = new System.Drawing.Point(109, 250);[m
+[32m+             this.tbxETLocation.Name = "tbxETLocation";[m
+[32m+             this.tbxETLocation.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxETLocation.TabIndex = 15;[m
+              // [m
+              // tbxETMaxCamp[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxETMaxCamp.Location = new System.Drawing.Point(163, 251);[m
+[32m +            this.tbxETMaxCamp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxETMaxCamp.Name = "tbxETMaxCamp";[m
+[32m +            this.tbxETMaxCamp.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             this.tbxETMaxCamp.Location = new System.Drawing.Point(109, 163);[m
+[32m+             this.tbxETMaxCamp.Name = "tbxETMaxCamp";[m
+[32m+             this.tbxETMaxCamp.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxETMaxCamp.TabIndex = 13;[m
+              // [m
+              // tbxETMaxTickets[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxETMaxTickets.Location = new System.Drawing.Point(163, 182);[m
+[32m +            this.tbxETMaxTickets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxETMaxTickets.Name = "tbxETMaxTickets";[m
+[32m +            this.tbxETMaxTickets.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             this.tbxETMaxTickets.Location = new System.Drawing.Point(109, 119);[m
+[32m+             this.tbxETMaxTickets.Name = "tbxETMaxTickets";[m
+[32m+             this.tbxETMaxTickets.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxETMaxTickets.TabIndex = 12;[m
+              // [m
+              // tbxETEventName[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.tbxETEventName.Location = new System.Drawing.Point(163, 111);[m
+[32m +            this.tbxETEventName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.tbxETEventName.Name = "tbxETEventName";[m
+[32m +            this.tbxETEventName.Size = new System.Drawing.Size(148, 26);[m
+[32m++=======[m
+[32m+             this.tbxETEventName.Location = new System.Drawing.Point(109, 72);[m
+[32m+             this.tbxETEventName.Name = "tbxETEventName";[m
+[32m+             this.tbxETEventName.Size = new System.Drawing.Size(100, 20);[m
+[32m++>>>>>>> origin/master[m
+              this.tbxETEventName.TabIndex = 11;[m
+              // [m
+              // btnETDeleteEvent[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnETDeleteEvent.Location = new System.Drawing.Point(705, 46);[m
+[32m +            this.btnETDeleteEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnETDeleteEvent.Name = "btnETDeleteEvent";[m
+[32m +            this.btnETDeleteEvent.Size = new System.Drawing.Size(152, 35);[m
+[32m++=======[m
+[32m+             this.btnETDeleteEvent.Location = new System.Drawing.Point(470, 30);[m
+[32m+             this.btnETDeleteEvent.Name = "btnETDeleteEvent";[m
+[32m+             this.btnETDeleteEvent.Size = new System.Drawing.Size(101, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnETDeleteEvent.TabIndex = 10;[m
+              this.btnETDeleteEvent.Text = "Delete Event";[m
+              this.btnETDeleteEvent.UseVisualStyleBackColor = true;[m
+              // [m
+              // btnETNewEvent[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnETNewEvent.Location = new System.Drawing.Point(544, 46);[m
+[32m +            this.btnETNewEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnETNewEvent.Name = "btnETNewEvent";[m
+[32m +            this.btnETNewEvent.Size = new System.Drawing.Size(152, 35);[m
+[32m++=======[m
+[32m+             this.btnETNewEvent.Location = new System.Drawing.Point(363, 30);[m
+[32m+             this.btnETNewEvent.Name = "btnETNewEvent";[m
+[32m+             this.btnETNewEvent.Size = new System.Drawing.Size(101, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnETNewEvent.TabIndex = 9;[m
+              this.btnETNewEvent.Text = "New Event";[m
+              this.btnETNewEvent.UseVisualStyleBackColor = true;[m
+[36m@@@ -596,10 -537,9 +875,16 @@@[m
+              // [m
+              // btnETSelectEvent[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.btnETSelectEvent.Location = new System.Drawing.Point(384, 46);[m
+[32m +            this.btnETSelectEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.btnETSelectEvent.Name = "btnETSelectEvent";[m
+[32m +            this.btnETSelectEvent.Size = new System.Drawing.Size(152, 35);[m
+[32m++=======[m
+[32m+             this.btnETSelectEvent.Location = new System.Drawing.Point(256, 30);[m
+[32m+             this.btnETSelectEvent.Name = "btnETSelectEvent";[m
+[32m+             this.btnETSelectEvent.Size = new System.Drawing.Size(101, 23);[m
+[32m++>>>>>>> origin/master[m
+              this.btnETSelectEvent.TabIndex = 8;[m
+              this.btnETSelectEvent.Text = "Select Event";[m
+              this.btnETSelectEvent.UseVisualStyleBackColor = true;[m
+[36m@@@ -607,98 -548,80 +893,153 @@@[m
+              // cmbxEventSelectEvent[m
+              // [m
+              this.cmbxEventSelectEvent.FormattingEnabled = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.cmbxEventSelectEvent.Location = new System.Drawing.Point(163, 49);[m
+[32m +            this.cmbxEventSelectEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m +            this.cmbxEventSelectEvent.Name = "cmbxEventSelectEvent";[m
+[32m +            this.cmbxEventSelectEvent.Size = new System.Drawing.Size(180, 28);[m
+[32m++=======[m
+[32m+             this.cmbxEventSelectEvent.Location = new System.Drawing.Point(109, 32);[m
+[32m+             this.cmbxEventSelectEvent.Name = "cmbxEventSelectEvent";[m
+[32m+             this.cmbxEventSelectEvent.Size = new System.Drawing.Size(121, 21);[m
+[32m++>>>>>>> origin/master[m
+              this.cmbxEventSelectEvent.TabIndex = 7;[m
+              // [m
+              // label8[m
+              // [m
+              this.label8.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label8.Location = new System.Drawing.Point(12, 471);[m
+[32m +            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label8.Name = "label8";[m
+[32m +            this.label8.Size = new System.Drawing.Size(89, 20);[m
+[32m++=======[m
+[32m+             this.label8.Location = new System.Drawing.Point(8, 306);[m
+[32m+             this.label8.Name = "label8";[m
+[32m+             this.label8.Size = new System.Drawing.Size(60, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label8.TabIndex = 6;[m
+              this.label8.Text = "Description";[m
+              // [m
+              // label7[m
+              // [m
+              this.label7.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label7.Location = new System.Drawing.Point(12, 389);[m
+[32m +            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label7.Name = "label7";[m
+[32m +            this.label7.Size = new System.Drawing.Size(70, 20);[m
+[32m++=======[m
+[32m+             this.label7.Location = new System.Drawing.Point(8, 253);[m
+[32m+             this.label7.Name = "label7";[m
+[32m+             this.label7.Size = new System.Drawing.Size(48, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label7.TabIndex = 5;[m
+              this.label7.Text = "Location";[m
+              // [m
+              // label6[m
+              // [m
+              this.label6.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label6.Location = new System.Drawing.Point(12, 325);[m
+[32m +            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label6.Name = "label6";[m
+[32m +            this.label6.Size = new System.Drawing.Size(89, 20);[m
+[32m++=======[m
+[32m+             this.label6.Location = new System.Drawing.Point(8, 211);[m
+[32m+             this.label6.Name = "label6";[m
+[32m+             this.label6.Size = new System.Drawing.Size(61, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label6.TabIndex = 4;[m
+              this.label6.Text = "Event Date";[m
+              // [m
+              // label5[m
+              // [m
+              this.label5.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label5.Location = new System.Drawing.Point(12, 255);[m
+[32m +            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label5.Name = "label5";[m
+[32m +            this.label5.Size = new System.Drawing.Size(102, 20);[m
+[32m++=======[m
+[32m+             this.label5.Location = new System.Drawing.Point(8, 166);[m
+[32m+             this.label5.Name = "label5";[m
+[32m+             this.label5.Size = new System.Drawing.Size(70, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label5.TabIndex = 3;[m
+              this.label5.Text = "Max camping";[m
+              // [m
+              // label4[m
+              // [m
+              this.label4.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label4.Location = new System.Drawing.Point(12, 182);[m
+[32m +            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label4.Name = "label4";[m
+[32m +            this.label4.Size = new System.Drawing.Size(88, 20);[m
+[32m++=======[m
+[32m+             this.label4.Location = new System.Drawing.Point(8, 119);[m
+[32m+             this.label4.Name = "label4";[m
+[32m+             this.label4.Size = new System.Drawing.Size(61, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label4.TabIndex = 2;[m
+              this.label4.Text = "Max tickets";[m
+              // [m
+              // label3[m
+              // [m
+              this.label3.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label3.Location = new System.Drawing.Point(12, 115);[m
+[32m +            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label3.Name = "label3";[m
+[32m +            this.label3.Size = new System.Drawing.Size(96, 20);[m
+[32m++=======[m
+[32m+             this.label3.Location = new System.Drawing.Point(8, 75);[m
+[32m+             this.label3.Name = "label3";[m
+[32m+             this.label3.Size = new System.Drawing.Size(66, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label3.TabIndex = 1;[m
+              this.label3.Text = "Event Name";[m
+              // [m
+              // label2[m
+              // [m
+              this.label2.AutoSize = true;[m
+[32m++<<<<<<< HEAD[m
+[32m +            this.label2.Location = new System.Drawing.Point(12, 54);[m
+[32m +            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);[m
+[32m +            this.label2.Name = "label2";[m
+[32m +            this.label2.Size = new System.Drawing.Size(99, 20);[m
+[32m++=======[m
+[32m+             this.label2.Location = new System.Drawing.Point(8, 35);[m
+[32m+             this.label2.Name = "label2";[m
+[32m+             this.label2.Size = new System.Drawing.Size(68, 13);[m
+[32m++>>>>>>> origin/master[m
+              this.label2.TabIndex = 0;[m
+              this.label2.Text = "Select Event";[m
+              // [m
+[32m +            // lbOrder[m
+[32m +            // [m
+[32m +            this.lbOrder.FormattingEnabled = true;[m
+[32m +            this.lbOrder.ItemHeight = 20;[m
+[32m +            this.lbOrder.Location = new System.Drawing.Point(20, 218);[m
+[32m +            this.lbOrder.Name = "lbOrder";[m
+[32m +            this.lbOrder.Size = new System.Drawing.Size(498, 344);[m
+[32m +            this.lbOrder.TabIndex = 12;[m
+[32m +            // [m
+              // FestivalAppForm[m
+              // [m
+[32m++<<<<<<< HEAD[m
+[32m +            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);[m
+[32m +            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;[m
+[32m +            this.ClientSize = new System.Drawing.Size(1176, 862);[m
+[32m +            this.Controls.Add(this.TabControl);[m
+[32m +            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);[m
+[32m++=======[m
+[32m+             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);[m
+[32m+             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;[m
+[32m+             this.ClientSize = new System.Drawing.Size(784, 561);[m
+[32m+             this.Controls.Add(this.TabControl);[m
+[32m++>>>>>>> origin/master[m
+              this.Name = "FestivalAppForm";[m
+              this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;[m
+              this.Text = "Averti Festival ";[m
+[36m@@@ -772,8 -694,7 +1111,12 @@@[m
+          private System.Windows.Forms.Label label10;[m
+          private System.Windows.Forms.DataGridView dataGridView1;[m
+          private System.Windows.Forms.Button btnCheckTicket;[m
+[32m++<<<<<<< HEAD[m
+[32m +        private System.Windows.Forms.Label lbStatus;[m
+[32m +        private System.Windows.Forms.ListBox lbOrder;[m
+[32m++=======[m
+[32m+         private System.Windows.Forms.Label lbAssigned;[m
+[32m++>>>>>>> origin/master[m
+  [m
+  [m
+      }[m
+[1mdiff --cc Averti_Festival_application/Averti_Festival_application/FestivalAppForm.cs[m
+[1mindex d257c3e,1cb04cd..11b5b04[m
+[1m--- a/Averti_Festival_application/Averti_Festival_application/FestivalAppForm.cs[m
+[1m+++ b/Averti_Festival_application/Averti_Festival_application/FestivalAppForm.cs[m
+[36m@@@ -133,15 -125,31 +138,43 @@@[m [mnamespace AvertiFestivalApplicatio[m
+  [m
+          }[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +        private void btnSTAddToOrder_Click(object sender, EventArgs e)[m
+[32m +        {[m
+[32m +            foreach(Article a in db.GetArticles())[m
+[32m +            {[m
+[32m +                if (a.Name == db.GetArticles()[this.cbxSTArticles.SelectedIndex].Name && this.NUDSTArticleAmount.Value >0)[m
+[32m +                {[m
+[32m +                    lbOrder.Items.Add(a.Name + " | Amount: " + this.NUDSTArticleAmount.Value + " | Amount in stock: " + a.Stock);[m
+[32m +                }[m
+[32m +            }[m
+[32m++=======[m
+[32m+         private void btnETSelectEvent_Click(object sender, EventArgs e)[m
+[32m+         {[m
+[32m+ [m
+[32m+         }[m
+[32m+ [m
+[32m+         private void btnETNewEvent_Click(object sender, EventArgs e)[m
+[32m+         {[m
+[32m+ [m
+[32m+         }[m
+[32m+ [m
+[32m+         private void tabEvent_Click(object sender, EventArgs e)[m
+[32m+         {[m
+[32m+             List<string> eventsq = db.GetEvents();[m
+[32m+ [m
+[32m+             List<Event> events = new List<Event>();[m
+[32m+             for (int i = 0; i < eventsq.Count -1; i = i+2)[m
+[32m+             {[m
+[32m+                 Event newevent = new Event(eventsq[i+1],Convert.ToInt32(eventsq[i]));[m
+[32m+                 events.Add(newevent);[m
+[32m+             }[m
+[32m+             foreach (var item in events)[m
+[32m+             {[m
+[32m+                 this.cmbxEventSelectEvent.Items.Add(item.Name);   [m
+[32m+             }[m
+[32m+             [m
+[32m++>>>>>>> origin/master[m
+          }[m
+      }[m
+  }[m
+[1mdiff --cc Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csproj.FileListAbsolute.txt[m
+[1mindex 52dcc32,91dcfac..2cd5981[m
+[1m--- a/Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csproj.FileListAbsolute.txt[m
+[1m+++ b/Averti_Festival_application/Averti_Festival_application/obj/Debug/AvertiFestivalApplication.csproj.FileListAbsolute.txt[m
+[36m@@@ -26,15 -26,20 +26,35 @@@[m [mC:\Users\Ruud\Documents\GitHub\Averti\A[m
+  C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config[m
+  C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe[m
+  C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb[m
+[32m++<<<<<<< HEAD[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll[m
+[32m +C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml[m
+[32m++=======[m
+[32m+ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache[m
+[32m+ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources[m
+[32m+ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources[m
+[32m+ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources[m
+[32m+ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources[m
+[32m+ \\vmware-host\Shared Folders\Desktop\ICT\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache[m
+[32m++>>>>>>> origin/master[m
