@@ -295,43 +295,58 @@ namespace AvertiFestivalApplication
         }
 
         //gets a list of 
-        public List<Article> GetArticles()
+        public List<string>[] InfoArticle()
         {
-            String sql = "SELECT * FROM article";
+            String sql = ("SELECT * FROM atricle");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
-            List<Article> temp;
-            temp = new List<Article>();
 
-            try
+            List<string>[] list = new List<string>[5];
+            list[0] = new List<string>();
+            list[1] = new List<string>();
+            list[2] = new List<string>();
+            list[3] = new List<string>();
+            list[4] = new List<string>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
             {
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
 
-                int id;
-                string sort;
-                string name;
-                int stock;
+                list[0].Add(reader["ArticleID"] + "");
+                list[1].Add(reader["SortArticle"] + "");
+                list[2].Add(reader["Name"] + "");
+                list[3].Add(reader["Stock"] + "");
+                list[4].Add(reader["Price"] + "");
 
-                while (reader.Read())
-                {
-                    id = Convert.ToInt32(reader["ArticleID"]);
-                    sort = Convert.ToString(reader["SoortArticle"]);
-                    stock = Convert.ToInt32(reader["Stock"]);
-                    name = Convert.ToString(reader["Name"]);
 
-                    temp.Add(new Article(id, sort, name, stock));
-                }
             }
-            catch
-            {
-                return null;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return temp;
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
+        public void Insert(int personalID)
+        {
+            string query = "INSERT INTO tableinfo ";
+
+            //open connection
+            connection.Open();
+            //create command and assign the query and connection from the constructor
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+
+            //Execute command
+            cmd.ExecuteNonQuery();
+
+            //close connection
+            connection.Close();
         }
 
         public DataTable GetDatatable(string table)
@@ -355,5 +370,34 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        public double WalletBalance(string rFID)
+        {
+            string sql = ("SELECT walletBalance FROM person WHERE rfid = '" + rFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader[0]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
     }
 }

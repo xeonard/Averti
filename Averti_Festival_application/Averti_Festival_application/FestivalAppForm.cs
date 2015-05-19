@@ -15,6 +15,7 @@ namespace AvertiFestivalApplication
 {
     public partial class FestivalAppForm : Form
     {
+        List<Article> articles = new List<Article>();
         private RFID RfidCheckin;
 
         DBHandler db = new DBHandler();
@@ -31,7 +32,7 @@ namespace AvertiFestivalApplication
             {
                 foreach (Article a in db.GetArticles())
                 {
-                    this.cbxSTArticles.Items.Add(a.Name);
+                    this.cbxNameArticles.Items.Add(a.Name);
                 }
             }
             catch(NullReferenceException)
@@ -176,11 +177,33 @@ namespace AvertiFestivalApplication
 
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
-            foreach (Article a in db.GetArticles())
+            double overallPrice = 0;
+            if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
-                if (a.Name == db.GetArticles()[this.cbxSTArticles.SelectedIndex].Name && this.NUDSTArticleAmount.Value > 0)
+                foreach (var item in articles)
                 {
-                    lbOrder.Items.Add(a.Name + " | Amount: " + this.NUDSTArticleAmount.Value + " | Amount in stock: " + a.Stock);
+                    if (item.Name == cbxNameArticles.SelectedItem && item.SoortArticle == cbxSortArticle.SelectedItem)
+                    {
+                        lbOrder.Items.Add("Sort: ");
+                        lbOrder.Items.Add(item.SoortArticle);
+                        lbOrder.Items.Add("Stock:");
+                        lbOrder.Items.Add(Convert.ToString(NUDSTArticleAmount.Value));
+                        lbOrder.Items.Add("Name:");
+                        lbOrder.Items.Add(item.Name);
+                        lbOrder.Items.Add("Price:");
+                        lbOrder.Items.Add(Convert.ToString(item.Price));
+                        lbOrder.Items.Add("Totale Price:");
+                        double totalePrice = item.Price * Convert.ToInt32(NUDSTArticleAmount.Value);
+                        overallPrice = overallPrice + totalePrice;
+                        lbOrder.Items.Add(Convert.ToString(totalePrice));
+                        lbOrder.Items.Add("\n");
+
+                        double newWalletCredit = db.WalletBalance(tbxRFID.Text) - overallPrice;
+                        lblSTNewWalletCredit.Text = "Your new balance is: "+ Convert.ToString(newWalletCredit);
+                    }
+
+
+
                 }
             }
         }
@@ -276,6 +299,17 @@ namespace AvertiFestivalApplication
                     lblPersonID.Visible = false;
                     tbxDTPErsonID.Visible = false;
                 }
+        }
+
+        private void btnSTSeeDetails_Click(object sender, EventArgs e)
+        {
+            double balance = db.WalletBalance(tbxRFID.Text);
+            this.lbWallet.Text = balance.ToString();
+        }
+
+        private void btnSTCompleteOrder_Click(object sender, EventArgs e)
+        {
+           // int personalID = db.Insert(tbxRFID.Text);
         }
     }
 }
