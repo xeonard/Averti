@@ -25,6 +25,7 @@ namespace AvertiFestivalApplication
             InitializeComponent();
 
             RfidCheckin = new RFID();
+<<<<<<< HEAD
             //TabControl.TabPages.Remove(tabSales);
 
         //    //code for sales page
@@ -43,6 +44,50 @@ namespace AvertiFestivalApplication
         //    }
 
         //    dataGridView1.DataSource = db.GetDatatable("event");
+=======
+        //    TabControl.TabPages.Remove(tabSales);
+
+            //dbView filling dropboxes
+
+            //event dropbox
+            try
+            {
+                foreach (string a in db.GetInfoTable("event", "eventID"))
+                {
+                    this.cbxDTSelectEvent.Items.Add(a);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("There is no events in database");
+            }
+
+            //camp dropbox
+            try
+            {
+                foreach (string a in db.GetInfoTable("camp", "campID"))
+                {
+                    this.cbxDTSelectCampSpot.Items.Add(a);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("There is no events in database");
+            }
+
+            //article dropbox
+            try
+            {
+                foreach (string a in db.GetInfoTable("article", "ArticleID"))
+                {
+                    this.cbxDTSelectArticle.Items.Add(a);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("There is no Articles in database");
+            }
+>>>>>>> origin/master
         }
 
         public FestivalAppForm(String personalID)
@@ -201,7 +246,7 @@ namespace AvertiFestivalApplication
                         lbOrder.Items.Add("\n");
 
                         double newWalletCredit = db.WalletBalance(tbxRFID.Text) - overallPrice;
-                        lblSTNewWalletCredit.Text = "Your new balance is: "+ Convert.ToString(newWalletCredit);
+                        lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
                     }
 
 
@@ -225,14 +270,14 @@ namespace AvertiFestivalApplication
             List<string> eventsq = db.GetEvents();
 
             List<Event> events = new List<Event>();
-            for (int i = 0; i < eventsq.Count -1; i = i+2)
+            for (int i = 0; i < eventsq.Count - 1; i = i + 2)
             {
-                Event newevent = new Event(eventsq[i+1],Convert.ToInt32(eventsq[i]));
+                Event newevent = new Event(eventsq[i + 1], Convert.ToInt32(eventsq[i]));
                 events.Add(newevent);
             }
             foreach (var item in events)
             {
-                this.cmbxEventSelectEvent.Items.Add(item.Name);   
+                this.cmbxEventSelectEvent.Items.Add(item.Name);
             }
             
 
@@ -356,6 +401,77 @@ namespace AvertiFestivalApplication
             lblSTNewWalletCredit.Text = "Wallet Credit after purchase:";
 
             
+        }
+
+        private void FestivalAppForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnShowSQL_Click(object sender, EventArgs e)
+        {
+            switch(cbxDTInfoType.SelectedIndex)
+            {
+                case 0:
+                    { 
+                        try
+                        {
+                            // event table
+                            string where = "Where eventID = " + cbxDTSelectEvent.SelectedItem.ToString() + " ";
+                            dataGridView1.DataSource = db.GetDatatable("event", where);
+                        }
+                        catch (NullReferenceException)
+                        {
+
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        try
+                        {
+                        //person table
+                        string where = "Where personalID = " + tbxDTPErsonID.Text + " ";
+                        dataGridView1.DataSource = db.GetDatatable("person", where);
+                        break;
+                            }
+                        catch(NullReferenceException)
+                        {
+
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        try
+                        {
+                            //camping table
+                            string where = "Where campID = " + cbxDTSelectCampSpot.SelectedItem.ToString() + " ";
+                            dataGridView1.DataSource = db.GetDatatable("camp", where);
+                            break;
+                        }
+                        catch(NullReferenceException)
+                        {
+
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        try
+                        {
+                            //article table
+                            string where = "Where ArticleID = " + cbxDTSelectArticle.SelectedItem.ToString() + " ";
+                            dataGridView1.DataSource = db.GetDatatable("article", where);
+                            break;
+                        }
+                        catch (NullReferenceException)
+                        {
+
+                        }
+                        break;
+                    }
+            }
         }
     }
 }
