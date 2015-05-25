@@ -25,22 +25,24 @@ namespace AvertiFestivalApplication
             InitializeComponent();
 
             RfidCheckin = new RFID();
-        //    TabControl.TabPages.Remove(tabSales);
+            //TabControl.TabPages.Remove(tabSales);
 
-            //code for sales page
-            try
-            {
-                foreach (Article a in db.GetArticles())
-                {
-                    this.cbxNameArticles.Items.Add(a.Name);
-                }
-            }
-            catch(NullReferenceException)
-            {
-                MessageBox.Show("There is no Articles in database");
-            }
+        //    //code for sales page
+        //    try
+        //    {
+        //        List <string > list = new List<string>(db.InfoArticle)
+                
+        //        foreach (Article a in db.InfoArticle())
+        //        {
+        //            this.cbxNameArticles.Items.Add(a.Name);
+        //        }
+        //    }
+        //    catch(NullReferenceException)
+        //    {
+        //        MessageBox.Show("There is no Articles in database");
+        //    }
 
-            dataGridView1.DataSource = db.GetDatatable("event");
+        //    dataGridView1.DataSource = db.GetDatatable("event");
         }
 
         public FestivalAppForm(String personalID)
@@ -242,15 +244,6 @@ namespace AvertiFestivalApplication
             MessageBox.Show("" + "" + "");
         }
 
-        private void label17_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void cbxDTInfoType_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnShow_Click(object sender, EventArgs e)
         {
@@ -307,9 +300,62 @@ namespace AvertiFestivalApplication
             this.lbWallet.Text = balance.ToString();
         }
 
+        
+
+        private void tabSales_Click(object sender, EventArgs e)
+        {
+
+            cbxSortArticle.Items.Clear();
+            cbxNameArticles.Items.Clear();
+            List<string>[] listOfSortArticle = new List<string>[5];
+            listOfSortArticle = db.InfoArticle();
+            for (int i = 0; i < listOfSortArticle.Length - 1; i++)
+            {
+                Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
+                articles.Add(A);
+            }
+            foreach (var item in articles)
+            {
+                cbxSortArticle.Items.Add(item.SoortArticle);
+                cbxNameArticles.Items.Add(item.Name);
+            }
+        }
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
-           // int personalID = db.Insert(tbxRFID.Text);
+            string s = tbxRFID.Text;
+            int personalID = db.personalID(s);
+            int transactionID = db.TransactionID();
+            Double cost = 0;
+            int articleID = 0;
+             List<string>[] listOfSortArticle = new List<string>[5];
+            listOfSortArticle = db.InfoArticle();
+            for (int i = 0; i < listOfSortArticle.Length - 1; i++)
+            {
+                Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
+                articles.Add(A);
+            }
+           
+            foreach (var item in articles)
+            {
+              
+              double costItem = item.Price;
+                cost = costItem;
+                articleID = item.ArticleID;
+            }
+            db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now.Date);
+            db.InsertToTransactionarticle(transactionID, articleID,Convert.ToInt32( NUDSTArticleAmount.Value));
+        }
+
+        private void btnSTCancel_Click(object sender, EventArgs e)
+        {
+            tbxRFID.Clear();
+            cbxNameArticles.Text = "";
+            cbxSortArticle.Text = "";
+            lbOrder.Items.Clear();
+            lbWallet.Text = "";
+            lblSTNewWalletCredit.Text = "Wallet Credit after purchase:";
+
+            
         }
     }
 }

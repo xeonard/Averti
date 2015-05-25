@@ -301,7 +301,7 @@ namespace AvertiFestivalApplication
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
-            List<string>[] list = new List<string>[5];
+            List<string>[] list = new List<string>[6];
             list[0] = new List<string>();
             list[1] = new List<string>();
             list[2] = new List<string>();
@@ -333,17 +333,94 @@ namespace AvertiFestivalApplication
             return list;
 
         }
-        public void Insert(int personalID)
+        public int personalID (string rFID)
         {
-            string query = "INSERT INTO tableinfo ";
+            int personalID;
+           string quaryPersonalID = "SELECT peronalID FROM person where rfid = '" + rFID + "' ";
+           try
+           {
+
+               connection.Open();
+               MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
+
+               MySqlDataReader reader = command.ExecuteReader();
+
+               if (reader.Read())
+               {
+                   personalID = Convert.ToInt32(reader[0]);
+                   return personalID;
+
+               }
+               else
+               {
+                   return 0;
+               }
+           }
+
+           catch
+           {
+               return 0;
+               connection.Close();
+           }
+
+  
+        }
+
+        public int TransactionID()
+        {
+            int transactionID;
+            string queryTransactionID = "SELECT MAX(transactionID) FROM transaction groupby transactionID ";
+            try
+            {
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(queryTransactionID, connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    transactionID = Convert.ToInt32(reader[0]);
+                    return transactionID;
+
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            catch
+            {
+                return 0;
+                connection.Close();
+            }
+        }
+        public void InsertToTransactionarticle(int transactionID, int articleID, int quantity)
+        {
+             string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
 
             //open connection
             connection.Open();
-            //create command and assign the query and connection from the constructor
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-
+            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
             //Execute command
-            cmd.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            //close connection
+            connection.Close();
+        }
+        
+
+        public void InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
+        {
+         
+            string quaryInsert = "INSERT INTO transaction(transactionID, personalID,description, cost, dateTime) VALUES('" + transactionID + "','" + personalID + "','" + description + "','" + cost + "', '" + dataTime +"')";
+
+            //open connection
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+            //Execute command
+            command.ExecuteNonQuery();
 
             //close connection
             connection.Close();

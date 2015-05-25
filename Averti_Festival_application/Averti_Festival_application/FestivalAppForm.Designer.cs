@@ -30,6 +30,8 @@
         {
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabSales = new System.Windows.Forms.TabPage();
+            this.cbxSortArticle = new System.Windows.Forms.ComboBox();
+            this.lbWallet = new System.Windows.Forms.Label();
             this.lbOrder = new System.Windows.Forms.ListBox();
             this.btnSTCancel = new System.Windows.Forms.Button();
             this.btnSTCompleteOrder = new System.Windows.Forms.Button();
@@ -83,8 +85,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.lbWallet = new System.Windows.Forms.Label();
-            this.cbxSortArticle = new System.Windows.Forms.ComboBox();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -132,6 +132,24 @@
             this.tabSales.Text = "Sales";
             this.tabSales.ToolTipText = "All transactions are to be made here.";
             this.tabSales.UseVisualStyleBackColor = true;
+            this.tabSales.Click += new System.EventHandler(this.tabSales_Click);
+            // 
+            // cbxSortArticle
+            // 
+            this.cbxSortArticle.FormattingEnabled = true;
+            this.cbxSortArticle.Location = new System.Drawing.Point(14, 145);
+            this.cbxSortArticle.Name = "cbxSortArticle";
+            this.cbxSortArticle.Size = new System.Drawing.Size(121, 24);
+            this.cbxSortArticle.TabIndex = 14;
+            // 
+            // lbWallet
+            // 
+            this.lbWallet.AutoSize = true;
+            this.lbWallet.Location = new System.Drawing.Point(129, 86);
+            this.lbWallet.Name = "lbWallet";
+            this.lbWallet.Size = new System.Drawing.Size(54, 17);
+            this.lbWallet.TabIndex = 13;
+            this.lbWallet.Text = "label11";
             // 
             // lbOrder
             // 
@@ -151,6 +169,7 @@
             this.btnSTCancel.TabIndex = 11;
             this.btnSTCancel.Text = "Cancel Order";
             this.btnSTCancel.UseVisualStyleBackColor = true;
+            this.btnSTCancel.Click += new System.EventHandler(this.btnSTCancel_Click);
             // 
             // btnSTCompleteOrder
             // 
@@ -186,7 +205,7 @@
             // 
             // NUDSTArticleAmount
             // 
-            this.NUDSTArticleAmount.Location = new System.Drawing.Point(212, 137);
+            this.NUDSTArticleAmount.Location = new System.Drawing.Point(210, 180);
             this.NUDSTArticleAmount.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";
             this.NUDSTArticleAmount.Size = new System.Drawing.Size(51, 22);
@@ -254,7 +273,7 @@
             this.tabCheckIn.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.tabCheckIn.Name = "tabCheckIn";
             this.tabCheckIn.Padding = new System.Windows.Forms.Padding(4);
-            this.tabCheckIn.Size = new System.Drawing.Size(1037, 570);
+            this.tabCheckIn.Size = new System.Drawing.Size(1037, 748);
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
             this.tabCheckIn.UseVisualStyleBackColor = true;
@@ -351,7 +370,7 @@
             this.tabDBView.Location = new System.Drawing.Point(4, 25);
             this.tabDBView.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.tabDBView.Name = "tabDBView";
-            this.tabDBView.Size = new System.Drawing.Size(1037, 570);
+            this.tabDBView.Size = new System.Drawing.Size(1037, 748);
             this.tabDBView.TabIndex = 2;
             this.tabDBView.Text = "Database view";
             this.tabDBView.UseVisualStyleBackColor = true;
@@ -496,7 +515,6 @@
             this.cbxDTInfoType.Name = "cbxDTInfoType";
             this.cbxDTInfoType.Size = new System.Drawing.Size(160, 24);
             this.cbxDTInfoType.TabIndex = 1;
-            this.cbxDTInfoType.SelectedIndexChanged += new System.EventHandler(this.cbxDTInfoType_SelectedIndexChanged_1);
             // 
             // label10
             // 
@@ -532,7 +550,7 @@
             this.tabEvent.Location = new System.Drawing.Point(4, 25);
             this.tabEvent.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.tabEvent.Name = "tabEvent";
-            this.tabEvent.Size = new System.Drawing.Size(1037, 570);
+            this.tabEvent.Size = new System.Drawing.Size(1037, 748);
             this.tabEvent.TabIndex = 3;
             this.tabEvent.Text = "Event";
             this.tabEvent.ToolTipText = "Create, change or delete an event";
@@ -727,23 +745,6 @@
             this.label9.Size = new System.Drawing.Size(46, 17);
             this.label9.TabIndex = 1;
             this.label9.Text = "label9";
-            // 
-            // lbWallet
-            // 
-            this.lbWallet.AutoSize = true;
-            this.lbWallet.Location = new System.Drawing.Point(129, 86);
-            this.lbWallet.Name = "lbWallet";
-            this.lbWallet.Size = new System.Drawing.Size(54, 17);
-            this.lbWallet.TabIndex = 13;
-            this.lbWallet.Text = "label11";
-            // 
-            // cbxSortArticle
-            // 
-            this.cbxSortArticle.FormattingEnabled = true;
-            this.cbxSortArticle.Location = new System.Drawing.Point(14, 145);
-            this.cbxSortArticle.Name = "cbxSortArticle";
-            this.cbxSortArticle.Size = new System.Drawing.Size(121, 24);
-            this.cbxSortArticle.TabIndex = 14;
             // 
             // FestivalAppForm
             // 
