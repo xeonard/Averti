@@ -264,11 +264,11 @@ namespace AvertiFestivalApplication
             }
             
         }
-        public List<string> GetEvents(){
-                    //another test method
-            String sql = "SELECT * FROM Event";
+        public List<string> GetEvents()
+        {
+            String sql = "SELECT * FROM event";
             MySqlCommand command = new MySqlCommand(sql, connection);
-            List<String> eventid = new List<string>();
+            List<String> list = new List<string>();
 
             try
             {
@@ -278,8 +278,8 @@ namespace AvertiFestivalApplication
 
                 while (reader.Read())
                 {
-                    eventid.Add(reader["eventid"].ToString());
-                    eventid.Add(reader["eventname"].ToString());
+                    list.Add(reader["eventID"].ToString());
+                    list.Add(reader["eventName"].ToString());
                 }
             }
             catch
@@ -291,7 +291,7 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
 
-            return eventid;
+            return list;
         }
 
         //gets a list of 
@@ -349,9 +349,9 @@ namespace AvertiFestivalApplication
             connection.Close();
         }
 
-        public DataTable GetDatatable(string table)
+        public DataTable GetDatatable(string table, string where)
         {
-            String sql = "SELECT * FROM "+ table;
+            String sql = "SELECT * FROM "+ table + " " + where;
             MySqlDataAdapter a = new MySqlDataAdapter(sql, connection);
 
             try
@@ -370,6 +370,35 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        public List<string> GetInfoTable(string table, string key)
+        {
+            String sql = "SELECT * FROM " + table;
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            List<String> list = new List<string>();
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(reader[key].ToString());
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return list;
+        }
+
         public double WalletBalance(string rFID)
         {
             string sql = ("SELECT walletBalance FROM person WHERE rfid = '" + rFID + "'");
@@ -399,5 +428,6 @@ namespace AvertiFestivalApplication
             }
         }
 
+        
     }
 }
