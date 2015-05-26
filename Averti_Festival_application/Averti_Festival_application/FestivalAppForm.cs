@@ -30,10 +30,6 @@ namespace AvertiFestivalApplication
             //code for sales page
             try
             {
-                foreach (Article a in db.GetArticles())
-                {
-                    this.cbxNameArticles.Items.Add(a.Name);
-                }
                 //foreach (Article a in db.InfoArticle())
                 //{
                 //    this.cbxNameArticles.Items.Add(a.Name);
