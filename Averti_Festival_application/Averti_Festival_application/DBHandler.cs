@@ -14,11 +14,11 @@ namespace AvertiFestivalApplication
         private MySqlConnection connection;
 
         public DBHandler()
-        {
+        {                               
             String connectInfo =    "server=athena01.fhict.local;" +
                                     "database=dbi252284;" +
                                     "user id=dbi252284;" +
-                                    "password=fCPIXLUNGi;" +
+                                    "password= fCPIXLUNGi;" +
                                     "connect timeout=30;";
 
             connection = new MySqlConnection(connectInfo);
@@ -264,22 +264,29 @@ namespace AvertiFestivalApplication
             }
             
         }
-        public List<string> GetEvents()
-        {
-            String sql = "SELECT * FROM event";
+
+        public List<string>[] GetEvents(){
+            String sql = "SELECT * FROM Event";
             MySqlCommand command = new MySqlCommand(sql, connection);
-            List<String> list = new List<string>();
+            List<String>[] eventid = new List<string>[8];
 
             try
             {
                 connection.Open();
-
+                int i = 0;
                 MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    list.Add(reader["eventID"].ToString());
-                    list.Add(reader["eventName"].ToString());
+                    eventid[i].Add(reader["minimumage"].ToString());
+                    eventid[i].Add(reader["eventid"].ToString());
+                    eventid[i].Add(reader["date"].ToString());
+                    eventid[i].Add(reader["location"].ToString());
+                    eventid[i].Add(reader["nrOfParticipants"].ToString());
+                    eventid[i].Add(reader["eventname"].ToString());
+                    eventid[i].Add(reader["maxcamping"].ToString());
+                    eventid[i].Add(reader["description"].ToString());
+                    i++;
                 }
             }
             catch
@@ -291,22 +298,73 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
 
-            return list;
+            return eventid;
         }
 
+
+        public bool saveEvent(int minage, string date, string location, int nrofpeople, string name, int maxcamping, string des)
+        {
+             String sql = ("INSERT INTO EVENT (minimumAge, date, location, nrOfParticipants, eventName, maxCamping, description) VALUES (" + minage.ToString() + date.ToString() + location.ToString() + nrofpeople.ToString() + name.ToString() + maxcamping.ToString() + des.ToString() + ");"   );
+                       MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+         return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        } 
+        
+
+
+        public int deleteEvent(int Eventid)
+        {
+                       String sql = ("DELETE FROM EVENT WHERE eventID = "  + Eventid);
+                       MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader["Eventid"]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        
+
         //gets a list of 
-        public List<string>[] InfoArticle()
+        public List<Article> InfoArticle()
         {
             String sql = ("SELECT * FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
-            List<string>[] list = new List<string>[6];
-            list[0] = new List<string>();
-            list[1] = new List<string>();
-            list[2] = new List<string>();
-            list[3] = new List<string>();
-            list[4] = new List<string>();
+            List<Article> list = new List<Article>();
 
 
             connection.Open();
@@ -316,11 +374,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list[0].Add(reader["ArticleID"] + "");
-                list[1].Add(reader["SortArticle"] + "");
-                list[2].Add(reader["Name"] + "");
-                list[3].Add(reader["Stock"] + "");
-                list[4].Add(reader["Price"] + "");
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["soortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["name"]), Convert.ToDouble(reader["price"])));
 
 
             }
@@ -472,7 +526,7 @@ namespace AvertiFestivalApplication
             }
             catch
             {
-                return null;
+                list = null;
             }
             finally
             {

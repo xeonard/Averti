@@ -17,11 +17,12 @@ namespace AvertiFestivalApplication
     {
         List<Article> articles = new List<Article>();
         private RFID RfidCheckin;
-
+        Event newEvent;
         DBHandler db = new DBHandler();
-
+        List<Event> events;
         public FestivalAppForm()
         {
+           events = new List<Event>();
             InitializeComponent();
 
             RfidCheckin = new RFID();
@@ -93,6 +94,30 @@ namespace AvertiFestivalApplication
                 MessageBox.Show("There is no Articles in database");
             }
 
+            //sort dropbox
+            try
+            {
+                foreach (string a in db.GetInfoTable("article", "SortArticle"))
+                {
+                    this.cbxSortArticle.Items.Add(a);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("There is no Articles in database");
+            }
+            //name dropbox
+            try
+            {
+                foreach (string a in db.GetInfoTable("article", "name"))
+                {
+                    this.cbxNameArticles.Items.Add(a);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("There is no Articles in database");
+            }
         }
 
         public FestivalAppForm(String personalID)
@@ -262,22 +287,54 @@ namespace AvertiFestivalApplication
 
         private void btnETSelectEvent_Click(object sender, EventArgs e)
         {
-
+            foreach (var item in events)
+            {
+                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
+                {
+                    this.tbxETEventName.Text = item.Name;
+                    this.tbxETLocation.Text = item.Location;
+                    this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
+                    this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
+                    this.richTbxETDescription.AppendText(item.Description);
+                    this.tbxETEventDate.Text = item.Date.ToString();
+                    this.tbxETEventMinage.Text = item.Minage.ToString();
+                    
+                }
+            }
         }
 
         private void btnETNewEvent_Click(object sender, EventArgs e)
         {
+            string name =  this.tbxETEventName.Text;
+            string location = this.tbxETLocation.Text;
+            int maxticket = Convert.ToInt32( this.tbxETMaxTickets.Text);
+            int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
+            string descript = this.richTbxETDescription.Text;
+            string date = this.tbxETEventDate.Text;
+            int minage = Convert.ToInt32( this.tbxETEventMinage.Text);
+            try 
+	{	        
+		newEvent = new Event(minage,date,location,maxticket,name,maxcamp,descript);
+               
+	}
+	catch (Exception)
+	{
+		
+		MessageBox.Show("all fields should be filled");
+	}
+            
 
         }
 
         private void tabEvent_Click(object sender, EventArgs e)
         {
-            List<string> eventsq = db.GetEvents();
+            List<string>[] eventsq = db.GetEvents();
 
-            List<Event> events = new List<Event>();
-            for (int i = 0; i < eventsq.Count - 1; i = i + 2)
+      
+            for (int i = 0; i < eventsq.Length -1; i++)
             {
-                Event newevent = new Event(eventsq[i + 1], Convert.ToInt32(eventsq[i]));
+                Event newevent = new Event(Convert.ToInt32( eventsq[i][0]), Convert.ToInt32(eventsq[i][1]), eventsq[i][2], eventsq[i][3], Convert.ToInt32(eventsq[i][4]), eventsq[i][5], Convert.ToInt32(eventsq[i][6]), eventsq[i][7]);
+
                 events.Add(newevent);
             }
             foreach (var item in events)
@@ -288,6 +345,55 @@ namespace AvertiFestivalApplication
 
         }
 
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnETDeleteEvent_Click(object sender, EventArgs e)
+        {
+
+            foreach (var item in events)
+            {
+                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
+                {
+                    db.deleteEvent(item.Eventid);
+                }
+            }
+        }
+
+        private void cmbxEventSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpETEventDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            newEvent = null;
+            this.tbxETEventName.Text = "";
+            this.tbxETLocation.Text = "";
+            this.tbxETMaxTickets.Text = "";
+            this.tbxETMaxCamp.Text = "";
+            //check this pls
+            this.richTbxETDescription.Clear() ;
+            //how to complete this? 
+            this.tbxETEventDate.Text = "";
+
+            this.tbxETEventMinage.Text = "";
+        }
+
+        private void btnETSave_Click(object sender, EventArgs e)
+        {
+            if (newEvent != null)
+            {
+                db.saveEvent(newEvent.Minage, newEvent.Date, newEvent.Location, newEvent.Maxtickets, newEvent.Name, newEvent.Maxcamping, newEvent.Description);
+            }
+        }
 
         private void btnGoToDetails_Click(object sender, EventArgs e)
         {
@@ -353,45 +459,39 @@ namespace AvertiFestivalApplication
         private void tabSales_Click(object sender, EventArgs e)
         {
 
-            cbxSortArticle.Items.Clear();
-            cbxNameArticles.Items.Clear();
-            List<string>[] listOfSortArticle = new List<string>[5];
-            listOfSortArticle = db.InfoArticle();
-            for (int i = 0; i < listOfSortArticle.Length - 1; i++)
-            {
-                Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
-                articles.Add(A);
-            }
-            foreach (var item in articles)
-            {
-                cbxSortArticle.Items.Add(item.SoortArticle);
-                cbxNameArticles.Items.Add(item.Name);
-            }
+            //cbxSortArticle.Items.Clear();
+            //cbxNameArticles.Items.Clear();
+            //articles = db.InfoArticle();
+            //foreach (var item in articles)
+            //{
+            //    cbxSortArticle.Items.Add(item.SoortArticle);
+            //    cbxNameArticles.Items.Add(item.Name);
+            //}
         }
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
-            string s = tbxRFID.Text;
-            int personalID = db.personalID(s);
-            int transactionID = db.TransactionID();
-            Double cost = 0;
-            int articleID = 0;
-             List<string>[] listOfSortArticle = new List<string>[5];
-            listOfSortArticle = db.InfoArticle();
-            for (int i = 0; i < listOfSortArticle.Length - 1; i++)
-            {
-                Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
-                articles.Add(A);
-            }
+        //    string s = tbxRFID.Text;
+        //    int personalID = db.personalID(s);
+        //    int transactionID = db.TransactionID();
+        //    Double cost = 0;
+        //    int articleID = 0;
+        //     List<Article> listOfSortArticle = new List<Article>;
+        //    listOfSortArticle = db.InfoArticle();
+        //    for (int i = 0; i < listOfSortArticle.Length - 1; i++)
+        //    {
+        //        Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
+        //        articles.Add(A);
+        //    }
            
-            foreach (var item in articles)
-            {
+        //    foreach (var item in articles)
+        //    {
               
-              double costItem = item.Price;
-                cost = costItem;
-                articleID = item.ArticleID;
-            }
-            db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now.Date);
-            db.InsertToTransactionarticle(transactionID, articleID,Convert.ToInt32( NUDSTArticleAmount.Value));
+        //      double costItem = item.Price;
+        //        cost = costItem;
+        //        articleID = item.ArticleID;
+        //    }
+        //    db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now.Date);
+        //    db.InsertToTransactionarticle(transactionID, articleID,Convert.ToInt32( NUDSTArticleAmount.Value));
         }
 
         private void btnSTCancel_Click(object sender, EventArgs e)
