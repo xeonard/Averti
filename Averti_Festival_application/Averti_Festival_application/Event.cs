@@ -13,7 +13,6 @@ namespace AvertiFestivalApplication
         private int maxtickets;
         private int maxcamping;
         private string date;
-        
         private string description;
         private string location;
         private int minage;

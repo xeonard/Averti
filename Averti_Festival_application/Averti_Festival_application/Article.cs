@@ -15,14 +15,17 @@ namespace AvertiFestivalApplication
         public string SoortArticle { get; set; }
         public string Name { get; set; }
         public int Stock { get; set; }
+        public double Price { get; set; }
          
         //constructor
-        public Article(int articleID, string soortArticle, string name, int stock)
+        public Article(int articleID, string soortArticle, string name, int stock, double price)
         {
             ArticleID = articleID;
             SoortArticle = soortArticle;
             Name = name;
             Stock = stock;
+            Price = price;
+
         }
 
         //methods
