@@ -34,6 +34,10 @@ namespace AvertiFestivalApplication
                 {
                     this.cbxNameArticles.Items.Add(a.Name);
                 }
+                //foreach (Article a in db.InfoArticle())
+                //{
+                //    this.cbxNameArticles.Items.Add(a.Name);
+                //}
             }
             catch(NullReferenceException)
             {
