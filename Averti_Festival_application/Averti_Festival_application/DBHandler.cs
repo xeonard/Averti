@@ -305,7 +305,6 @@ namespace AvertiFestivalApplication
         {
                        String sql = ("DELETE FROM EVENT WHERE eventID = "  + Eventid);
                        MySqlCommand command = new MySqlCommand(sql, connection);
-
             try
             {
                 connection.Open();
