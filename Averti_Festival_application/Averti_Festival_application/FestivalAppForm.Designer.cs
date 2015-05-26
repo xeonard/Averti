@@ -85,10 +85,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-<<<<<<< HEAD
-=======
             this.btnShowSQL = new System.Windows.Forms.Button();
->>>>>>> origin/master
+
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -227,13 +225,9 @@
             // 
             // NUDSTArticleAmount
             // 
-<<<<<<< HEAD
-            this.NUDSTArticleAmount.Location = new System.Drawing.Point(210, 180);
-            this.NUDSTArticleAmount.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-=======
             this.NUDSTArticleAmount.Location = new System.Drawing.Point(238, 171);
             this.NUDSTArticleAmount.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
->>>>>>> origin/master
+
             this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";
             this.NUDSTArticleAmount.Size = new System.Drawing.Size(57, 26);
             this.NUDSTArticleAmount.TabIndex = 6;
@@ -299,13 +293,10 @@
             this.tabCheckIn.Location = new System.Drawing.Point(4, 29);
             this.tabCheckIn.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tabCheckIn.Name = "tabCheckIn";
-<<<<<<< HEAD
-            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(4);
-            this.tabCheckIn.Size = new System.Drawing.Size(1037, 748);
-=======
+
             this.tabCheckIn.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabCheckIn.Size = new System.Drawing.Size(1168, 938);
->>>>>>> origin/master
+
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
             this.tabCheckIn.UseVisualStyleBackColor = true;
@@ -403,11 +394,8 @@
             this.tabDBView.Location = new System.Drawing.Point(4, 29);
             this.tabDBView.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tabDBView.Name = "tabDBView";
-<<<<<<< HEAD
-            this.tabDBView.Size = new System.Drawing.Size(1037, 748);
-=======
+
             this.tabDBView.Size = new System.Drawing.Size(1168, 938);
->>>>>>> origin/master
             this.tabDBView.TabIndex = 2;
             this.tabDBView.Text = "Database view";
             this.tabDBView.UseVisualStyleBackColor = true;
@@ -587,11 +575,8 @@
             this.tabEvent.Location = new System.Drawing.Point(4, 29);
             this.tabEvent.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tabEvent.Name = "tabEvent";
-<<<<<<< HEAD
-            this.tabEvent.Size = new System.Drawing.Size(1037, 748);
-=======
+
             this.tabEvent.Size = new System.Drawing.Size(1168, 938);
->>>>>>> origin/master
             this.tabEvent.TabIndex = 3;
             this.tabEvent.Text = "Event";
             this.tabEvent.ToolTipText = "Create, change or delete an event";
@@ -787,8 +772,6 @@
             this.label9.TabIndex = 1;
             this.label9.Text = "label9";
             // 
-<<<<<<< HEAD
-=======
             // btnShowSQL
             // 
             this.btnShowSQL.Location = new System.Drawing.Point(406, 78);
@@ -799,7 +782,6 @@
             this.btnShowSQL.UseVisualStyleBackColor = true;
             this.btnShowSQL.Click += new System.EventHandler(this.btnShowSQL_Click);
             // 
->>>>>>> origin/master
             // FestivalAppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);

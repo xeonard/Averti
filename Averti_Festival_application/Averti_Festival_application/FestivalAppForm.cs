@@ -25,7 +25,7 @@ namespace AvertiFestivalApplication
             InitializeComponent();
 
             RfidCheckin = new RFID();
-<<<<<<< HEAD
+
             //TabControl.TabPages.Remove(tabSales);
 
         //    //code for sales page
@@ -44,7 +44,6 @@ namespace AvertiFestivalApplication
         //    }
 
         //    dataGridView1.DataSource = db.GetDatatable("event");
-=======
         //    TabControl.TabPages.Remove(tabSales);
 
             //dbView filling dropboxes
@@ -52,17 +51,16 @@ namespace AvertiFestivalApplication
             //event dropbox
             try
             {
-<<<<<<< HEAD
                 //foreach (Article a in db.InfoArticle())
                 //{
                 //    this.cbxNameArticles.Items.Add(a.Name);
                 //}
-=======
+
                 foreach (string a in db.GetInfoTable("event", "eventID"))
                 {
                     this.cbxDTSelectEvent.Items.Add(a);
                 }
->>>>>>> origin/master
+
             }
             catch (NullReferenceException)
             {
@@ -94,7 +92,7 @@ namespace AvertiFestivalApplication
             {
                 MessageBox.Show("There is no Articles in database");
             }
->>>>>>> origin/master
+
         }
 
         public FestivalAppForm(String personalID)
@@ -236,7 +234,7 @@ namespace AvertiFestivalApplication
             {
                 foreach (var item in articles)
                 {
-                    if (item.Name == cbxNameArticles.SelectedItem && item.SoortArticle == cbxSortArticle.SelectedItem)
+                    if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                     {
                         lbOrder.Items.Add("Sort: ");
                         lbOrder.Items.Add(item.SoortArticle);

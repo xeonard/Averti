@@ -297,7 +297,7 @@ namespace AvertiFestivalApplication
         //gets a list of 
         public List<string>[] InfoArticle()
         {
-            String sql = ("SELECT * FROM atricle");
+            String sql = ("SELECT * FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
@@ -360,9 +360,11 @@ namespace AvertiFestivalApplication
            catch
            {
                return 0;
+           }
+           finally
+           {
                connection.Close();
            }
-
   
         }
 
@@ -393,6 +395,10 @@ namespace AvertiFestivalApplication
             catch
             {
                 return 0;
+            }
+
+            finally
+            {
                 connection.Close();
             }
         }
