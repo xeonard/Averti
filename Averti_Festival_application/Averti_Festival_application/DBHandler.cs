@@ -358,18 +358,13 @@ namespace AvertiFestivalApplication
         
 
         //gets a list of 
-        public List<string>[] InfoArticle()
+        public List<Article> InfoArticle()
         {
             String sql = ("SELECT * FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
-            List<string>[] list = new List<string>[6];
-            list[0] = new List<string>();
-            list[1] = new List<string>();
-            list[2] = new List<string>();
-            list[3] = new List<string>();
-            list[4] = new List<string>();
+            List<Article> list = new List<Article>();
 
 
             connection.Open();
@@ -379,11 +374,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list[0].Add(reader["ArticleID"] + "");
-                list[1].Add(reader["SortArticle"] + "");
-                list[2].Add(reader["Name"] + "");
-                list[3].Add(reader["Stock"] + "");
-                list[4].Add(reader["Price"] + "");
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["soortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["name"]), Convert.ToDouble(reader["price"])));
 
 
             }
@@ -535,7 +526,7 @@ namespace AvertiFestivalApplication
             }
             catch
             {
-                return null;
+                list = null;
             }
             finally
             {
