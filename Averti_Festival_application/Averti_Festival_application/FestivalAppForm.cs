@@ -16,11 +16,12 @@ namespace AvertiFestivalApplication
     public partial class FestivalAppForm : Form
     {
         private RFID RfidCheckin;
-
+        Event newEvent;
         DBHandler db = new DBHandler();
-
+        List<Event> events;
         public FestivalAppForm()
         {
+           events = new List<Event>();
             InitializeComponent();
 
         //    TabControl.TabPages.Remove(tabSales);
@@ -152,30 +153,112 @@ namespace AvertiFestivalApplication
 
         private void btnETSelectEvent_Click(object sender, EventArgs e)
         {
-
+            foreach (var item in events)
+            {
+                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
+                {
+                    this.tbxETEventName.Text = item.Name;
+                    this.tbxETLocation.Text = item.Location;
+                    this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
+                    this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
+                    this.richTbxETDescription.AppendText(item.Description);
+                    this.tbxETEventDate.Text = item.Date.ToString();
+                    this.tbxETEventMinage.Text = item.Minage.ToString();
+                    
+                }
+            }
         }
 
         private void btnETNewEvent_Click(object sender, EventArgs e)
         {
+            string name =  this.tbxETEventName.Text;
+            string location = this.tbxETLocation.Text;
+            int maxticket = Convert.ToInt32( this.tbxETMaxTickets.Text);
+            int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
+            string descript = this.richTbxETDescription.Text;
+            string date = this.tbxETEventDate.Text;
+            int minage = Convert.ToInt32( this.tbxETEventMinage.Text);
+            try 
+	{	        
+		newEvent = new Event(minage,date,location,maxticket,name,maxcamp,descript);
+               
+	}
+	catch (Exception)
+	{
+		
+		MessageBox.Show("all fields should be filled");
+	}
+            
 
         }
 
         private void tabEvent_Click(object sender, EventArgs e)
         {
-            List<string> eventsq = db.GetEvents();
+            List<string>[] eventsq = db.GetEvents();
 
-            List<Event> events = new List<Event>();
-            for (int i = 0; i < eventsq.Count -1; i = i+2)
+           
+            for (int i = 0; i < eventsq.Length -1; i++)
             {
-                Event newevent = new Event(eventsq[i+1],Convert.ToInt32(eventsq[i]));
+                Event newevent = new Event(Convert.ToInt32( eventsq[i][0]), Convert.ToInt32(eventsq[i][1]), eventsq[i][2], eventsq[i][3], Convert.ToInt32(eventsq[i][4]), eventsq[i][5], Convert.ToInt32(eventsq[i][6]), eventsq[i][7]);
                 events.Add(newevent);
             }
             foreach (var item in events)
             {
-                this.cmbxEventSelectEvent.Items.Add(item.Name);   
+
+                this.cmbxEventSelectEvent.Items.Add(item.Name);
             }
             
 
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnETDeleteEvent_Click(object sender, EventArgs e)
+        {
+
+            foreach (var item in events)
+            {
+                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
+                {
+                    db.deleteEvent(item.Eventid);
+                }
+            }
+        }
+
+        private void cmbxEventSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpETEventDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            newEvent = null;
+            this.tbxETEventName.Text = "";
+            this.tbxETLocation.Text = "";
+            this.tbxETMaxTickets.Text = "";
+            this.tbxETMaxCamp.Text = "";
+            //check this pls
+            this.richTbxETDescription.Clear() ;
+            //how to complete this? 
+            this.tbxETEventDate.Text = "";
+
+            this.tbxETEventMinage.Text = "";
+        }
+
+        private void btnETSave_Click(object sender, EventArgs e)
+        {
+            if (newEvent != null)
+            {
+                db.saveEvent(newEvent.Minage, newEvent.Date, newEvent.Location, newEvent.Maxtickets, newEvent.Name, newEvent.Maxcamping, newEvent.Description);
+            }
         }
     }
 }
