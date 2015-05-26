@@ -25,7 +25,7 @@ namespace AvertiFestivalApplication
             InitializeComponent();
 
             RfidCheckin = new RFID();
-<<<<<<< HEAD
+
             //TabControl.TabPages.Remove(tabSales);
 
         //    //code for sales page
@@ -44,7 +44,6 @@ namespace AvertiFestivalApplication
         //    }
 
         //    dataGridView1.DataSource = db.GetDatatable("event");
-=======
         //    TabControl.TabPages.Remove(tabSales);
 
             //dbView filling dropboxes
@@ -52,10 +51,16 @@ namespace AvertiFestivalApplication
             //event dropbox
             try
             {
+                //foreach (Article a in db.InfoArticle())
+                //{
+                //    this.cbxNameArticles.Items.Add(a.Name);
+                //}
+
                 foreach (string a in db.GetInfoTable("event", "eventID"))
                 {
                     this.cbxDTSelectEvent.Items.Add(a);
                 }
+
             }
             catch (NullReferenceException)
             {
@@ -87,7 +92,7 @@ namespace AvertiFestivalApplication
             {
                 MessageBox.Show("There is no Articles in database");
             }
->>>>>>> origin/master
+
         }
 
         public FestivalAppForm(String personalID)
@@ -229,7 +234,7 @@ namespace AvertiFestivalApplication
             {
                 foreach (var item in articles)
                 {
-                    if (item.Name == cbxNameArticles.SelectedItem && item.SoortArticle == cbxSortArticle.SelectedItem)
+                    if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                     {
                         lbOrder.Items.Add("Sort: ");
                         lbOrder.Items.Add(item.SoortArticle);
@@ -289,54 +294,52 @@ namespace AvertiFestivalApplication
             MessageBox.Show("" + "" + "");
         }
 
+        private void hide()
+        {
+            lblPersonID.Visible = false;
+            tbxDTPErsonID.Visible = false;
+            lblSelectEvent.Visible = false;
+            cbxDTSelectEvent.Visible = false;
+            lblSelectCSpot.Visible = false;
+            cbxDTSelectCampSpot.Visible = false;
+            lblSelectArticle.Visible = false;
+            cbxDTSelectArticle.Visible = false;
+        }
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            if(cbxDTInfoType.SelectedIndex==1)
+            int index = cbxDTInfoType.SelectedIndex;
+            switch (index)
             {
-                lblPersonID.Visible = true;
-                tbxDTPErsonID.Visible = true;
-                lblSelectEvent.Visible = false;
-                cbxDTSelectEvent.Visible = false;
-                lblSelectCSpot.Visible = false;
-                cbxDTSelectCampSpot.Visible = false;
-                lblSelectArticle.Visible = false;
-                cbxDTSelectArticle.Visible = false ;
+                case 1:
+                    {
+                        hide();
+                        lblPersonID.Visible = true;
+                        tbxDTPErsonID.Visible = true;
+                        break;
+                    }
+                case 0:
+                    {
+                        hide();
+                        lblSelectEvent.Visible = true;
+                        cbxDTSelectEvent.Visible = true;
+                        break;
+                    }
+                case 2:
+                    {
+                        hide();
+                        lblSelectCSpot.Visible = true;
+                        cbxDTSelectCampSpot.Visible = true;
+                        break;
+                    }
+                case 3:
+                    {
+                        hide();
+                        lblSelectArticle.Visible = true;
+                        cbxDTSelectArticle.Visible = true;
+                        break;
+                    }
             }
-            else 
-                if(cbxDTInfoType.SelectedIndex==0)
-                {
-                    lblSelectEvent.Visible = true;
-                    cbxDTSelectEvent.Visible = true;
-                    lblPersonID.Visible = false;
-                    tbxDTPErsonID.Visible = false;
-                    lblSelectCSpot.Visible = false;
-                    cbxDTSelectCampSpot.Visible = false;
-                    lblSelectArticle.Visible = false;
-                    cbxDTSelectArticle.Visible = false;
-                }
-                else if(cbxDTInfoType.SelectedIndex == 2)
-                {
-                    lblSelectCSpot.Visible = true;
-                    cbxDTSelectCampSpot.Visible = true;
-                    lblSelectEvent.Visible = false;
-                    cbxDTSelectEvent.Visible = false;
-                    lblPersonID.Visible = false;
-                    tbxDTPErsonID.Visible = false;
-                    lblSelectArticle.Visible = false;
-                    cbxDTSelectArticle.Visible = false;
-                }
-                else if(cbxDTInfoType.SelectedIndex == 3)
-                {
-                    lblSelectArticle.Visible = true;
-                    cbxDTSelectArticle.Visible = true;
-                    lblSelectCSpot.Visible = false;
-                    cbxDTSelectCampSpot.Visible = false;
-                    lblSelectEvent.Visible = false;
-                    cbxDTSelectEvent.Visible = false;
-                    lblPersonID.Visible = false;
-                    tbxDTPErsonID.Visible = false;
-                }
         }
 
         private void btnSTSeeDetails_Click(object sender, EventArgs e)
