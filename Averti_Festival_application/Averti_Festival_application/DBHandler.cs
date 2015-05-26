@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace AvertiFestivalApplication
 {
@@ -186,7 +187,7 @@ namespace AvertiFestivalApplication
         {
 
 
-            String sql = ("UPDATE person SET rfid = '"+ rFID+"' WHERE personalID = "
+            String sql = ("UPDATE person SET rfid = '"+ rFID+"', status = 'arrived'  WHERE personalID = "
                 + "(SELECT personalID FROM transaction WHERE transactionID = " +
                 "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR)+"))"); 
             MySqlCommand command = new MySqlCommand(sql, connection);
@@ -208,7 +209,30 @@ namespace AvertiFestivalApplication
             }
             return false;
         }
+        public bool UnassignRFID(string rFID)
+        {
+            String sql = ("UPDATE person SET rfid = NULL, status = 'left' WHERE rfid = '"  + rFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
 
+            try
+            {
+                connection.Open();
+
+                if (command.ExecuteNonQuery() == 1)
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+
+
+        }
         public string GetName(string rFID)
         {
 
@@ -240,6 +264,7 @@ namespace AvertiFestivalApplication
             }
             
         }
+
         public List<string>[] GetEvents(){
             String sql = "SELECT * FROM Event";
             MySqlCommand command = new MySqlCommand(sql, connection);
@@ -275,6 +300,7 @@ namespace AvertiFestivalApplication
 
             return eventid;
         }
+
 
         public bool saveEvent(int minage, string date, string location, int nrofpeople, string name, int maxcamping, string des)
         {
@@ -331,32 +357,180 @@ namespace AvertiFestivalApplication
         }
         
 
-        public List<Article> GetArticles()
+        //gets a list of 
+        public List<string>[] InfoArticle()
         {
-            String sql = "SELECT * FROM article";
+            String sql = ("SELECT * FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
-            List<Article> temp;
-            temp = new List<Article>();
+
+            List<string>[] list = new List<string>[6];
+            list[0] = new List<string>();
+            list[1] = new List<string>();
+            list[2] = new List<string>();
+            list[3] = new List<string>();
+            list[4] = new List<string>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                list[0].Add(reader["ArticleID"] + "");
+                list[1].Add(reader["SortArticle"] + "");
+                list[2].Add(reader["Name"] + "");
+                list[3].Add(reader["Stock"] + "");
+                list[4].Add(reader["Price"] + "");
+
+
+            }
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
+        public int personalID (string rFID)
+        {
+            int personalID;
+           string quaryPersonalID = "SELECT peronalID FROM person where rfid = '" + rFID + "' ";
+           try
+           {
+
+               connection.Open();
+               MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
+
+               MySqlDataReader reader = command.ExecuteReader();
+
+               if (reader.Read())
+               {
+                   personalID = Convert.ToInt32(reader[0]);
+                   return personalID;
+
+               }
+               else
+               {
+                   return 0;
+               }
+           }
+
+           catch
+           {
+               return 0;
+           }
+           finally
+           {
+               connection.Close();
+           }
+  
+        }
+
+        public int TransactionID()
+        {
+            int transactionID;
+            string queryTransactionID = "SELECT MAX(transactionID) FROM transaction groupby transactionID ";
+            try
+            {
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(queryTransactionID, connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    transactionID = Convert.ToInt32(reader[0]);
+                    return transactionID;
+
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            catch
+            {
+                return 0;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public void InsertToTransactionarticle(int transactionID, int articleID, int quantity)
+        {
+             string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
+
+            //open connection
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+            //Execute command
+            command.ExecuteNonQuery();
+
+            //close connection
+            connection.Close();
+        }
+        
+
+        public void InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
+        {
+         
+            string quaryInsert = "INSERT INTO transaction(transactionID, personalID,description, cost, dateTime) VALUES('" + transactionID + "','" + personalID + "','" + description + "','" + cost + "', '" + dataTime +"')";
+
+            //open connection
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+            //Execute command
+            command.ExecuteNonQuery();
+
+            //close connection
+            connection.Close();
+        }
+
+        public DataTable GetDatatable(string table, string where)
+        {
+            String sql = "SELECT * FROM "+ table + " " + where;
+            MySqlDataAdapter a = new MySqlDataAdapter(sql, connection);
 
             try
             {
                 connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                DataTable t = new DataTable();
+                a.Fill(t);
+                return t;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public List<string> GetInfoTable(string table, string key)
+        {
+            String sql = "SELECT * FROM " + table;
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            List<String> list = new List<string>();
 
-                int id;
-                string sort;
-                string name;
-                int stock;
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    id = Convert.ToInt32(reader["ArticleID"]);
-                    sort = Convert.ToString(reader["SoortArticle"]);
-                    stock = Convert.ToInt32(reader["Stock"]);
-                    name = Convert.ToString(reader["Name"]);
-
-                    temp.Add(new Article(id, sort, name, stock));
+                    list.Add(reader[key].ToString());
                 }
             }
             catch
@@ -367,7 +541,39 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
-            return temp;
+
+            return list;
         }
+
+        public double WalletBalance(string rFID)
+        {
+            string sql = ("SELECT walletBalance FROM person WHERE rfid = '" + rFID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader[0]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        
     }
 }
