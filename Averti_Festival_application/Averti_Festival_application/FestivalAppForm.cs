@@ -96,10 +96,13 @@ namespace AvertiFestivalApplication
             //sort dropbox
             try
             {
-                foreach (string a in db.GetInfoTable("article", "SortArticle"))
+                foreach (string a in db.GetInfoTable("article", "SortArticle").Distinct())
                 {
                     this.cbxSortArticle.Items.Add(a);
+                   
+
                 }
+                
             }
             catch (NullReferenceException)
             {
@@ -256,6 +259,7 @@ namespace AvertiFestivalApplication
             double overallPrice = 0;
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
+                articles = db.InfoArticle();
                 foreach (var item in articles)
                 {
                     if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
@@ -374,42 +378,34 @@ namespace AvertiFestivalApplication
 
         
 
-        private void tabSales_Click(object sender, EventArgs e)
-        {
-
-            //cbxSortArticle.Items.Clear();
-            //cbxNameArticles.Items.Clear();
-            //articles = db.InfoArticle();
-            //foreach (var item in articles)
-            //{
-            //    cbxSortArticle.Items.Add(item.SoortArticle);
-            //    cbxNameArticles.Items.Add(item.Name);
-            //}
-        }
+ 
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
-        //    string s = tbxRFID.Text;
-        //    int personalID = db.personalID(s);
-        //    int transactionID = db.TransactionID();
-        //    Double cost = 0;
-        //    int articleID = 0;
-        //     List<Article> listOfSortArticle = new List<Article>;
-        //    listOfSortArticle = db.InfoArticle();
-        //    for (int i = 0; i < listOfSortArticle.Length - 1; i++)
-        //    {
-        //        Article A = new Article(Convert.ToInt32(listOfSortArticle[i][0]), listOfSortArticle[i][1], listOfSortArticle[i][2], Convert.ToInt32(listOfSortArticle[i][3]), Convert.ToDouble(listOfSortArticle[i][4]));
-        //        articles.Add(A);
-        //    }
-           
-        //    foreach (var item in articles)
-        //    {
-              
-        //      double costItem = item.Price;
-        //        cost = costItem;
-        //        articleID = item.ArticleID;
-        //    }
-        //    db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now.Date);
-        //    db.InsertToTransactionarticle(transactionID, articleID,Convert.ToInt32( NUDSTArticleAmount.Value));
+            string s = tbxRFID.Text;
+            int personalID = db.personalID(s);
+            int transactionID = db.TransactionID();
+            Double cost = 0;
+            int articleID = 0;
+             List<Article> listOfSortArticle = new List<Article>();
+            listOfSortArticle = db.InfoArticle();
+            
+            foreach (var item in articles)
+            {
+                if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
+                {
+
+                    double costItem = item.Price;
+                    cost = costItem;
+
+                    articleID = item.ArticleID;
+                }
+            }
+
+            if (!(db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now)))
+                MessageBox.Show("Averti");
+
+           if( !db.InsertToTransactionarticle(transactionID, articleID, Convert.ToInt32(NUDSTArticleAmount.Value)))
+                MessageBox.Show("jhkjg,");
         }
 
         private void btnSTCancel_Click(object sender, EventArgs e)

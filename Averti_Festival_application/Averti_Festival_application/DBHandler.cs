@@ -311,7 +311,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["soortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["name"]), Convert.ToDouble(reader["price"])));
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
 
 
             }
@@ -327,12 +327,13 @@ namespace AvertiFestivalApplication
         public int personalID (string rFID)
         {
             int personalID;
-           string quaryPersonalID = "SELECT peronalID FROM person where rfid = '" + rFID + "' ";
+            string quaryPersonalID = "SELECT personalID FROM person where rfid = '" + rFID + "' ";
+            MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
            try
            {
 
                connection.Open();
-               MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
+               
 
                MySqlDataReader reader = command.ExecuteReader();
 
@@ -362,11 +363,12 @@ namespace AvertiFestivalApplication
         public int TransactionID()
         {
             int transactionID;
-            string queryTransactionID = "SELECT MAX(transactionID) FROM transaction groupby transactionID ";
+            string queryTransactionID = "SELECT COUNT(transactionID) FROM transaction ";
             try
             {
 
                 connection.Open();
+
                 MySqlCommand command = new MySqlCommand(queryTransactionID, connection);
 
                 MySqlDataReader reader = command.ExecuteReader();
@@ -374,7 +376,7 @@ namespace AvertiFestivalApplication
                 if (reader.Read())
                 {
                     transactionID = Convert.ToInt32(reader[0]);
-                    return transactionID;
+                    return transactionID + 1;
 
                 }
                 else
@@ -393,34 +395,52 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        public void InsertToTransactionarticle(int transactionID, int articleID, int quantity)
+        public bool InsertToTransactionarticle(int transactionID, int articleID, int quantity)
         {
              string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
-
+            try
+            {
             //open connection
             connection.Open();
             MySqlCommand command = new MySqlCommand(quaryInsert, connection);
             //Execute command
             command.ExecuteNonQuery();
+            return true;
+            }
+                catch
+            {
+                return false;
+            }
 
+            finally
+            {
+                connection.Close();
+            }
             //close connection
-            connection.Close();
+            
         }
-        
 
-        public void InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
+        public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
         {
          
-            string quaryInsert = "INSERT INTO transaction(transactionID, personalID,description, cost, dateTime) VALUES('" + transactionID + "','" + personalID + "','" + description + "','" + cost + "', '" + dataTime +"')";
-
-            //open connection
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
-            //Execute command
-            command.ExecuteNonQuery();
-
+            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime +"')";
+            try
+            {
+                //open connection
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+                //Execute command
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally { 
             //close connection
             connection.Close();
+            }
         }
 
         public DataTable GetDatatable(string table, string where)
