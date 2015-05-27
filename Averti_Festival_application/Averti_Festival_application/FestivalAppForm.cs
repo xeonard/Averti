@@ -258,6 +258,7 @@ namespace AvertiFestivalApplication
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
             double overallPrice = 0;
+            
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
                 articles = db.InfoArticle();
@@ -265,19 +266,19 @@ namespace AvertiFestivalApplication
                 {
                     if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                     {
-                        lbOrder.Items.Add("Sort: ");
-                        lbOrder.Items.Add(item.SoortArticle);
-                        lbOrder.Items.Add("Stock:");
-                        lbOrder.Items.Add(Convert.ToString(NUDSTArticleAmount.Value));
-                        lbOrder.Items.Add("Name:");
-                        lbOrder.Items.Add(item.Name);
-                        lbOrder.Items.Add("Price:");
-                        lbOrder.Items.Add(Convert.ToString(item.Price));
-                        lbOrder.Items.Add("Totale Price:");
+                        lbOrder.Items.Add("Your selected articles: ");
+                        lbOrder.Items.Add("");
+                        lbOrder.Items.Add("1:   " + item.SoortArticle + "( " + item.Name + " ) " + "Stock:  " + Convert.ToString(NUDSTArticleAmount.Value) + "   Price:  €" + Convert.ToString(item.Price));
+                        lbOrder.Items.Add("");
+                        lbOrder.Items.Add("***********************");
                         double totalePrice = item.Price * Convert.ToInt32(NUDSTArticleAmount.Value);
                         overallPrice = overallPrice + totalePrice;
-                        lbOrder.Items.Add(Convert.ToString(totalePrice));
+                        lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(totalePrice));
+                       
+                       
                         lbOrder.Items.Add("\n");
+                    }
+
 
                         double newWalletCredit = db.WalletBalance(tbxRFID.Text) - overallPrice;
                         lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
@@ -285,7 +286,12 @@ namespace AvertiFestivalApplication
 
 
 
-                }
+                
+            }
+
+            else
+            {
+                MessageBox.Show("Pleas choose a article or the quantity");
             }
         }
 
@@ -300,8 +306,8 @@ namespace AvertiFestivalApplication
                     this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
                     this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
                     this.richTbxETDescription.AppendText(item.Description);
-                    this.tbxETEventDate.Text = item.Date.ToString();
-                    this.tbxETEventMinage.Text = item.Minage.ToString();
+                   // this.tbxETEventDate.Text = item.Date.ToString();
+                   // this.tbxETEventMinage.Text = item.Minage.ToString();
                     
                 }
             }
@@ -314,11 +320,11 @@ namespace AvertiFestivalApplication
             int maxticket = Convert.ToInt32( this.tbxETMaxTickets.Text);
             int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
             string descript = this.richTbxETDescription.Text;
-            string date = this.tbxETEventDate.Text;
-            int minage = Convert.ToInt32( this.tbxETEventMinage.Text);
+           // string date = this.tbxETEventDate.Text;
+           // int minage = Convert.ToInt32( this.tbxETEventMinage.Text);
             try 
 	{	        
-		newEvent = new Event(minage,date,location,maxticket,name,maxcamp,descript);
+		//newEvent = new Event(minage,date,location,maxticket,name,maxcamp,descript);
                
 	}
 	catch (Exception)
@@ -386,9 +392,9 @@ namespace AvertiFestivalApplication
             //check this pls
             this.richTbxETDescription.Clear() ;
             //how to complete this? 
-            this.tbxETEventDate.Text = "";
+            //this.tbxETEventDate.Text = "";
 
-            this.tbxETEventMinage.Text = "";
+            //this.tbxETEventMinage.Text = "";
         }
 
         private void btnETSave_Click(object sender, EventArgs e)
@@ -454,20 +460,39 @@ namespace AvertiFestivalApplication
 
         private void btnSTSeeDetails_Click(object sender, EventArgs e)
         {
-            double balance = db.WalletBalance(tbxRFID.Text);
-            this.lbWallet.Text = balance.ToString();
-        }
+            string s = tbxRFID.Text;
+            double balance = db.WalletBalance(s);
+            int personalID = db.personalID(s);
+            int sumPriceOfOrders = db.SumOrders(personalID);
+            double newBalance = balance - sumPriceOfOrders;
+            if (newBalance > 2.5)
+            {
+                this.lbWallet.Text = newBalance.ToString();
+            }
 
+            if (newBalance < 2.5)
+            {
+                this.lbWallet.Text = Convert.ToString(db.WalletBalance(s));
+                btnSTAddToOrder.Enabled = false;
+                btnSTCompleteOrder.Enabled = false;
+                MessageBox.Show(" You have not enough credit to by a article. You can charge your credit via our website");
+                tbxRFID.Text = "";
+                lbWallet.Text = "";
+                btnSTCompleteOrder.Enabled = true;
+                btnSTAddToOrder.Enabled = true;
+            }
+  
+        }
         
 
- 
+
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
             string s = tbxRFID.Text;
             int personalID = db.personalID(s);
             int transactionID = db.TransactionID();
             Double cost = 0;
-            int articleID = 0;
+            int articleID = 0;           
              List<Article> listOfSortArticle = new List<Article>();
             listOfSortArticle = db.InfoArticle();
             
@@ -475,7 +500,6 @@ namespace AvertiFestivalApplication
             {
                 if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                 {
-
                     double costItem = item.Price;
                     cost = costItem;
 
@@ -483,11 +507,9 @@ namespace AvertiFestivalApplication
                 }
             }
 
-            if (!(db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now)))
-                MessageBox.Show("Averti");
-
-           if( !db.InsertToTransactionarticle(transactionID, articleID, Convert.ToInt32(NUDSTArticleAmount.Value)))
-                MessageBox.Show("jhkjg,");
+            db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now);
+            db.InsertToTransactionarticle(transactionID, articleID, Convert.ToInt32(NUDSTArticleAmount.Value));
+    
         }
 
         private void btnSTCancel_Click(object sender, EventArgs e)
@@ -502,10 +524,7 @@ namespace AvertiFestivalApplication
             
         }
 
-        private void FestivalAppForm_Load(object sender, EventArgs e)
-        {
 
-        }
 
         private void btnShowSQL_Click(object sender, EventArgs e)
         {
@@ -571,6 +590,12 @@ namespace AvertiFestivalApplication
                         break;
                     }
             }
+        }
+
+        private void tabSales_Click(object sender, EventArgs e)
+        {
+            btnSTCompleteOrder.Enabled = false;
+            btnSTAddToOrder.Enabled = false;
         }
     }
 }

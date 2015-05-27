@@ -458,6 +458,41 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        public int SumOrders(int personalID)
+        {
+            int SumOrders;
+            string querySumOrders = "SELECT SUM(cost) FROM transaction where personalID = '" + personalID + "' ";
+            try
+            {
+
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand(querySumOrders, connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    SumOrders = Convert.ToInt32(reader[0]);
+                    return SumOrders;
+
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            catch
+            {
+                return 0;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
         public bool InsertToTransactionarticle(int transactionID, int articleID, int quantity)
         {
              string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
@@ -486,7 +521,7 @@ namespace AvertiFestivalApplication
         public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
         {
          
-            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime +"')";
+            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime.ToString() +"')";
             try
             {
                 //open connection

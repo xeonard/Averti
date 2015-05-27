@@ -30,6 +30,7 @@
         {
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabSales = new System.Windows.Forms.TabPage();
+            this.SelectAnArticle = new System.Windows.Forms.Label();
             this.cbxSortArticle = new System.Windows.Forms.ComboBox();
             this.lbWallet = new System.Windows.Forms.Label();
             this.lbOrder = new System.Windows.Forms.ListBox();
@@ -110,6 +111,7 @@
             // 
             // tabSales
             // 
+            this.tabSales.Controls.Add(this.SelectAnArticle);
             this.tabSales.Controls.Add(this.cbxSortArticle);
             this.tabSales.Controls.Add(this.lbWallet);
             this.tabSales.Controls.Add(this.lbOrder);
@@ -132,19 +134,31 @@
             this.tabSales.Text = "Sales";
             this.tabSales.ToolTipText = "All transactions are to be made here.";
             this.tabSales.UseVisualStyleBackColor = true;
+            this.tabSales.Click += new System.EventHandler(this.tabSales_Click);
+            // 
+            // SelectAnArticle
+            // 
+            this.SelectAnArticle.AutoSize = true;
+            this.SelectAnArticle.Location = new System.Drawing.Point(12, 131);
+            this.SelectAnArticle.Name = "SelectAnArticle";
+            this.SelectAnArticle.Size = new System.Drawing.Size(113, 17);
+            this.SelectAnArticle.TabIndex = 16;
+            this.SelectAnArticle.Text = "Select an article:";
             // 
             // cbxSortArticle
             // 
             this.cbxSortArticle.FormattingEnabled = true;
-            this.cbxSortArticle.Location = new System.Drawing.Point(14, 145);
+            this.cbxSortArticle.Location = new System.Drawing.Point(15, 166);
             this.cbxSortArticle.Name = "cbxSortArticle";
             this.cbxSortArticle.Size = new System.Drawing.Size(121, 24);
             this.cbxSortArticle.TabIndex = 14;
+            this.cbxSortArticle.Tag = "";
+            this.cbxSortArticle.Text = "Sort of article";
             // 
             // lbWallet
             // 
             this.lbWallet.AutoSize = true;
-            this.lbWallet.Location = new System.Drawing.Point(129, 86);
+            this.lbWallet.Location = new System.Drawing.Point(150, 77);
             this.lbWallet.Name = "lbWallet";
             this.lbWallet.Size = new System.Drawing.Size(54, 17);
             this.lbWallet.TabIndex = 13;
@@ -156,7 +170,7 @@
             this.lbOrder.Location = new System.Drawing.Point(15, 212);
             this.lbOrder.Margin = new System.Windows.Forms.Padding(4);
             this.lbOrder.Name = "lbOrder";
-            this.lbOrder.Size = new System.Drawing.Size(308, 260);
+            this.lbOrder.Size = new System.Drawing.Size(556, 260);
             this.lbOrder.TabIndex = 12;
             // 
             // btnSTCancel
@@ -193,7 +207,7 @@
             // 
             // btnSTAddToOrder
             // 
-            this.btnSTAddToOrder.Location = new System.Drawing.Point(305, 133);
+            this.btnSTAddToOrder.Location = new System.Drawing.Point(431, 166);
             this.btnSTAddToOrder.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnSTAddToOrder.Name = "btnSTAddToOrder";
             this.btnSTAddToOrder.Size = new System.Drawing.Size(100, 28);
@@ -204,7 +218,7 @@
             // 
             // NUDSTArticleAmount
             // 
-            this.NUDSTArticleAmount.Location = new System.Drawing.Point(212, 137);
+            this.NUDSTArticleAmount.Location = new System.Drawing.Point(354, 166);
             this.NUDSTArticleAmount.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";
             this.NUDSTArticleAmount.Size = new System.Drawing.Size(51, 22);
@@ -213,17 +227,17 @@
             // cbxNameArticles
             // 
             this.cbxNameArticles.FormattingEnabled = true;
-            this.cbxNameArticles.Location = new System.Drawing.Point(14, 178);
+            this.cbxNameArticles.Location = new System.Drawing.Point(163, 166);
             this.cbxNameArticles.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.cbxNameArticles.Name = "cbxNameArticles";
             this.cbxNameArticles.Size = new System.Drawing.Size(160, 24);
             this.cbxNameArticles.TabIndex = 5;
-            this.cbxNameArticles.Text = "Select An Article";
+            this.cbxNameArticles.Text = "Name of article";
             // 
             // lblCostumerWallet
             // 
             this.lblCostumerWallet.AutoSize = true;
-            this.lblCostumerWallet.Location = new System.Drawing.Point(11, 86);
+            this.lblCostumerWallet.Location = new System.Drawing.Point(12, 77);
             this.lblCostumerWallet.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblCostumerWallet.Name = "lblCostumerWallet";
             this.lblCostumerWallet.Size = new System.Drawing.Size(96, 17);
@@ -232,28 +246,28 @@
             // 
             // btnSTSeeDetails
             // 
-            this.btnSTSeeDetails.Location = new System.Drawing.Point(288, 27);
+            this.btnSTSeeDetails.Location = new System.Drawing.Point(384, 30);
             this.btnSTSeeDetails.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnSTSeeDetails.Name = "btnSTSeeDetails";
-            this.btnSTSeeDetails.Size = new System.Drawing.Size(100, 28);
+            this.btnSTSeeDetails.Size = new System.Drawing.Size(177, 28);
             this.btnSTSeeDetails.TabIndex = 3;
-            this.btnSTSeeDetails.Text = "See Details";
+            this.btnSTSeeDetails.Text = "See your current";
             this.btnSTSeeDetails.UseVisualStyleBackColor = true;
             this.btnSTSeeDetails.Click += new System.EventHandler(this.btnSTSeeDetails_Click);
             // 
             // tbxRFID
             // 
-            this.tbxRFID.Location = new System.Drawing.Point(129, 33);
+            this.tbxRFID.Location = new System.Drawing.Point(98, 30);
             this.tbxRFID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.tbxRFID.Name = "tbxRFID";
-            this.tbxRFID.Size = new System.Drawing.Size(132, 22);
+            this.tbxRFID.Size = new System.Drawing.Size(225, 22);
             this.tbxRFID.TabIndex = 1;
             this.tbxRFID.Text = "1c00fd0c0e";
             // 
             // lbFRID
             // 
             this.lbFRID.AutoSize = true;
-            this.lbFRID.Location = new System.Drawing.Point(45, 33);
+            this.lbFRID.Location = new System.Drawing.Point(22, 30);
             this.lbFRID.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbFRID.Name = "lbFRID";
             this.lbFRID.Size = new System.Drawing.Size(47, 17);
@@ -760,7 +774,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Averti Festival ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FestivalAppForm_FormClosing);
-            this.Load += new System.EventHandler(this.FestivalAppForm_Load);
+            //this.Load += new System.EventHandler(this.FestivalAppForm_Load);
             this.TabControl.ResumeLayout(false);
             this.tabSales.ResumeLayout(false);
             this.tabSales.PerformLayout();
@@ -835,6 +849,7 @@
         private System.Windows.Forms.ComboBox cbxSortArticle;
         private System.Windows.Forms.Label lbWallet;
         private System.Windows.Forms.Button btnShowSQL;
+        private System.Windows.Forms.Label SelectAnArticle;
 
 
     }
