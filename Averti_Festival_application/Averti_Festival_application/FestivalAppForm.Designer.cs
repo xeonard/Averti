@@ -30,6 +30,7 @@
         {
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabSales = new System.Windows.Forms.TabPage();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.SelectAnArticle = new System.Windows.Forms.Label();
             this.cbxSortArticle = new System.Windows.Forms.ComboBox();
             this.lbWallet = new System.Windows.Forms.Label();
@@ -111,6 +112,7 @@
             // 
             // tabSales
             // 
+            this.tabSales.Controls.Add(this.btnDelete);
             this.tabSales.Controls.Add(this.SelectAnArticle);
             this.tabSales.Controls.Add(this.cbxSortArticle);
             this.tabSales.Controls.Add(this.lbWallet);
@@ -136,6 +138,16 @@
             this.tabSales.UseVisualStyleBackColor = true;
             this.tabSales.Click += new System.EventHandler(this.tabSales_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(556, 166);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(120, 28);
+            this.btnDelete.TabIndex = 17;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // SelectAnArticle
             // 
             this.SelectAnArticle.AutoSize = true;
@@ -154,15 +166,15 @@
             this.cbxSortArticle.TabIndex = 14;
             this.cbxSortArticle.Tag = "";
             this.cbxSortArticle.Text = "Sort of article";
+            this.cbxSortArticle.SelectedIndexChanged += new System.EventHandler(this.cbxSortArticle_SelectedIndexChanged);
             // 
             // lbWallet
             // 
             this.lbWallet.AutoSize = true;
             this.lbWallet.Location = new System.Drawing.Point(150, 77);
             this.lbWallet.Name = "lbWallet";
-            this.lbWallet.Size = new System.Drawing.Size(54, 17);
+            this.lbWallet.Size = new System.Drawing.Size(0, 17);
             this.lbWallet.TabIndex = 13;
-            this.lbWallet.Text = "label11";
             // 
             // lbOrder
             // 
@@ -207,7 +219,7 @@
             // 
             // btnSTAddToOrder
             // 
-            this.btnSTAddToOrder.Location = new System.Drawing.Point(431, 166);
+            this.btnSTAddToOrder.Location = new System.Drawing.Point(432, 166);
             this.btnSTAddToOrder.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnSTAddToOrder.Name = "btnSTAddToOrder";
             this.btnSTAddToOrder.Size = new System.Drawing.Size(100, 28);
@@ -223,6 +235,7 @@
             this.NUDSTArticleAmount.Name = "NUDSTArticleAmount";
             this.NUDSTArticleAmount.Size = new System.Drawing.Size(51, 22);
             this.NUDSTArticleAmount.TabIndex = 6;
+            this.NUDSTArticleAmount.ValueChanged += new System.EventHandler(this.NUDSTArticleAmount_ValueChanged);
             // 
             // cbxNameArticles
             // 
@@ -233,6 +246,7 @@
             this.cbxNameArticles.Size = new System.Drawing.Size(160, 24);
             this.cbxNameArticles.TabIndex = 5;
             this.cbxNameArticles.Text = "Name of article";
+            this.cbxNameArticles.SelectedIndexChanged += new System.EventHandler(this.cbxNameArticles_SelectedIndexChanged);
             // 
             // lblCostumerWallet
             // 
@@ -774,7 +788,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Averti Festival ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FestivalAppForm_FormClosing);
-            //this.Load += new System.EventHandler(this.FestivalAppForm_Load);
+            this.Load += new System.EventHandler(this.FestivalAppForm_Load);
             this.TabControl.ResumeLayout(false);
             this.tabSales.ResumeLayout(false);
             this.tabSales.PerformLayout();
@@ -850,6 +864,7 @@
         private System.Windows.Forms.Label lbWallet;
         private System.Windows.Forms.Button btnShowSQL;
         private System.Windows.Forms.Label SelectAnArticle;
+        private System.Windows.Forms.Button btnDelete;
 
 
     }

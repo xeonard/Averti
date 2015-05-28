@@ -355,12 +355,67 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        
-
-        //gets a list of 
-        public List<Article> InfoArticle()
+        public int ArticleID()
         {
-            String sql = ("SELECT * FROM article");
+            String sql = ("Select ArticleID FROM Article" );
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader[0]);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public List<Article> SortArticle ()
+        {
+            String sql = ("SELECT * FROM Article " );
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+
+            List<Article> list = new List<Article>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString(), reader["name"].ToString(), Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
+
+
+            }
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
+        //gets a list of 
+        public List<Article> InfoArticle( int ArticleID )
+        {
+            String sql = ("SELECT * FROM KindOfArticle where ArticleID = "+ ArticleID);
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 

@@ -82,6 +82,7 @@
     <Compile Include="FestivalAppForm.Designer.cs">
       <DependentUpon>FestivalAppForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Order.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FestivalAppForm.resx">
