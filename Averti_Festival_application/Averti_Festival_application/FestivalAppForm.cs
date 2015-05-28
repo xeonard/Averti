@@ -102,7 +102,7 @@ namespace AvertiFestivalApplication
             //sort dropbox
             try
             {
-                foreach (string a in db.("article", "SortArticle").Distinct())
+                foreach (string a in db.GetInfoTable("article", "SortArticle").Distinct())
                 {
                     this.cbxSortArticle.Items.Add(a);
 
@@ -541,7 +541,7 @@ namespace AvertiFestivalApplication
             Double cost = 0;
             int articleID = 0;
             List<Article> listOfSortArticle = new List<Article>();
-            listOfSortArticle = db.InfoArticle();
+            listOfSortArticle = db.InfoArticle(articleID);
 
             foreach (var item in articles)
             {
