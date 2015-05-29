@@ -102,13 +102,15 @@ namespace AvertiFestivalApplication
             //sort dropbox
             try
             {
-                foreach (string a in db.GetInfoTable("article", "SortArticle").Distinct())
+                List<Article> SortArticles = new List<Article>();
+                SortArticles = db.SortArticle(ArticleID);
+               
+                foreach (var item in  db.SortArticle(ArticleID))
                 {
-                    this.cbxSortArticle.Items.Add(a);
-
-
+                    this.cbxSortArticle.Items.Add(item.SoortArticle);
                 }
-
+                
+                
             }
             catch (NullReferenceException)
             {
@@ -117,10 +119,14 @@ namespace AvertiFestivalApplication
             //name dropbox
             try
             {
-                foreach (string a in db.GetInfoTable("article", "name"))
+                List <Article> Namearticle = new List<Article>();
+                Namearticle = db.NameArticle(ArticleID);
+                
+                foreach (var item in  Namearticle)
                 {
-                    this.cbxNameArticles.Items.Add(a);
+                    this.cbxNameArticles.Items.Add(item.Name);
                 }
+                
             }
             catch (NullReferenceException)
             {
@@ -540,8 +546,9 @@ namespace AvertiFestivalApplication
             int transactionID = db.TransactionID();
             Double cost = 0;
             int articleID = 0;
+            int ArticleID = db.ArticleID();
             List<Article> listOfSortArticle = new List<Article>();
-            listOfSortArticle = db.InfoArticle(articleID);
+            listOfSortArticle = db.InfoArticle(ArticleID);
 
             foreach (var item in articles)
             {

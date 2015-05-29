@@ -383,9 +383,9 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        public List<Article> SortArticle ()
+        public List<Article> NameArticle ( int ArticleID)
         {
-            String sql = ("SELECT * FROM Article " );
+            String sql = ("SELECT * FROM kindofarticle where ArticleID = " + ArticleID);
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
@@ -399,7 +399,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString(), reader["name"].ToString(), Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
+                list.Add(new Article(Convert.ToInt32(reader["KinOfArticleID"]), Convert.ToInt32(reader["ArticleID"]), reader["Name"].ToString(), Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
 
 
             }
@@ -415,7 +415,7 @@ namespace AvertiFestivalApplication
         //gets a list of 
         public List<Article> InfoArticle( int ArticleID )
         {
-            String sql = ("SELECT * FROM KindOfArticle where ArticleID = "+ ArticleID);
+            String sql = ("SELECT * FROM article where ArticleID = " + ArticleID);
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
@@ -430,6 +430,35 @@ namespace AvertiFestivalApplication
             {
 
                 list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
+
+
+            }
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
+        public List<Article> SortArticle( int ArticleID)
+        {
+            String sql = ("SELECT * FROM article where ArticleID = " + ArticleID);
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+
+            List<Article> list = new List<Article>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString()));
 
 
             }

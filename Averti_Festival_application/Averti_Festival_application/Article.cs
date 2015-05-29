@@ -16,8 +16,21 @@ namespace AvertiFestivalApplication
         public string Name { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
+        public int KindOfArticleID { get; set; }
          
-        //constructor
+        public Article ()
+        {
+
+        }
+        public Article(int kinOfArticleID, int articleID, string name, int stock, double price)
+        {
+            this.KindOfArticleID = kinOfArticleID;
+            this.ArticleID = articleID;
+            this.Name = name;
+            this.Stock = stock;
+            this.Price = price;
+           
+        }
         public Article(int articleID, string soortArticle, string name, int stock, double price)
         {
             ArticleID = articleID;
@@ -27,6 +40,13 @@ namespace AvertiFestivalApplication
             Price = price;
 
         }
+        public Article(int articleID, string soortArticle)
+        {
+            ArticleID = articleID;
+            SoortArticle = soortArticle;
+          
+        }
+
 
         //methods
         public string GetInfo()
