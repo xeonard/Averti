@@ -17,6 +17,7 @@ namespace AvertiFestivalApplication
     {
         List<Order> orders = new List<Order>();
         List<Article> articles = new List<Article>();
+        List<Article> NameArticles = new List<Article>();
         private RFID RfidCheckin;
         Event newEvent;
         DBHandler db = new DBHandler();
@@ -103,9 +104,9 @@ namespace AvertiFestivalApplication
             try
             {
                 List<Article> SortArticles = new List<Article>();
-                SortArticles = db.SortArticle(ArticleID);
+                SortArticles = db.SortArticle();
                
-                foreach (var item in  db.SortArticle(ArticleID))
+                foreach (var item in  db.SortArticle())
                 {
                     this.cbxSortArticle.Items.Add(item.SoortArticle);
                 }
@@ -119,14 +120,46 @@ namespace AvertiFestivalApplication
             //name dropbox
             try
             {
+                
                 List <Article> Namearticle = new List<Article>();
-                Namearticle = db.NameArticle(ArticleID);
-                
-                foreach (var item in  Namearticle)
+                //List<Article> Namearticle2 = new List<Article>();
+                foreach (var item in Namearticle)
                 {
-                    this.cbxNameArticles.Items.Add(item.Name);
+                    ArticleID = db.ArticleID();
+
+                    if (ArticleID == 1)
+                    {
+                        this.cbxNameArticles.Items.Add(item.Name);
+                    }
+                    else if (ArticleID == 2)
+                    {
+                        this.cbxNameArticles.Items.Add(item.Name);
+                    }
+                    
                 }
-                
+                //Namearticle = db.NameArticle(ArticleID);
+                //Namearticle2 = db.NameArticle(ArticleID);
+                //foreach (var item in Namearticle)
+                //{
+                //    if (cbxSortArticle.SelectedText == "BBQ")
+                //    {
+                //        ArticleID = 1;
+                        
+                //        this.cbxNameArticles.Items.Add(item.Name);
+                //    }
+                //}
+                    
+                //foreach (var item in Namearticle2)
+                //{
+                //    if (cbxSortArticle.SelectedText == "Drink")
+                //{
+                //    ArticleID = 2;
+                   
+                //     this.cbxNameArticles.Items.Add(item.Name);
+
+                //}
+
+//	}      
             }
             catch (NullReferenceException)
             {
@@ -293,25 +326,28 @@ namespace AvertiFestivalApplication
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
             double overallPrice = 0;
+             int counter = 0;
+            int KindOfArticleID = db.KindOfArticleID();
             lbOrder.Items.Clear();
             int ArticleID = db.ArticleID();
             lbOrder.Items.Add("Your selected articles: ");
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
-                articles = db.InfoArticle( ArticleID);
+                articles = db.SortArticle();
+                 NameArticles = db.NameArticle(ArticleID);
 
-                int counter = 0;
+               
                 double totalePrice = 0;
-                foreach (var item in articles)
+                foreach (var item in NameArticles)
                 {
-
-                    if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
+                    foreach (var items in articles)
+                        if (item.Name == cbxNameArticles.SelectedItem.ToString() && items.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                     {
+                            
                         Order order = new Order(item, Convert.ToInt32(NUDSTArticleAmount.Value));
+                         
                         orders.Add(order);
-                        
-
-                    }
+                    }    
                     
                 }
                 foreach (var orderitem in orders)

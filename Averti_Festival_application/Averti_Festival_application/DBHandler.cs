@@ -383,6 +383,41 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        public int KindOfArticleID()
+        {
+            int KindOfArticleID;
+            string quaryKindOfArticleID = "SELECT COUNT(KinOfArticleID) FROM kindofarticle ";
+            try
+            {
+
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand(quaryKindOfArticleID, connection);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    KindOfArticleID = Convert.ToInt32(reader[0]);
+                    return KindOfArticleID + 1;
+
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            catch
+            {
+                return 0;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
         public List<Article> NameArticle ( int ArticleID)
         {
             String sql = ("SELECT * FROM kindofarticle where ArticleID = " + ArticleID);
@@ -429,7 +464,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["sortArticle"].ToString(), reader["name"].ToString(),Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["soortArticle"].ToString()));
 
 
             }
@@ -442,9 +477,9 @@ namespace AvertiFestivalApplication
             return list;
 
         }
-        public List<Article> SortArticle( int ArticleID)
+        public List<Article> SortArticle()
         {
-            String sql = ("SELECT * FROM article where ArticleID = " + ArticleID);
+            String sql = ("SELECT * FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
 
