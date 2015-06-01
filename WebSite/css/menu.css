@@ -368,3 +368,15 @@ input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover{
 input[type=submit]:active, input[type=button]:active, input[type=reset]:active {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ff6f3a), to(#ff6f3a));
 }
+
+/** part two of the project
+*
+*
+*
+*/
+
+#error{
+
+
+    color: #ff030d;
+}
