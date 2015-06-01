@@ -86,6 +86,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabOv = new System.Windows.Forms.TabPage();
+            this.btnOvRefresh = new System.Windows.Forms.Button();
+            this.lbxOvInfo = new System.Windows.Forms.ListBox();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -93,6 +96,7 @@
             this.tabDBView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabEvent.SuspendLayout();
+            this.tabOv.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControl
@@ -101,6 +105,7 @@
             this.TabControl.Controls.Add(this.tabCheckIn);
             this.TabControl.Controls.Add(this.tabDBView);
             this.TabControl.Controls.Add(this.tabEvent);
+            this.TabControl.Controls.Add(this.tabOv);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl.Location = new System.Drawing.Point(0, 0);
             this.TabControl.Name = "TabControl";
@@ -762,6 +767,36 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Select Event";
             // 
+            // tabOv
+            // 
+            this.tabOv.Controls.Add(this.lbxOvInfo);
+            this.tabOv.Controls.Add(this.btnOvRefresh);
+            this.tabOv.Location = new System.Drawing.Point(4, 22);
+            this.tabOv.Name = "tabOv";
+            this.tabOv.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOv.Size = new System.Drawing.Size(776, 576);
+            this.tabOv.TabIndex = 4;
+            this.tabOv.Text = "Overview";
+            this.tabOv.UseVisualStyleBackColor = true;
+            // 
+            // btnOvRefresh
+            // 
+            this.btnOvRefresh.Location = new System.Drawing.Point(8, 302);
+            this.btnOvRefresh.Name = "btnOvRefresh";
+            this.btnOvRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnOvRefresh.TabIndex = 0;
+            this.btnOvRefresh.Text = "Refresh";
+            this.btnOvRefresh.UseVisualStyleBackColor = true;
+            this.btnOvRefresh.Click += new System.EventHandler(this.btnOvRefresh_Click);
+            // 
+            // lbxOvInfo
+            // 
+            this.lbxOvInfo.FormattingEnabled = true;
+            this.lbxOvInfo.Location = new System.Drawing.Point(8, 6);
+            this.lbxOvInfo.Name = "lbxOvInfo";
+            this.lbxOvInfo.Size = new System.Drawing.Size(262, 290);
+            this.lbxOvInfo.TabIndex = 1;
+            // 
             // FestivalAppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -785,6 +820,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabEvent.ResumeLayout(false);
             this.tabEvent.PerformLayout();
+            this.tabOv.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -849,6 +885,9 @@
         private System.Windows.Forms.Button btnShowSQL;
         private System.Windows.Forms.Label SelectAnArticle;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.TabPage tabOv;
+        private System.Windows.Forms.ListBox lbxOvInfo;
+        private System.Windows.Forms.Button btnOvRefresh;
 
 
     }

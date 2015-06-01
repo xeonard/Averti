@@ -773,5 +773,37 @@ namespace AvertiFestivalApplication
             //    if (item)
             //}
         }
+
+
+        private void btnOvRefresh_Click(object sender, EventArgs e)
+        {
+            //Things to add to the listbox sold, ppl at the festival, open camp spots and stocks
+            lbxOvInfo.Items.Clear();
+            //Add the tickets sold and # of visitors
+            lbxOvInfo.Items.Add("Tickets sold: " + db.getTicketsSold());
+            lbxOvInfo.Items.Add("Poeple at the festival: " + db.getPoepleAtFestival());
+            //Add the open camp spots
+            lbxOvInfo.Items.Add("Open camping spots: " + db.GetNrOfEmptyCamping());
+
+            //Adding the stocks of articles
+            lbxOvInfo.Items.Add("Remaining Stocks");
+
+            // Get all the articles name and their stocks
+
+            ///#TODO Make an article list refresh method
+            
+            NameArticles.Clear();
+
+            foreach (Article a in SortArticles)
+            {
+                NameArticles.AddRange(db.NameArticle(a.ArticleID));
+            }
+
+            foreach (Article art in NameArticles)
+            {
+                lbxOvInfo.Items.Add(art.Name + ": " + art.Stock);
+            }
+            
+        }
     }
 }

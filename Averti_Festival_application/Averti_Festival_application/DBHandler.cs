@@ -740,6 +740,79 @@ namespace AvertiFestivalApplication
             }
         }
 
-        
+
+
+        public int GetNrOfEmptyCamping()
+        {
+            String sql = "SELECT COUNT(*) FROM camp WHERE reserved = 'Free'";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public int getPoepleAtFestival()
+        {
+            String sql = "SELECT COUNT(*) FROM person WHERE status = 'arrived'";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Method for getting the total amount of tickets sold
+        /// </summary>
+        /// <returns>
+        /// int tickets
+        /// </returns>
+        public int getTicketsSold()
+        {
+            String sql = "SELECT COUNT(*) FROM Tickets";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return Convert.ToInt32(command.ExecuteScalar());
+
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
