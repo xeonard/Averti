@@ -496,7 +496,6 @@ namespace AvertiFestivalApplication
 
         private void btnGoToDetails_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("" + "" + "");
         }
 
         private void hide()
