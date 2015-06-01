@@ -22,6 +22,10 @@ namespace AvertiFestivalApplication
         Event newEvent;
         DBHandler db = new DBHandler();
         List<Event> events;
+        List<Article> Namearticle;
+        List<Article> SortArticles;
+        
+        
        
         public FestivalAppForm()
         {
@@ -30,7 +34,6 @@ namespace AvertiFestivalApplication
 
             RfidCheckin = new RFID();
             RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
-            int ArticleID = db.ArticleID();
           
 
             //TabControl.TabPages.Remove(tabSales);
@@ -103,7 +106,7 @@ namespace AvertiFestivalApplication
             //sort dropbox
             try
             {
-                List<Article> SortArticles = new List<Article>();
+                SortArticles = new List<Article>();
                 SortArticles = db.SortArticle();
                
                 foreach (var item in  db.SortArticle())
@@ -120,12 +123,12 @@ namespace AvertiFestivalApplication
             //name dropbox
             try
             {
-                
-                List <Article> Namearticle = new List<Article>();
+
+                Namearticle = new List<Article>();
                 //List<Article> Namearticle2 = new List<Article>();
                 foreach (var item in Namearticle)
                 {
-                    ArticleID = db.ArticleID();
+                    int ArticleID = db.ArticleID();
 
                     if (ArticleID == 1)
                     {
@@ -702,11 +705,47 @@ namespace AvertiFestivalApplication
 
         private void cbxSortArticle_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
                 btnSTAddToOrder.Enabled = true;
                 btnSTCompleteOrder.Enabled = true;
             }
+
+            List<Article> NameOfarticle = new List<Article>();
+
+            Article selectedSort = new Article("stub");
+
+            foreach (Article a in SortArticles)
+            {
+                NameOfarticle.AddRange(db.NameArticle(a.ArticleID));
+
+                if ((String)(cbxSortArticle.SelectedItem) == a.SoortArticle)
+                {
+                    selectedSort = a;
+                }
+            }
+
+                this.cbxNameArticles.Items.Clear();
+                foreach (var item in NameOfarticle)
+                {
+                    if (selectedSort.ArticleID == item.ArticleID)
+                    {
+                        this.cbxNameArticles.Items.Add(item.Name);
+                    }
+                }
+            
+
+            //foreach (var item in Namearticle2)
+            //{
+            //    if (cbxSortArticle.SelectedText == "Drink")
+            //    {
+            //        ArticleID = 2;
+
+            //        this.cbxNameArticles.Items.Add(item.Name);
+
+            //    }
+            //}
         }
 
         private void cbxNameArticles_SelectedIndexChanged(object sender, EventArgs e)

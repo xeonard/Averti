@@ -160,6 +160,7 @@ namespace AvertiFestivalApplication
 
             try
             {
+                connection.Close();
                 connection.Open();
 
                 MySqlDataReader reader = command.ExecuteReader();
@@ -173,7 +174,7 @@ namespace AvertiFestivalApplication
                     return -1;
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return -1;
             }
@@ -357,7 +358,7 @@ namespace AvertiFestivalApplication
         }
         public int ArticleID()
         {
-            String sql = ("Select ArticleID FROM Article" );
+            String sql = ("SELECT articleID FROM article");
             MySqlCommand command = new MySqlCommand(sql, connection);
             try
             {

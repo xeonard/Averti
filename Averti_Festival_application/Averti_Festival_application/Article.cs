@@ -17,11 +17,21 @@ namespace AvertiFestivalApplication
         public int Stock { get; set; }
         public double Price { get; set; }
         public int KindOfArticleID { get; set; }
-         
-        public Article ()
+
+        public Article()
         {
 
         }
+         
+        public Article (String name)
+        {
+            this.KindOfArticleID = -1;
+            this.ArticleID = -1;
+            this.Stock = -1;
+            this.Price = -1;
+
+        }
+
         public Article(int kinOfArticleID, int articleID, string name, int stock, double price)
         {
             this.KindOfArticleID = kinOfArticleID;
