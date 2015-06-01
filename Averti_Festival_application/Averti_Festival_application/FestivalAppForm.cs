@@ -15,6 +15,8 @@ namespace AvertiFestivalApplication
 {
     public partial class FestivalAppForm : Form
     {
+        double overallPrice = 0;
+        double totalePrice = 0;
         List<Order> orders = new List<Order>();
         List<Article> articles = new List<Article>();
         List<Article> NameArticles = new List<Article>();
@@ -24,9 +26,9 @@ namespace AvertiFestivalApplication
         List<Event> events;
         List<Article> Namearticle;
         List<Article> SortArticles;
-        
-        
-       
+
+
+
         public FestivalAppForm()
         {
             events = new List<Event>();
@@ -34,7 +36,7 @@ namespace AvertiFestivalApplication
 
             RfidCheckin = new RFID();
             RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
-          
+
 
             //TabControl.TabPages.Remove(tabSales);
 
@@ -108,13 +110,13 @@ namespace AvertiFestivalApplication
             {
                 SortArticles = new List<Article>();
                 SortArticles = db.SortArticle();
-               
-                foreach (var item in  db.SortArticle())
+
+                foreach (var item in db.SortArticle())
                 {
                     this.cbxSortArticle.Items.Add(item.SoortArticle);
                 }
-                
-                
+
+
             }
             catch (NullReferenceException)
             {
@@ -138,7 +140,7 @@ namespace AvertiFestivalApplication
                     {
                         this.cbxNameArticles.Items.Add(item.Name);
                     }
-                    
+
                 }
                 //Namearticle = db.NameArticle(ArticleID);
                 //Namearticle2 = db.NameArticle(ArticleID);
@@ -147,22 +149,22 @@ namespace AvertiFestivalApplication
                 //    if (cbxSortArticle.SelectedText == "BBQ")
                 //    {
                 //        ArticleID = 1;
-                        
+
                 //        this.cbxNameArticles.Items.Add(item.Name);
                 //    }
                 //}
-                    
+
                 //foreach (var item in Namearticle2)
                 //{
                 //    if (cbxSortArticle.SelectedText == "Drink")
                 //{
                 //    ArticleID = 2;
-                   
+
                 //     this.cbxNameArticles.Items.Add(item.Name);
 
                 //}
 
-//	}      
+                //	}      
             }
             catch (NullReferenceException)
             {
@@ -328,40 +330,54 @@ namespace AvertiFestivalApplication
 
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
-            double overallPrice = 0;
-             int counter = 0;
+
+            int counter = 0;
             int KindOfArticleID = db.KindOfArticleID();
             lbOrder.Items.Clear();
             int ArticleID = db.ArticleID();
-            lbOrder.Items.Add("Your selected articles: ");
+            
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
                 articles = db.SortArticle();
-                 NameArticles = db.NameArticle(ArticleID);
+                if (cbxSortArticle.SelectedItem.ToString() == "BBQ")
+                {
+                    ArticleID = 1;
+                }
+                if (cbxSortArticle.SelectedItem.ToString() == "Drink")
+                {
+                    ArticleID = 2;
+                }
+                NameArticles = db.NameArticle(ArticleID);
 
-               
-                double totalePrice = 0;
+
+
                 foreach (var item in NameArticles)
                 {
                     foreach (var items in articles)
                         if (item.Name == cbxNameArticles.SelectedItem.ToString() && items.SoortArticle == cbxSortArticle.SelectedItem.ToString())
-                    {
-                            
-                        Order order = new Order(item, Convert.ToInt32(NUDSTArticleAmount.Value));
-                         
-                        orders.Add(order);
-                    }    
-                    
+                        {
+
+                            Order order = new Order(item, Convert.ToInt32(NUDSTArticleAmount.Value));
+
+                            orders.Add(order);
+                            totalePrice = order.Article.Price * Convert.ToInt32(NUDSTArticleAmount.Value);
+                            overallPrice = overallPrice + totalePrice;
+                        }
+
                 }
+
+
+                lbOrder.Items.Clear();
+
+                lbOrder.Items.Add("Your selected articles: ");
                 foreach (var orderitem in orders)
                 {
                     counter++;
                     lbOrder.Items.Add("");
                     lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.Article.SoortArticle + "( " + orderitem.Article.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Quantity) + "   Price:  €" + Convert.ToString(orderitem.Article.Price));
                     lbOrder.Items.Add("");
-                    
-                    totalePrice = orderitem.Article.Price * Convert.ToInt32(NUDSTArticleAmount.Value);
-                    overallPrice = overallPrice + totalePrice;
+
+
                     lbOrder.Items.Add("\n");
                 }
                 lbOrder.Items.Add("***********************");
@@ -371,9 +387,8 @@ namespace AvertiFestivalApplication
                 {
                     btnSTCompleteOrder.Enabled = false;
                     MessageBox.Show("your credit is not enough to buy your orders");
-                    
-                }
 
+                }
 
                 double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
                 lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
@@ -383,8 +398,13 @@ namespace AvertiFestivalApplication
 
             else
             {
-                MessageBox.Show("Pleas choose a article or the quantity");
+                MessageBox.Show("Please choose an article or the quantity");
             }
+        }
+
+        private void Filllistbox()
+        {
+           
         }
 
         private void btnETSelectEvent_Click(object sender, EventArgs e)
@@ -726,15 +746,15 @@ namespace AvertiFestivalApplication
                 }
             }
 
-                this.cbxNameArticles.Items.Clear();
-                foreach (var item in NameOfarticle)
+            this.cbxNameArticles.Items.Clear();
+            foreach (var item in NameOfarticle)
+            {
+                if (selectedSort.ArticleID == item.ArticleID)
                 {
-                    if (selectedSort.ArticleID == item.ArticleID)
-                    {
-                        this.cbxNameArticles.Items.Add(item.Name);
-                    }
+                    this.cbxNameArticles.Items.Add(item.Name);
                 }
-            
+            }
+
 
             //foreach (var item in Namearticle2)
             //{
@@ -768,10 +788,40 @@ namespace AvertiFestivalApplication
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //foreach (var item in lbOrder.SelectedItems)
-            //{
-            //    if (item)
-            //}
+
+            int result;
+            if (int.TryParse(lbOrder.SelectedItem.ToString().Substring(0 , 1), out result))
+            {
+                int item = Convert.ToInt32(lbOrder.SelectedItem.ToString().Substring(0,1))-1;
+                overallPrice = overallPrice - (orders[item].Article.Price * orders[item].Quantity);
+                totalePrice = totalePrice + (orders[item].Article.Price * orders[item].Quantity);
+                orders.RemoveAt(Convert.ToInt32(item));
+                lbOrder.Items.Clear();
+                lbOrder.Items.Add("Your selected articles: ");
+                int counter = 0;
+                foreach (var orderitem in orders)
+                {
+                    counter++;
+                    lbOrder.Items.Add("");
+                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.Article.SoortArticle + "( " + orderitem.Article.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Quantity) + "   Price:  €" + Convert.ToString(orderitem.Article.Price));
+                    lbOrder.Items.Add("");
+
+
+                    lbOrder.Items.Add("\n");
+                }
+                lbOrder.Items.Add("***********************");
+                lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(overallPrice));
+                lbOrder.Items.Add("\n");
+                if (overallPrice > Convert.ToInt32(lbWallet.Text))
+                {
+                    btnSTCompleteOrder.Enabled = false;
+                    MessageBox.Show("your credit is not enough to buy your orders");
+
+                }
+
+                double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
+                lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
+            }
         }
 
 
