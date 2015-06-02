@@ -62,6 +62,9 @@ namespace AvertiFestivalApplication
         /// 3 if the ticket is found and the person left the event
         /// </summary>
         /// <returns></returns>
+        
+        #region CheckIN
+
         public int CheckTicket(String ticket)
         {
             String sql = ("SELECT status FROM person WHERE personalID = " + 
@@ -174,7 +177,7 @@ namespace AvertiFestivalApplication
                     return -1;
                 }
             }
-            catch(Exception e)
+            catch(Exception )
             {
                 return -1;
             }
@@ -265,6 +268,44 @@ namespace AvertiFestivalApplication
             }
             
         }
+        public int personalID(string rFID)
+        {
+            int personalID;
+            string quaryPersonalID = "SELECT personalID FROM person where rfid = '" + rFID + "' ";
+            MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
+            try
+            {
+
+                connection.Open();
+
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    personalID = Convert.ToInt32(reader[0]);
+                    return personalID;
+
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+        #endregion
+
+        #region Event
 
         public List<string>[] GetEvents(){
             String sql = "SELECT * FROM Event";
@@ -356,6 +397,11 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+
+        #endregion
+
+        #region Article
+
         public int ArticleID()
         {
             String sql = ("SELECT articleID FROM article");
@@ -507,41 +553,9 @@ namespace AvertiFestivalApplication
             return list;
 
         }
-        public int personalID (string rFID)
-        {
-            int personalID;
-            string quaryPersonalID = "SELECT personalID FROM person where rfid = '" + rFID + "' ";
-            MySqlCommand command = new MySqlCommand(quaryPersonalID, connection);
-           try
-           {
+        #endregion
 
-               connection.Open();
-               
-
-               MySqlDataReader reader = command.ExecuteReader();
-
-               if (reader.Read())
-               {
-                   personalID = Convert.ToInt32(reader[0]);
-                   return personalID;
-
-               }
-               else
-               {
-                   return 0;
-               }
-           }
-
-           catch
-           {
-               return 0;
-           }
-           finally
-           {
-               connection.Close();
-           }
-  
-        }
+        #region Sales
 
         public int TransactionID()
         {
@@ -814,5 +828,6 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        #endregion
     }
 }

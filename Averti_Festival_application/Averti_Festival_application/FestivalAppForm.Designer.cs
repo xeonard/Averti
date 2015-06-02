@@ -596,6 +596,7 @@
             this.btnCancel.TabIndex = 19;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click_1);
             // 
             // btnETSave
             // 
@@ -775,9 +776,18 @@
             this.tabOv.Name = "tabOv";
             this.tabOv.Padding = new System.Windows.Forms.Padding(3);
             this.tabOv.Size = new System.Drawing.Size(776, 576);
+            this.tabOv.Size = new System.Drawing.Size(776, 577);
             this.tabOv.TabIndex = 4;
             this.tabOv.Text = "Overview";
             this.tabOv.UseVisualStyleBackColor = true;
+            // 
+            // lbxOvInfo
+            // 
+            this.lbxOvInfo.FormattingEnabled = true;
+            this.lbxOvInfo.Location = new System.Drawing.Point(8, 6);
+            this.lbxOvInfo.Name = "lbxOvInfo";
+            this.lbxOvInfo.Size = new System.Drawing.Size(262, 290);
+            this.lbxOvInfo.TabIndex = 1;
             // 
             // btnOvRefresh
             // 
@@ -788,14 +798,6 @@
             this.btnOvRefresh.Text = "Refresh";
             this.btnOvRefresh.UseVisualStyleBackColor = true;
             this.btnOvRefresh.Click += new System.EventHandler(this.btnOvRefresh_Click);
-            // 
-            // lbxOvInfo
-            // 
-            this.lbxOvInfo.FormattingEnabled = true;
-            this.lbxOvInfo.Location = new System.Drawing.Point(8, 6);
-            this.lbxOvInfo.Name = "lbxOvInfo";
-            this.lbxOvInfo.Size = new System.Drawing.Size(262, 290);
-            this.lbxOvInfo.TabIndex = 1;
             // 
             // FestivalAppForm
             // 
