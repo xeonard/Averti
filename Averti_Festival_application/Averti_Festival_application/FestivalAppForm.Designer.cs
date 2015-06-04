@@ -67,28 +67,30 @@
             this.cbxDTInfoType = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tabEvent = new System.Windows.Forms.TabPage();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnETSave = new System.Windows.Forms.Button();
-            this.richTbxETDescription = new System.Windows.Forms.RichTextBox();
-            this.dtpETEventDate = new System.Windows.Forms.DateTimePicker();
-            this.tbxETLocation = new System.Windows.Forms.TextBox();
-            this.tbxETMaxCamp = new System.Windows.Forms.TextBox();
-            this.tbxETMaxTickets = new System.Windows.Forms.TextBox();
+            this.listBoxEventSelect = new System.Windows.Forms.ListBox();
+            this.tabNewEvent = new System.Windows.Forms.Panel();
+            this.tbxETEventMinage = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.tbxETEventName = new System.Windows.Forms.TextBox();
             this.btnETDeleteEvent = new System.Windows.Forms.Button();
-            this.btnETNewEvent = new System.Windows.Forms.Button();
-            this.btnETSelectEvent = new System.Windows.Forms.Button();
-            this.cmbxEventSelectEvent = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnETSave = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.richTbxETDescription = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxETdate = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbxETLocation = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbxETMaxCamp = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbxETMaxTickets = new System.Windows.Forms.TextBox();
+            this.btnETNewEvent = new System.Windows.Forms.Button();
+            this.btnETViewEvents = new System.Windows.Forms.Button();
             this.tabOv = new System.Windows.Forms.TabPage();
-            this.btnOvRefresh = new System.Windows.Forms.Button();
             this.lbxOvInfo = new System.Windows.Forms.ListBox();
+            this.btnOvRefresh = new System.Windows.Forms.Button();
             this.TabControl.SuspendLayout();
             this.tabSales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDSTArticleAmount)).BeginInit();
@@ -96,6 +98,7 @@
             this.tabDBView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabEvent.SuspendLayout();
+            this.tabNewEvent.SuspendLayout();
             this.tabOv.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,7 +135,7 @@
             this.tabSales.Controls.Add(this.lbFRID);
             this.tabSales.Location = new System.Drawing.Point(4, 22);
             this.tabSales.Name = "tabSales";
-            this.tabSales.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabSales.Padding = new System.Windows.Forms.Padding(2);
             this.tabSales.Size = new System.Drawing.Size(776, 577);
             this.tabSales.TabIndex = 0;
             this.tabSales.Text = "Sales";
@@ -143,7 +146,7 @@
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(417, 135);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(90, 23);
             this.btnDelete.TabIndex = 17;
@@ -165,7 +168,7 @@
             // 
             this.cbxSortArticle.FormattingEnabled = true;
             this.cbxSortArticle.Location = new System.Drawing.Point(11, 135);
-            this.cbxSortArticle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbxSortArticle.Margin = new System.Windows.Forms.Padding(2);
             this.cbxSortArticle.Name = "cbxSortArticle";
             this.cbxSortArticle.Size = new System.Drawing.Size(92, 21);
             this.cbxSortArticle.TabIndex = 14;
@@ -303,7 +306,7 @@
             this.tabCheckIn.Location = new System.Drawing.Point(4, 22);
             this.tabCheckIn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabCheckIn.Name = "tabCheckIn";
-            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabCheckIn.Padding = new System.Windows.Forms.Padding(3);
             this.tabCheckIn.Size = new System.Drawing.Size(776, 577);
             this.tabCheckIn.TabIndex = 1;
             this.tabCheckIn.Text = "Check In/Out";
@@ -389,7 +392,7 @@
             this.tabDBView.Location = new System.Drawing.Point(4, 22);
             this.tabDBView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDBView.Name = "tabDBView";
-            this.tabDBView.Size = new System.Drawing.Size(776, 605);
+            this.tabDBView.Size = new System.Drawing.Size(776, 577);
             this.tabDBView.TabIndex = 2;
             this.tabDBView.Text = "Database view";
             this.tabDBView.UseVisualStyleBackColor = true;
@@ -397,7 +400,7 @@
             // btnShowSQL
             // 
             this.btnShowSQL.Location = new System.Drawing.Point(271, 50);
-            this.btnShowSQL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnShowSQL.Margin = new System.Windows.Forms.Padding(2);
             this.btnShowSQL.Name = "btnShowSQL";
             this.btnShowSQL.Size = new System.Drawing.Size(67, 19);
             this.btnShowSQL.TabIndex = 12;
@@ -408,7 +411,7 @@
             // btnShow
             // 
             this.btnShow.Location = new System.Drawing.Point(271, 23);
-            this.btnShow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnShow.Margin = new System.Windows.Forms.Padding(2);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(67, 19);
             this.btnShow.TabIndex = 11;
@@ -558,215 +561,236 @@
             // 
             // tabEvent
             // 
-            this.tabEvent.Controls.Add(this.btnCancel);
-            this.tabEvent.Controls.Add(this.btnETSave);
-            this.tabEvent.Controls.Add(this.richTbxETDescription);
-            this.tabEvent.Controls.Add(this.dtpETEventDate);
-            this.tabEvent.Controls.Add(this.tbxETLocation);
-            this.tabEvent.Controls.Add(this.tbxETMaxCamp);
-            this.tabEvent.Controls.Add(this.tbxETMaxTickets);
-            this.tabEvent.Controls.Add(this.tbxETEventName);
-            this.tabEvent.Controls.Add(this.btnETDeleteEvent);
+            this.tabEvent.Controls.Add(this.listBoxEventSelect);
+            this.tabEvent.Controls.Add(this.tabNewEvent);
             this.tabEvent.Controls.Add(this.btnETNewEvent);
-            this.tabEvent.Controls.Add(this.btnETSelectEvent);
-            this.tabEvent.Controls.Add(this.cmbxEventSelectEvent);
-            this.tabEvent.Controls.Add(this.label8);
-            this.tabEvent.Controls.Add(this.label7);
-            this.tabEvent.Controls.Add(this.label6);
-            this.tabEvent.Controls.Add(this.label5);
-            this.tabEvent.Controls.Add(this.label4);
-            this.tabEvent.Controls.Add(this.label3);
-            this.tabEvent.Controls.Add(this.label2);
+            this.tabEvent.Controls.Add(this.btnETViewEvents);
             this.tabEvent.Location = new System.Drawing.Point(4, 22);
             this.tabEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabEvent.Name = "tabEvent";
-            this.tabEvent.Size = new System.Drawing.Size(776, 605);
+            this.tabEvent.Size = new System.Drawing.Size(776, 577);
             this.tabEvent.TabIndex = 3;
             this.tabEvent.Text = "Event";
             this.tabEvent.ToolTipText = "Create, change or delete an event";
             this.tabEvent.UseVisualStyleBackColor = true;
             this.tabEvent.Click += new System.EventHandler(this.tabEvent_Click);
             // 
-            // btnCancel
+            // listBoxEventSelect
             // 
-            this.btnCancel.Location = new System.Drawing.Point(256, 450);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(101, 23);
-            this.btnCancel.TabIndex = 19;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click_1);
+            this.listBoxEventSelect.FormattingEnabled = true;
+            this.listBoxEventSelect.Location = new System.Drawing.Point(37, 155);
+            this.listBoxEventSelect.Name = "listBoxEventSelect";
+            this.listBoxEventSelect.Size = new System.Drawing.Size(201, 329);
+            this.listBoxEventSelect.TabIndex = 21;
+            this.listBoxEventSelect.SelectedIndexChanged += new System.EventHandler(this.listBoxEventSelect_SelectedIndexChanged);
             // 
-            // btnETSave
+            // tabNewEvent
             // 
-            this.btnETSave.Location = new System.Drawing.Point(24, 450);
-            this.btnETSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnETSave.Name = "btnETSave";
-            this.btnETSave.Size = new System.Drawing.Size(101, 23);
-            this.btnETSave.TabIndex = 18;
-            this.btnETSave.Text = "Save";
-            this.btnETSave.UseVisualStyleBackColor = true;
+            this.tabNewEvent.Controls.Add(this.tbxETEventMinage);
+            this.tabNewEvent.Controls.Add(this.label15);
+            this.tabNewEvent.Controls.Add(this.tbxETEventName);
+            this.tabNewEvent.Controls.Add(this.btnETDeleteEvent);
+            this.tabNewEvent.Controls.Add(this.btnCancel);
+            this.tabNewEvent.Controls.Add(this.label3);
+            this.tabNewEvent.Controls.Add(this.btnETSave);
+            this.tabNewEvent.Controls.Add(this.label4);
+            this.tabNewEvent.Controls.Add(this.richTbxETDescription);
+            this.tabNewEvent.Controls.Add(this.label5);
+            this.tabNewEvent.Controls.Add(this.tbxETdate);
+            this.tabNewEvent.Controls.Add(this.label6);
+            this.tabNewEvent.Controls.Add(this.tbxETLocation);
+            this.tabNewEvent.Controls.Add(this.label7);
+            this.tabNewEvent.Controls.Add(this.tbxETMaxCamp);
+            this.tabNewEvent.Controls.Add(this.label8);
+            this.tabNewEvent.Controls.Add(this.tbxETMaxTickets);
+            this.tabNewEvent.Location = new System.Drawing.Point(256, 64);
+            this.tabNewEvent.Name = "tabNewEvent";
+            this.tabNewEvent.Size = new System.Drawing.Size(498, 465);
+            this.tabNewEvent.TabIndex = 20;
+            this.tabNewEvent.Visible = false;
             // 
-            // richTbxETDescription
+            // tbxETEventMinage
             // 
-            this.richTbxETDescription.Location = new System.Drawing.Point(109, 303);
-            this.richTbxETDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.richTbxETDescription.Name = "richTbxETDescription";
-            this.richTbxETDescription.Size = new System.Drawing.Size(248, 99);
-            this.richTbxETDescription.TabIndex = 17;
-            this.richTbxETDescription.Text = "";
+            this.tbxETEventMinage.Location = new System.Drawing.Point(49, 233);
+            this.tbxETEventMinage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbxETEventMinage.Name = "tbxETEventMinage";
+            this.tbxETEventMinage.Size = new System.Drawing.Size(51, 20);
+            this.tbxETEventMinage.TabIndex = 25;
             // 
-            // dtpETEventDate
+            // label15
             // 
-            this.dtpETEventDate.Location = new System.Drawing.Point(109, 205);
-            this.dtpETEventDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.dtpETEventDate.Name = "dtpETEventDate";
-            this.dtpETEventDate.Size = new System.Drawing.Size(200, 20);
-            this.dtpETEventDate.TabIndex = 16;
-            // 
-            // tbxETLocation
-            // 
-            this.tbxETLocation.Location = new System.Drawing.Point(109, 250);
-            this.tbxETLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbxETLocation.Name = "tbxETLocation";
-            this.tbxETLocation.Size = new System.Drawing.Size(100, 20);
-            this.tbxETLocation.TabIndex = 15;
-            // 
-            // tbxETMaxCamp
-            // 
-            this.tbxETMaxCamp.Location = new System.Drawing.Point(109, 163);
-            this.tbxETMaxCamp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbxETMaxCamp.Name = "tbxETMaxCamp";
-            this.tbxETMaxCamp.Size = new System.Drawing.Size(100, 20);
-            this.tbxETMaxCamp.TabIndex = 13;
-            // 
-            // tbxETMaxTickets
-            // 
-            this.tbxETMaxTickets.Location = new System.Drawing.Point(109, 119);
-            this.tbxETMaxTickets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbxETMaxTickets.Name = "tbxETMaxTickets";
-            this.tbxETMaxTickets.Size = new System.Drawing.Size(100, 20);
-            this.tbxETMaxTickets.TabIndex = 12;
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(144, 236);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(280, 13);
+            this.label15.TabIndex = 24;
+            this.label15.Text = "Specify the minimum age of participants allowed to attend.";
             // 
             // tbxETEventName
             // 
-            this.tbxETEventName.Location = new System.Drawing.Point(109, 72);
+            this.tbxETEventName.Location = new System.Drawing.Point(149, 15);
             this.tbxETEventName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbxETEventName.Name = "tbxETEventName";
-            this.tbxETEventName.Size = new System.Drawing.Size(100, 20);
+            this.tbxETEventName.Size = new System.Drawing.Size(246, 20);
             this.tbxETEventName.TabIndex = 11;
             // 
             // btnETDeleteEvent
             // 
-            this.btnETDeleteEvent.Location = new System.Drawing.Point(470, 30);
+            this.btnETDeleteEvent.Location = new System.Drawing.Point(294, 393);
             this.btnETDeleteEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnETDeleteEvent.Name = "btnETDeleteEvent";
             this.btnETDeleteEvent.Size = new System.Drawing.Size(101, 23);
             this.btnETDeleteEvent.TabIndex = 10;
             this.btnETDeleteEvent.Text = "Delete Event";
             this.btnETDeleteEvent.UseVisualStyleBackColor = true;
+            this.btnETDeleteEvent.Click += new System.EventHandler(this.btnETDeleteEvent_Click_1);
             // 
-            // btnETNewEvent
+            // btnCancel
             // 
-            this.btnETNewEvent.Location = new System.Drawing.Point(363, 30);
-            this.btnETNewEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnETNewEvent.Name = "btnETNewEvent";
-            this.btnETNewEvent.Size = new System.Drawing.Size(101, 23);
-            this.btnETNewEvent.TabIndex = 9;
-            this.btnETNewEvent.Text = "New Event";
-            this.btnETNewEvent.UseVisualStyleBackColor = true;
-            this.btnETNewEvent.Click += new System.EventHandler(this.btnETNewEvent_Click);
-            // 
-            // btnETSelectEvent
-            // 
-            this.btnETSelectEvent.Location = new System.Drawing.Point(256, 30);
-            this.btnETSelectEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnETSelectEvent.Name = "btnETSelectEvent";
-            this.btnETSelectEvent.Size = new System.Drawing.Size(101, 23);
-            this.btnETSelectEvent.TabIndex = 8;
-            this.btnETSelectEvent.Text = "Select Event";
-            this.btnETSelectEvent.UseVisualStyleBackColor = true;
-            this.btnETSelectEvent.Click += new System.EventHandler(this.btnETSelectEvent_Click);
-            // 
-            // cmbxEventSelectEvent
-            // 
-            this.cmbxEventSelectEvent.FormattingEnabled = true;
-            this.cmbxEventSelectEvent.Location = new System.Drawing.Point(109, 32);
-            this.cmbxEventSelectEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cmbxEventSelectEvent.Name = "cmbxEventSelectEvent";
-            this.cmbxEventSelectEvent.Size = new System.Drawing.Size(121, 21);
-            this.cmbxEventSelectEvent.TabIndex = 7;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 306);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Description";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 253);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Location";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 211);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Event Date";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 166);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Max camping";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 119);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Max tickets";
+            this.btnCancel.Location = new System.Drawing.Point(178, 393);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(101, 23);
+            this.btnCancel.TabIndex = 19;
+            this.btnCancel.Text = "Clear";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click_1);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 75);
+            this.label3.Location = new System.Drawing.Point(48, 18);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Event Name";
             // 
-            // label2
+            // btnETSave
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 35);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Select Event";
+            this.btnETSave.Location = new System.Drawing.Point(64, 393);
+            this.btnETSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnETSave.Name = "btnETSave";
+            this.btnETSave.Size = new System.Drawing.Size(101, 23);
+            this.btnETSave.TabIndex = 18;
+            this.btnETSave.Text = "Save";
+            this.btnETSave.UseVisualStyleBackColor = true;
+            this.btnETSave.Click += new System.EventHandler(this.btnETSave_Click_1);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(48, 62);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Max tickets";
+            // 
+            // richTbxETDescription
+            // 
+            this.richTbxETDescription.Location = new System.Drawing.Point(149, 274);
+            this.richTbxETDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.richTbxETDescription.Name = "richTbxETDescription";
+            this.richTbxETDescription.Size = new System.Drawing.Size(248, 99);
+            this.richTbxETDescription.TabIndex = 17;
+            this.richTbxETDescription.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(48, 109);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Max camping";
+            // 
+            // tbxETdate
+            // 
+            this.tbxETdate.Location = new System.Drawing.Point(149, 148);
+            this.tbxETdate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbxETdate.Name = "tbxETdate";
+            this.tbxETdate.Size = new System.Drawing.Size(248, 20);
+            this.tbxETdate.TabIndex = 16;
+            this.tbxETdate.ValueChanged += new System.EventHandler(this.tbxETdate_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(48, 154);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Event Date";
+            // 
+            // tbxETLocation
+            // 
+            this.tbxETLocation.Location = new System.Drawing.Point(149, 193);
+            this.tbxETLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbxETLocation.Name = "tbxETLocation";
+            this.tbxETLocation.Size = new System.Drawing.Size(248, 20);
+            this.tbxETLocation.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(48, 196);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Location";
+            // 
+            // tbxETMaxCamp
+            // 
+            this.tbxETMaxCamp.Location = new System.Drawing.Point(149, 106);
+            this.tbxETMaxCamp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbxETMaxCamp.Name = "tbxETMaxCamp";
+            this.tbxETMaxCamp.Size = new System.Drawing.Size(248, 20);
+            this.tbxETMaxCamp.TabIndex = 13;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(48, 277);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Description";
+            // 
+            // tbxETMaxTickets
+            // 
+            this.tbxETMaxTickets.Location = new System.Drawing.Point(149, 62);
+            this.tbxETMaxTickets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbxETMaxTickets.Name = "tbxETMaxTickets";
+            this.tbxETMaxTickets.Size = new System.Drawing.Size(248, 20);
+            this.tbxETMaxTickets.TabIndex = 12;
+            // 
+            // btnETNewEvent
+            // 
+            this.btnETNewEvent.Location = new System.Drawing.Point(37, 76);
+            this.btnETNewEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnETNewEvent.Name = "btnETNewEvent";
+            this.btnETNewEvent.Size = new System.Drawing.Size(201, 23);
+            this.btnETNewEvent.TabIndex = 9;
+            this.btnETNewEvent.Text = "New Event";
+            this.btnETNewEvent.UseVisualStyleBackColor = true;
+            this.btnETNewEvent.Click += new System.EventHandler(this.btnETNewEvent_Click);
+            // 
+            // btnETViewEvents
+            // 
+            this.btnETViewEvents.Location = new System.Drawing.Point(37, 109);
+            this.btnETViewEvents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnETViewEvents.Name = "btnETViewEvents";
+            this.btnETViewEvents.Size = new System.Drawing.Size(201, 23);
+            this.btnETViewEvents.TabIndex = 8;
+            this.btnETViewEvents.Text = "View All Events";
+            this.btnETViewEvents.UseVisualStyleBackColor = true;
+            this.btnETViewEvents.Click += new System.EventHandler(this.btnETSelectEvent_Click);
             // 
             // tabOv
             // 
@@ -775,7 +799,6 @@
             this.tabOv.Location = new System.Drawing.Point(4, 22);
             this.tabOv.Name = "tabOv";
             this.tabOv.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOv.Size = new System.Drawing.Size(776, 576);
             this.tabOv.Size = new System.Drawing.Size(776, 577);
             this.tabOv.TabIndex = 4;
             this.tabOv.Text = "Overview";
@@ -821,7 +844,8 @@
             this.tabDBView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabEvent.ResumeLayout(false);
-            this.tabEvent.PerformLayout();
+            this.tabNewEvent.ResumeLayout(false);
+            this.tabNewEvent.PerformLayout();
             this.tabOv.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -837,22 +861,20 @@
         private System.Windows.Forms.Button btnCheckInSubmit;
         private System.Windows.Forms.TextBox tbxCheckInID;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbxEventSelectEvent;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxETLocation;
         private System.Windows.Forms.TextBox tbxETMaxCamp;
         private System.Windows.Forms.TextBox tbxETMaxTickets;
         private System.Windows.Forms.TextBox tbxETEventName;
         private System.Windows.Forms.Button btnETDeleteEvent;
         private System.Windows.Forms.Button btnETNewEvent;
-        private System.Windows.Forms.Button btnETSelectEvent;
-        private System.Windows.Forms.DateTimePicker dtpETEventDate;
+        private System.Windows.Forms.Button btnETViewEvents;
+        private System.Windows.Forms.DateTimePicker tbxETdate;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnETSave;
         private System.Windows.Forms.RichTextBox richTbxETDescription;
@@ -890,6 +912,10 @@
         private System.Windows.Forms.TabPage tabOv;
         private System.Windows.Forms.ListBox lbxOvInfo;
         private System.Windows.Forms.Button btnOvRefresh;
+        private System.Windows.Forms.ListBox listBoxEventSelect;
+        private System.Windows.Forms.Panel tabNewEvent;
+        private System.Windows.Forms.TextBox tbxETEventMinage;
+        private System.Windows.Forms.Label label15;
 
 
     }

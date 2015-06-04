@@ -307,10 +307,11 @@ namespace AvertiFestivalApplication
 
         #region Event
 
-        public List<string>[] GetEvents(){
+        public List<Event> GetEvents()
+        {
             String sql = "SELECT * FROM Event";
             MySqlCommand command = new MySqlCommand(sql, connection);
-            List<String>[] eventid = new List<string>[8];
+            List<Event> eventid = new List<Event>();
 
             try
             {
@@ -320,14 +321,10 @@ namespace AvertiFestivalApplication
 
                 while (reader.Read())
                 {
-                    eventid[i].Add(reader["minimumage"].ToString());
-                    eventid[i].Add(reader["eventid"].ToString());
-                    eventid[i].Add(reader["date"].ToString());
-                    eventid[i].Add(reader["location"].ToString());
-                    eventid[i].Add(reader["nrOfParticipants"].ToString());
-                    eventid[i].Add(reader["eventname"].ToString());
-                    eventid[i].Add(reader["maxcamping"].ToString());
-                    eventid[i].Add(reader["description"].ToString());
+                    Event newevent = new Event(Convert.ToInt32(reader["minimumage"]), Convert.ToString(reader["date"]),
+                        reader["location"].ToString(), Convert.ToInt32(reader["nrOfParticipants"]),
+                        reader["eventname"].ToString(), Convert.ToInt32(reader["maxcamping"]), reader["description"].ToString());
+                    eventid.Add(newevent);
                     i++;
                 }
             }
@@ -346,8 +343,8 @@ namespace AvertiFestivalApplication
 
         public bool saveEvent(int minage, string date, string location, int nrofpeople, string name, int maxcamping, string des)
         {
-             String sql = ("INSERT INTO EVENT (minimumAge, date, location, nrOfParticipants, eventName, maxCamping, description) VALUES (" + minage.ToString() + date.ToString() + location.ToString() + nrofpeople.ToString() + name.ToString() + maxcamping.ToString() + des.ToString() + ");"   );
-                       MySqlCommand command = new MySqlCommand(sql, connection);
+            String sql = ("INSERT INTO EVENT (minimumAge, date, location, nrOfParticipants, eventName, maxCamping, description) VALUES (" + minage + " ,'" + date.ToString() + " ' ,'" + location.ToString() + "' ," + nrofpeople + " ,'" + name.ToString() + "' ," + maxcamping + " ,'" + des.ToString() + "')");
+            MySqlCommand command = new MySqlCommand(sql, connection);
 
             try
             {
@@ -355,7 +352,7 @@ namespace AvertiFestivalApplication
 
                 MySqlDataReader reader = command.ExecuteReader();
 
-         return true;
+                return true;
             }
             catch
             {
@@ -365,28 +362,21 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
-        } 
-        
+        }
 
 
-        public int deleteEvent(int Eventid)
+
+        public int deleteEvent(string EventName)
         {
-                       String sql = ("DELETE FROM EVENT WHERE eventID = "  + Eventid);
-                       MySqlCommand command = new MySqlCommand(sql, connection);
+            String sql = ("DELETE FROM EVENT WHERE eventName = '" + EventName + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
             try
             {
                 connection.Open();
 
                 MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    return Convert.ToInt32(reader["Eventid"]);
-                }
-                else
-                {
-                    return -1;
-                }
+                return 1;
             }
             catch
             {
@@ -397,6 +387,8 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+
+
 
         #endregion
 

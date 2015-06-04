@@ -23,16 +23,16 @@ namespace AvertiFestivalApplication
         private RFID RfidCheckin;
         Event newEvent;
         DBHandler db = new DBHandler();
-        List<Event> events;
         List<Article> Namearticle;
         List<Article> SortArticles;
-
+        List<string>[] eventsq;
+        List<Event> events = new List<Event>();
 
 
         public FestivalAppForm()
         {
-            events = new List<Event>();
             InitializeComponent();
+            refreshEventsList();
 
             RfidCheckin = new RFID();
             RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
@@ -171,7 +171,7 @@ namespace AvertiFestivalApplication
                 MessageBox.Show("There is no Articles in database");
             }
         }
-                
+
         #region Login / CheckIn
 
         public FestivalAppForm(String personalID)
@@ -319,7 +319,7 @@ namespace AvertiFestivalApplication
                 btnSTAddToOrder.Enabled = true;
             }
         }
-        
+
         private void btnSTSeeDetails_Click(object sender, EventArgs e)
         {
             string s = tbxRFID.Text;
@@ -345,7 +345,7 @@ namespace AvertiFestivalApplication
             }
 
         }
-        
+
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
 
@@ -419,7 +419,7 @@ namespace AvertiFestivalApplication
                 MessageBox.Show("Please choose an article or the quantity");
             }
         }
-        
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
@@ -457,7 +457,7 @@ namespace AvertiFestivalApplication
                 lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
             }
         }
-        
+
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
             string s = tbxRFID.Text;
@@ -488,7 +488,7 @@ namespace AvertiFestivalApplication
             lbWallet.Text = "";
 
         }
-        
+
         private void btnSTCancel_Click(object sender, EventArgs e)
         {
             tbxRFID.Clear();
@@ -500,7 +500,7 @@ namespace AvertiFestivalApplication
 
 
         }
-        
+
         private void tabSales_Click(object sender, EventArgs e)
         {
 
@@ -511,6 +511,17 @@ namespace AvertiFestivalApplication
         #endregion
 
         #region Event
+
+        private void refreshEventsList()
+        {
+            events = db.GetEvents();
+            //    TabControl.TabPages.Remove(tabSales);
+            this.listBoxEventSelect.Items.Clear();
+            foreach (var item in events)
+            {
+                this.listBoxEventSelect.Items.Add(item.Name);
+            }
+        }
 
         private void cbxDTInfoType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -529,80 +540,34 @@ namespace AvertiFestivalApplication
 
         private void btnETSelectEvent_Click(object sender, EventArgs e)
         {
+            listBoxEventSelect.Items.Clear();
+
             foreach (var item in events)
             {
-                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
-                {
-                    this.tbxETEventName.Text = item.Name;
-                    this.tbxETLocation.Text = item.Location;
-                    this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
-                    this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
-                    this.richTbxETDescription.AppendText(item.Description);
-                    // this.tbxETEventDate.Text = item.Date.ToString();
-                    // this.tbxETEventMinage.Text = item.Minage.ToString();
-
-                }
+                listBoxEventSelect.Items.Add(item.Name);
             }
         }
 
         private void btnETNewEvent_Click(object sender, EventArgs e)
         {
-            string name = this.tbxETEventName.Text;
-            string location = this.tbxETLocation.Text;
-            int maxticket = Convert.ToInt32(this.tbxETMaxTickets.Text);
-            int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
-            string descript = this.richTbxETDescription.Text;
-            // string date = this.tbxETEventDate.Text;
-            // int minage = Convert.ToInt32( this.tbxETEventMinage.Text);
-            try
+
+            this.tabNewEvent.Visible = !this.tabNewEvent.Visible;
+
+            if (this.tabNewEvent.Visible == true)
             {
-                //newEvent = new Event(minage,date,location,maxticket,name,maxcamp,descript);
-
+                this.btnETNewEvent.Text = "Hide New Event";
             }
-            catch (Exception)
+            else
             {
-
-                MessageBox.Show("all fields should be filled");
+                this.btnETNewEvent.Text = "New Event";
             }
-
-
         }
 
         private void tabEvent_Click(object sender, EventArgs e)
         {
-            List<string>[] eventsq = db.GetEvents();
-
-
-            for (int i = 0; i < eventsq.Length - 1; i++)
-            {
-                Event newevent = new Event(Convert.ToInt32(eventsq[i][0]), Convert.ToInt32(eventsq[i][1]), eventsq[i][2], eventsq[i][3], Convert.ToInt32(eventsq[i][4]), eventsq[i][5], Convert.ToInt32(eventsq[i][6]), eventsq[i][7]);
-
-                events.Add(newevent);
-            }
-            foreach (var item in events)
-            {
-                this.cmbxEventSelectEvent.Items.Add(item.Name);
-            }
-
 
         }
 
-        private void label15_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnETDeleteEvent_Click(object sender, EventArgs e)
-        {
-
-            foreach (var item in events)
-            {
-                if (this.cbxDTSelectEvent.SelectedItem == item.Name)
-                {
-                    db.deleteEvent(item.Eventid);
-                }
-            }
-        }
 
         private void cmbxEventSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -613,33 +578,91 @@ namespace AvertiFestivalApplication
         {
 
         }
-        
-        private void btnETSave_Click(object sender, EventArgs e)
-        {
-            if (newEvent != null)
-            {
-                db.saveEvent(newEvent.Minage, newEvent.Date, newEvent.Location, newEvent.Maxtickets, newEvent.Name, newEvent.Maxcamping, newEvent.Description);
-            }
-        }
-        
+
+
         private void btnCancel_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
         {
             newEvent = null;
             this.tbxETEventName.Text = "";
             this.tbxETLocation.Text = "";
             this.tbxETMaxTickets.Text = "";
             this.tbxETMaxCamp.Text = "";
-            //check this pls
             this.richTbxETDescription.Clear();
-            //how to complete this? 
-            //this.tbxETEventDate.Text = "";
+            this.tbxETdate.Value = DateTime.Now;
+            this.tbxETEventMinage.Text = "";
+        }
 
-            //this.tbxETEventMinage.Text = "";
+        private void btnETSave_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string name = this.tbxETEventName.Text;
+                string location = this.tbxETLocation.Text;
+                int maxticket = Convert.ToInt32(this.tbxETMaxTickets.Text);
+                int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
+                string descript = this.richTbxETDescription.Text;
+                string date = this.tbxETdate.Value.ToString();
+                int minage = Convert.ToInt32(this.tbxETEventMinage.Text);
+
+                newEvent = new Event(minage, date, location, maxticket, name, maxcamp, descript);
+                db.saveEvent(minage, date, location, maxticket, name, maxcamp, descript);
+
+                this.tbxETEventName.Text = "";
+                this.tbxETLocation.Text = "";
+                this.tbxETMaxTickets.Text = "";
+                this.tbxETMaxCamp.Text = "";
+                this.richTbxETDescription.Clear();
+                this.tbxETdate.Value = DateTime.Now;
+                this.tbxETEventMinage.Text = "";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("all fields should be filled");
+            }
+            if (newEvent != null)
+            {
+                MessageBox.Show("a new event has been created");
+            }
+            else
+            {
+                MessageBox.Show("no event has been created");
+            }
+        }
+
+        private void btnETDeleteEvent_Click_1(object sender, EventArgs e)
+        {
+            foreach (var item in events)
+            {
+                if (this.listBoxEventSelect.SelectedItem == item.Name)
+                {
+                    if (1 == db.deleteEvent(item.Name))
+                    {
+                        MessageBox.Show("the event has been deleted");
+                        events.Remove(item);
+                    }
+                }
+            }
+            refreshEventsList();
+        }
+
+        private void listBoxEventSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.tabNewEvent.Visible = true;
+            foreach (var item in events)
+            {
+                if (this.listBoxEventSelect.SelectedItem.ToString() == item.Name.ToString())
+                {
+                    this.tbxETEventName.Text = item.Name;
+                    this.tbxETLocation.Text = item.Location;
+                    this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
+                    this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
+                    this.richTbxETDescription.AppendText(item.Description);
+                    DateTime myDate = DateTime.ParseExact(item.Date.ToString(), "yyyy-MM-dd",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+                    this.tbxETdate.Value = myDate;
+                    this.tbxETEventMinage.Text = item.Minage.ToString();
+                }
+            }
         }
 
         private void hide()
@@ -759,10 +782,10 @@ namespace AvertiFestivalApplication
                         break;
                     }
             }
-        }       
+        }
 
         #endregion
-        
+
         #region Article
 
 
@@ -836,7 +859,7 @@ namespace AvertiFestivalApplication
                 btnSTCompleteOrder.Enabled = true;
             }
         }
-        
+
         private void btnOvRefresh_Click(object sender, EventArgs e)
         {
             //Things to add to the listbox sold, ppl at the festival, open camp spots and stocks
@@ -865,10 +888,13 @@ namespace AvertiFestivalApplication
             {
                 lbxOvInfo.Items.Add(art.Name + ": " + art.Stock);
             }
-
         }
 
-        #endregion
+        private void tbxETdate_ValueChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
+
+        #endregion
