@@ -53,8 +53,7 @@
   			<form>
       			<label for="name">Name</label>
       			<input type="text" id="name" name="name"><br>
-      			<label for="lastname">Last Name</label>
-      			<input type="text" id="lastname" name="lastname"><br>
+      		
       			<label for="email">Email</label>
       			<input type="text" id="email" name="email"><br>
       			<label for="address">Address</label>
@@ -78,5 +77,81 @@
    <div class="Question">
  		<p><img src="Images/dimalogo.png" height="100"></p>
    	</div>
+<?php
+//if there is file has been selected 
+if (isset ($_FILES['file']))
+{
+//file should have this criteria 
+	$allowedExts = array("gif", "jpeg", "jpg", "png");
+	$temp = explode(".", $_FILES["file"]["name"]);
+	$extension = end($temp);
+
+	if ((($_FILES["file"]["type"] == "image/gif")
+	|| ($_FILES["file"]["type"] == "image/jpeg")
+	|| ($_FILES["file"]["type"] == "image/jpg")
+	|| ($_FILES["file"]["type"] == "image/pjpeg")
+	|| ($_FILES["file"]["type"] == "image/x-png")
+	|| ($_FILES["file"]["type"] == "image/png"))
+	&& ($_FILES["file"]["size"] < 2000000)
+	&& in_array($extension, $allowedExts)) {
+	  if ($_FILES["file"]["error"] > 0) {
+		echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
+	  } else {
+		echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+		echo "Type: " . $_FILES["file"]["type"] . "<br>";
+		echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+		echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";
+		if (file_exists("upload/" . $_FILES["file"]["name"])) {
+		  echo $_FILES["file"]["name"] . " already exists. ";
+		} else {
+		//upload the file 
+		  move_uploaded_file($_FILES["file"]["tmp_name"],
+		  "upload/" . $_FILES["file"]["name"]);
+		  echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+		}
+	  }
+	} else {
+	  echo "Invalid file";
+	}
+}
+?>
+				<?php
+				// make a connection to database
+$con=mysqli_connect("athena01.fhict.local","dbi252284","fCPIXLUNGi","dbi252284");
+// Check connection
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+//see the other characteristic of user 
+$result = mysqli_query($con,"SELECT * FROM person");
+while($row = mysqli_fetch_array($result)) {
+// fetch them 
+if ($row['username'] == $_SESSION['username'])
+{
+// print them here
+		  echo '<p>';
+		  echo "<br>";
+		  echo "<br>";
+		  echo "Your name:";
+		  echo $row['name'];
+		  echo "<br>";
+             echo "Your address: ";
+		  echo $row['address'];
+             echo "<br>";
+             echo "Your telephone:";
+		  echo $row['telephoneNumber'];
+             echo "<br>";
+		  echo "You are a : ";
+		  echo $row['Sex'];
+             echo "<br>";
+             echo "Your papalID is :";
+		  echo $row['paypalID'];
+     		echo '</p>';
+		}
+		}
+		//close the connection 
+	mysqli_close($con);
+		?>
+
 </body>   	
 </html>
