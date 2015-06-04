@@ -418,6 +418,7 @@ namespace AvertiFestivalApplication
             {
                 MessageBox.Show("Please choose an article or the quantity");
             }
+            btnSTCompleteOrder.Enabled = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -455,6 +456,7 @@ namespace AvertiFestivalApplication
 
                 double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
                 lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
+                btnSTCompleteOrder.Enabled = true;
             }
         }
 
