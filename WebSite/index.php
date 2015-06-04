@@ -1,4 +1,7 @@
-<!-DOCTYPE html->
+<?php
+    session_start();
+    
+?>
 <html>
 <head>
 	<title>Averti Festival</title>
@@ -10,26 +13,9 @@
 	<script src="js/bootstrap.js"></script>
 </head>
 <body>
-	<div class="nav">
-      <div class="container" >
-          <nav class="navbar navbar-default navbar-fixed-top" style="background:#ff6f3a;">
-              <div class="container" >
-                  <ul  class="nav nav-pills">
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="learnmore.html">Learn More</a></li>
-                      <li><a href="tickets.html">Tickets</a></li>
-                      
-                      <li class="navbar-right">
-                      	<a id="signup">Sign Up</a>
-                      </li>
-                      <li class="navbar-right">
-                      	<a id="login">Log In</a>
-                      </li>
-                      <li class="navbar-right"><a href="profile.html">Profile</a></li>
-                  </ul>
-              </div>
-          </nav>
-    </div>
+    
+	<?php include 'php/navigation.php'; ?>
+        
      <div class="home">
 		<div class="dates">
 			<h1>
@@ -91,13 +77,13 @@
       	
       	<!--login form-->
         <div class="login">
-      		<form>
+      		<form action="php/login.php" method="POST">
       			<label for="username">Username</label>
       			<input type="text" id="username" name="username">
       			<label for="password">Password</label>
       			<input type="text" id="password" name="password">
       				<div id="lower">
-      					<input type="submit" value="Login" onclick="window.location.href='profile.html'">
+      					<input type="submit" value="Login">
       					<input type="reset" value="Close" class="btnCloseLogin">
       				</div>
       		</form>

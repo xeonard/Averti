@@ -1,39 +1,50 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ruud
- * Date: 1-6-2015
- * Time: 9:51
- */
 
-session_start();
-//connection details
-$host = "athena01.fhict.local";
-$username = "dbi252284";
-$password ="fCPIXLUNGi";
-$db = "dbi252284";
-
-try {
-    $con = mysql_connect($host, $username, $password);
-    mysql_select_db($db, $con);
-
-    /**
-     * @param $userId
-     * @return array
-     */
+    function connection(){
+        $host = "athena01.fhict.local";
+        $username = "dbi252284";
+        $password ="fCPIXLUNGi";
+        $db = "dbi252284";
+    
+        try {
+            $conn = new PDO("mysql:host=$host;dbname=$db", $username, $password);
+        }
+        catch (PDOException $pe) {
+            die("Could not connect to the database $db :" . $pe->getMessage());
+        }
+        return $conn;
+    }
+    
     function getUserData($userId)
     {
+        $conn = connection();
+        $stmt = $conn->prepare("select * from person where personalID = '$userId'limit 1");
+        $stmt->execute();
+        
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
 
-        $query = mysql_query("select * from person where personalID = '$userId'limit 1");
-
-        return mysql_fetch_array($query, 1);
+        return $result;
     }
-
-
-
-
-
-}catch (PDOException $e) {
-
-    echo $e;
-}
+    
+    function getarrayfromtable($username){//temperary method for profile using database from localhost
+        $conn = connection();
+        $stmt = $conn->prepare("select * from user Where uname = " . $username);
+        $stmt->execute();
+        $array = null;
+        
+        $results = $stmt->fetchAll(); 
+        foreach ($results as $result) {
+        $array = array(
+            'uname'    => $result['username'],
+            'name'  => $result['name'],
+            'lastname'  => $result['lastname'],
+            'email' => $result['email'],
+            'phone' => $result['telephoneNumber'],
+            'sex' => $result['Sex'],
+            'address' => $result['address'],
+            'wallet' => $result['walletBalance'],
+            'bday' => $result['birthday'],
+        );
+        }
+        return $array;
+    }
