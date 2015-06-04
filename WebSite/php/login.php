@@ -1,43 +1,29 @@
 <?php
 require('PDO.php');
-if(isset($_POST['loginbtn'])){
+if(isset($_POST['username'])){
 
-
+    $conn = connection();
     $userName = $_POST['username'];
     $passWord = $_POST['password'];
 
-    $cookie_name = "User" ;
-    $cookie_value = $userName;
-    setcookie($cookie_name,$cookie_value,time()+(86400 * 30),"/");
+    $sql ="select personalID from person where username = '$userName' and password = '$passWord'limit 1";
+    $query = $conn->prepare($sql);
+    $query->execute();
+    $getdata= $query->fetchAll();
+    if($getdata) {
 
-
-
-    $query = mysql_query("select personalID from person where username = '$userName' and password = '$passWord'limit 1");
-    if( mysql_num_rows($query)==1) {
-
-        $data= mysql_fetch_array($query,1);
-        $_SESSION['personalID']= $data['personalID'];
-
-        header('location:profile.php');
+        $_SESSION['personalID'] = $getdata['personalID'];
+        $_SESSION['username'] = $userName;
+        
+        echo 'You logged in succesfully. Redirecting to profile page...';
+        header('refresh:1; url=../profile.php');
     }else{
 
-        $error = "Invalid Login" ;
+        echo "Log in or password is incorrect, redirecting back...";
+        header( "refresh:1; url=../index.php" );
     }
-//todo when user is not logged in by session it needs to be redirected to indexpage; only for the member specific pages
+}
+ else {
+     echo "Something went wrong";
 }
 ?>
-<div id="logindiv">
-        <form class="form" action="" id="login" method="post">
-            <h3>Login Form</h3>
-            <?php if(isset($error)){ ?>
-            <label ><strong class="error"><?php echo $error ?></strong></label>
-            <?php } ?>
-
-            <label>Username :</label>
-            <input type="text" id="username" placeholder="Enter your username"/>
-            <label>Password : </label>
-            <input type="password" id="password" placeholder="Enter your password"/>
-            <input type="button" id="loginbtn" value="Login"/>
-            <input type="button" id="cancel" value="Cancel"/>
-        </form>
-    </div>
