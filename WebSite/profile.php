@@ -2,7 +2,7 @@
     include 'php/PDO.php';
     session_start();
     if(!isset($_SESSION['username'])){
-    header( "refresh:0; url=index.php" );
+    //header( "refresh:0; url=index.php" );
 }
 ?>
 
@@ -34,18 +34,17 @@
   		<div class="profinfo">
   			<img src="Images/profpic.png" alt="Profile Picture" height="200px"> <br> <br>
                         <?php
-                            $information = getarrayfromtable($_SESSION['username']);
+                            $information = getarrayfromtable('Sophia');
                         
  
                             echo '<p>Name: '. $information['name'] .'</p>'.
-                            '<p>Last Name: '. $information['lastname'] .'</p>
-                            <p>Email: '. $information['email'] .'</p>'.
-                            '<p>Address: '. $information['address'] .' Johannes van der Waalsweg 92A</p>
-                            <p>Birthday: '. $information['bday'] . '28/10/1996</p>
+                            '<p>Email: '. $information['email'] .'</p>'.
+                            '<p>Address: '. $information['address'] .'</p>
+                            <p>Birthday: '. $information['bday'] . '</p>
                             <p>Telephone number:',  $information['phone'] .'</p>
                             <p>Sex: '. $information['sex'] .'</p>
                             <p>Paypal id: ' . $information['paypall'] . '</p>
-                            <p>Camping information:  reserved camping spot ' . information['camp'] . '</p>';
+                            <p>Camping information:  reserved camping spot ' . $information['camp'] . '</p>';
                         ?>
   		</div>
   		

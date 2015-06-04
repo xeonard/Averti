@@ -81,7 +81,7 @@
       			<label for="username">Username</label>
       			<input type="text" id="username" name="username">
       			<label for="password">Password</label>
-      			<input type="text" id="password" name="password">
+      			<input type="password" id="password" name="password">
       				<div id="lower">
       					<input type="submit" value="Login">
       					<input type="reset" value="Close" class="btnCloseLogin">
