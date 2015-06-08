@@ -1,3 +1,11 @@
+<?php
+    include 'php/PDO.php';
+    session_start();
+    if(!isset($_SESSION['username'])){
+    header( "refresh:0; url=index.php" );
+}
+?>
+
 <html>
 <head>
 	<title>Averti Festival</title>
@@ -9,22 +17,7 @@
 	<script src="js/bootstrap.js"></script>
 </head>
 <body>
-	<!--navigation-->
-	<div class="nav">
-      <div class="container" >
-          <nav class="navbar navbar-default navbar-fixed-top" style="background:#ff6f3a;">
-              <div class="container" >
-                  <ul  class="nav nav-pills">
-                      <li><a href="index.php">Home</a></li>
-                      <li><a href="learnmore.html">Learn More</a></li>
-                      <li><a href="tickets.html">Tickets</a></li>
-
-                      <li class="navbar-right"><a href="profile.html">Profile</a></li>
-                  </ul>
-              </div>
-          </nav>
-    </div>
-   </div>
+	<?php include 'php/navigation.php'; ?>
   
    <div class="profile">
   		<div class="photo">
@@ -40,15 +33,20 @@
   		
   		<div class="profinfo">
   			<img src="Images/profpic.png" alt="Profile Picture" height="200px"> <br> <br>
-  			<p>Name: Dmytro</p>
-  			<p>Last Name: Bunin</p>
-  			<p>Email: bunind@live.com</p>
-  			<p>Address: Johannes van der Waalsweg 92A</p>
-  			<p>Birthday: 28/10/1996</p>
-  			<p>Telephone number: +380939762888</p>
-  			<p>Sex: Male</p>
-  			<p>Paypal id: 123456789</p>
-  			<p>Camping information: reserved camping spot #28A</p>
+                        <?php
+                            $information = getarrayfromtable($_SESSION['username']);
+                        
+ 
+                            echo '<p>Name: '. $information['name'] .'</p>'.
+                            '<p>Last Name: '. $information['lastname'] .'</p>
+                            <p>Email: '. $information['email'] .'</p>'.
+                            '<p>Address: '. $information['address'] .' Johannes van der Waalsweg 92A</p>
+                            <p>Birthday: '. $information['bday'] . '28/10/1996</p>
+                            <p>Telephone number:',  $information['phone'] .'</p>
+                            <p>Sex: '. $information['sex'] .'</p>
+                            <p>Paypal id: ' . $information['paypall'] . '</p>
+                            <p>Camping information:  reserved camping spot ' . information['camp'] . '</p>';
+                        ?>
   		</div>
   		
   		<div class="editinfo">

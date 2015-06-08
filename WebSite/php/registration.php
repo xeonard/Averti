@@ -1,0 +1,50 @@
+<?php
+require('PDO.php');
+  if ( empty( $_POST ) ) {
+?>
+<form name="registration" action="registration.php" method="POST">
+  <label for='username'>Username: </label>
+  <input type="text" name="username"/>
+  <label for='password'>Password: </label>
+  <input type="password" name="password"/>
+  <label for='name'>name: </label>
+  <input type="text" name="name"/>
+  <label for='email'>Email: </label>
+  <input type="text" name="email"/>
+  <br/>
+  <button type="button" class="btn btn-primary">Submit</button>
+</form>
+<?php
+} else {
+	$db = connection();
+	$form = $_POST;
+	$username = $form[ 'username' ];
+	$password = $form[ 'password' ];
+	$name = $form[ 'name' ];
+	$email = $form[ 'email' ];
+        
+	$conn = connection();
+        $stmt = $conn->prepare("Select MAX(`personalID`)+1 AS personalID FROM person ");
+        $stmt->execute();
+        $array = null;
+        $personalID = null;
+        
+        $results = $stmt->fetchAll(); 
+        foreach ($results as $result) {
+            $personalID =$result['personalID'];
+        }
+        
+        echo 'personal id: ' . $personalID;
+	$sql = "INSERT INTO person (personalID, name, email, username, password) 
+	VALUES ( :personalID, :name,  :email, :username, :password)";
+	$query = $db->prepare( $sql );
+	$result = $query->execute( array( ':personalID'=>$personalID, ':username'=>$username, ':password'=>$password, 
+		':name'=>$name, ':email'=>$email ) );
+	if ( $result ){
+ 		 echo "<p>Thank you. You have been registered</p>";
+	} else {
+		  echo "<p>Sorry, there has been a problem inserting your details. Please try again</p>";
+	}
+}
+
+?>

@@ -10,9 +10,9 @@ if(isset($_POST['username'])){
     $query = $conn->prepare($sql);
     $query->execute();
     $getdata= $query->fetchAll();
-    if(isset($getdata)) {
-        foreach($getdata as $data)
-        $_SESSION['personalID'] = $data['personalID'];
+    if($getdata) {
+
+        $_SESSION['personalID'] = $getdata['personalID'];
         $_SESSION['username'] = $userName;
         
         echo 'You logged in succesfully. Redirecting to profile page...';
