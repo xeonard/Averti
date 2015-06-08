@@ -553,6 +553,14 @@ namespace AvertiFestivalApplication
         {
 
             this.tabNewEvent.Visible = !this.tabNewEvent.Visible;
+            this.tbxETEventName.Text = "";
+            this.tbxETLocation.Text = "";
+            this.tbxETMaxTickets.Text = "";
+            this.tbxETMaxCamp.Text = "";
+            this.richTbxETDescription.Clear();
+            this.tbxETdate.Value = DateTime.Now;
+            this.tbxETEventMinage.Text = "";
+            this.richTbxETDescription.Text = "";
 
             if (this.tabNewEvent.Visible == true)
             {
@@ -617,14 +625,17 @@ namespace AvertiFestivalApplication
                 this.tbxETEventMinage.Text = "";
                 this.richTbxETDescription.Text = "";
                 this.refreshEventsList();
+
             }
             catch (Exception)
             {
                 MessageBox.Show("all fields should be filled");
+                newEvent = null;
             }
             if (newEvent != null)
             {
                 MessageBox.Show("a new event has been created");
+
             }
             else
             {

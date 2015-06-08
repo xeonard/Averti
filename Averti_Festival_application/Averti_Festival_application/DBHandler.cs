@@ -343,7 +343,7 @@ namespace AvertiFestivalApplication
 
         public bool saveEvent(int minage, string date, string location, int nrofpeople, string name, int maxcamping, string des)
         {
-            String sql = ("INSERT INTO EVENT (minimumAge, date, location, nrOfParticipants, eventName, maxCamping, description) VALUES (" + minage + " ,'" + date + " ' ,'" + location.ToString() + "' ," + nrofpeople + " ,'" + name.ToString() + "' ," + maxcamping + " ,'" + des.ToString() + "')");
+            String sql = ("INSERT INTO EVENT (minimumAge, date, location, nrOfParticipants, eventName, maxCamping, description) VALUES (" + minage + " ,'" + date.ToString() + " ' ,'" + location.ToString() + "' ," + nrofpeople + " ,'" + name.ToString() + "' ," + maxcamping + " ,'" + des.ToString() + "')");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
             try
