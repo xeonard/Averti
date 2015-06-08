@@ -8,12 +8,9 @@ D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_applica
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.LogInForm.resources
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.FestivalAppForm.resources
-<<<<<<< HEAD
 C:\Users\Ruud\Documents\School docs\year_1\Semester_2\ProP\ProP group M\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
 C:\Users\Ruud\Documents\School docs\year_1\Semester_2\ProP\ProP group M\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
 C:\Users\Ruud\Documents\School docs\year_1\Semester_2\ProP\ProP group M\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
-=======
->>>>>>> origin/master
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
