@@ -1,5 +1,38 @@
 <?php
 require('PDO.php');
+session_start();
+if(isset($_POST['submit']))
+{
+ //whether the username is blank
+ if($_POST['username'] == '')
+ {
+  $_SESSION['error']['username'] = "Username is required.";
+ }
+ //whether the email is blank
+ if($_POST['email'] == '')
+ {
+  $_SESSION['error']['email'] = "Email is required.";
+ }
+ else
+ {
+  //whether the email format is correct
+     $Syntax='/^([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+$/';
+   if(preg_match($Syntaxe, $_POST['email']))
+      return true;
+   else
+   $_SESSION['error']['email'] = "Your email is not valid.";
+   }
+ //whether the password is blank
+ if($_POST['password'] == '')
+ {
+  $_SESSION['error']['password'] = "Password is required.";
+ }
+  //whether the name is blank
+ if($_POST['name'] == '')
+ {
+  $_SESSION['error']['name'] = "Name is required.";
+ }
+ 
   if ( empty( $_POST ) ) {
 ?>
 <form name="registration" action="registration.php" method="POST">
@@ -45,6 +78,7 @@ require('PDO.php');
 	} else {
 		  echo "<p>Sorry, there has been a problem inserting your details. Please try again</p>";
 	}
+}
 }
 
 ?>
