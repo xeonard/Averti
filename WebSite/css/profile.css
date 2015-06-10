@@ -117,9 +117,9 @@ form {
 label {
     color: white;
     display: inline-block;
-    margin-left: 10px;
-    padding-top: 10px;
-    font-size: 14px;
+    margin-left: 30px;
+    padding-top: 20px;
+    font-size: 18px;
 }
 
 input {
