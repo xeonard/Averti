@@ -39,7 +39,7 @@ namespace AvertiFestivalApplication
                 MessageBox.Show("No RFID connection");
             }
 
-                 
+
         }
 
         private void ProcessThisTag(object sender, TagEventArgs e)
@@ -48,39 +48,49 @@ namespace AvertiFestivalApplication
 
             if (this.tbxLoginID.Text != string.Empty)
             {
-                btnLogin.Enabled = true; 
+                btnLogin.Enabled = true;
             }
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            if (db.CheckRFID(tbxLoginID.Text) != -1)
+            if (db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)) == "visitor")
             {
-
-
-                try
-                {
-                    Thread thread = new Thread(new ThreadStart(FestivalThread));
-                    thread.Start();
-                    this.Close();
-
-                }
-                catch (Exception) 
-                { 
-                    MessageBox.Show("Error with Login"); 
-                }
-
+                MessageBox.Show("Visitors have no access!");
             }
             else
             {
-                MessageBox.Show("There is no such rfid");
+
+                if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
+                {
+                    try
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(FestivalThread));
+                        thread.Start(db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)));
+                        this.Close();
+
+                    }
+                    catch (Exception) { MessageBox.Show("Error with Login"); }
+
+                }
+                else
+                {
+                    MessageBox.Show("Login incorrect");
+                }
+
             }
         }
         private void btnQuit_Click(object sender, EventArgs e)
         {
-           Application.Exit(); //was this really necessary?
+            Application.Exit(); //was this really necessary?
 
         }
-
+        //thread with parameter
+        public void FestivalThread(object description)
+        {
+            Application.Run(new FestivalAppForm((String)description));
+        }
+        //normal thread
         public static void FestivalThread()
         {
             Application.Run(new FestivalAppForm());
@@ -88,22 +98,36 @@ namespace AvertiFestivalApplication
 
         private void btnNormalLog_Click(object sender, EventArgs e)
         {
-            if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
+            if (db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)) == "visitor")
             {
-                try
-                {
-                    Thread thread = new Thread(new ThreadStart(FestivalThread));
-                    thread.Start();
-                    this.Close();
-
-                }
-                catch (Exception) { MessageBox.Show("Error with Login"); }
+                MessageBox.Show("Visitors have no access");
 
             }
             else
             {
-                MessageBox.Show("Login incorrect");
+
+
+                if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
+                {
+                    try
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(FestivalThread));
+                        thread.Start(db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)));
+                        this.Close();
+
+                    }
+                    catch (Exception) { MessageBox.Show("Error with Login"); }
+
+                }
+                else
+                {
+                    MessageBox.Show("Login incorrect");
+                }
+
             }
+
+
+
         }
 
         private void LogInForm_Load(object sender, EventArgs e)
@@ -121,6 +145,6 @@ namespace AvertiFestivalApplication
                 RfidLogin.close();
             }
         }
-    
+
     }
 }

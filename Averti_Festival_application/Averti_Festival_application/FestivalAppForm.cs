@@ -171,15 +171,31 @@ namespace AvertiFestivalApplication
             }
         }
 
-        #region Login / CheckIn
-
-        public FestivalAppForm(String personalID)
+        public FestivalAppForm(String description)
+            : this() // call the normal constructor for this class
         {
-            InitializeComponent();
-
             // check id to see which tabs to remove
+            switch (description)
+            {
+                case "sales": TabControl.TabPages.Remove(tabEvent);
+                    TabControl.TabPages.Remove(tabDBView);
+                    TabControl.TabPages.Remove(tabCheckIn);
+                    TabControl.TabPages.Remove(tabOv);
+                    break;
+                case "admin":
+                    TabControl.TabPages.Remove(tabSales);
+                    TabControl.TabPages.Remove(tabCheckIn);
+                    break;
+                case "entrance": TabControl.TabPages.Remove(tabEvent);
+                    TabControl.TabPages.Remove(tabDBView);
+                    TabControl.TabPages.Remove(tabSales);
+                    TabControl.TabPages.Remove(tabOv);
+                    break;
 
-            TabControl.TabPages.Remove(tabSales); // how to remove a tab
+                default:
+                    TabControl.TabPages.Remove(tabSales); // how to remove a tab
+                    break;
+            }
 
         }
 
@@ -189,6 +205,11 @@ namespace AvertiFestivalApplication
             Thread thread = new Thread(new ThreadStart(LogInThread));
             thread.Start();
         }
+        #region Login / CheckIn
+
+
+        
+       
         private void btnCheckTicket_Click(object sender, EventArgs e)
         {
             switch (db.CheckTicket(this.tbxCheckInID.Text))
@@ -897,7 +918,8 @@ namespace AvertiFestivalApplication
             lbxOvInfo.Items.Clear();
             //Add the tickets sold and # of visitors
             lbxOvInfo.Items.Add("Tickets sold: " + db.getTicketsSold());
-            lbxOvInfo.Items.Add("Poeple at the festival: " + db.getPoepleAtFestival());
+            lbxOvInfo.Items.Add("People at the festival: " + db.getPoepleAtFestival());
+            lbxOvInfo.Items.Add("People that left the festival: " + db.getPeopleLeftFestival());
             //Add the open camp spots
             lbxOvInfo.Items.Add("Open camping spots: " + db.GetNrOfEmptyCamping());
 

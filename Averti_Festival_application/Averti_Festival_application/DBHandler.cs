@@ -14,8 +14,8 @@ namespace AvertiFestivalApplication
         private MySqlConnection connection;
 
         public DBHandler()
-        {                               
-            String connectInfo =    "server=athena01.fhict.local;" +
+        {
+            String connectInfo = "server=athena01.fhict.local;" +
                                     "database=dbi252284;" +
                                     "user id=dbi252284;" +
                                     "password= fCPIXLUNGi;" +
@@ -44,7 +44,7 @@ namespace AvertiFestivalApplication
             }
             catch
             {
-                return("Error with DB");
+                return ("Error with DB");
             }
             finally
             {
@@ -62,16 +62,16 @@ namespace AvertiFestivalApplication
         /// 3 if the ticket is found and the person left the event
         /// </summary>
         /// <returns></returns>
-        
+
         #region CheckIN
 
         public int CheckTicket(String ticket)
         {
-            String sql = ("SELECT status FROM person WHERE personalID = " + 
+            String sql = ("SELECT status FROM person WHERE personalID = " +
                 "(SELECT personalID FROM transaction WHERE transactionID = " +
-                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticket)+"))");
-            MySqlCommand command = new MySqlCommand(sql, connection); 
-            
+                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticket) + "))");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
             String temp = String.Empty;
 
             try
@@ -80,7 +80,7 @@ namespace AvertiFestivalApplication
 
                 MySqlDataReader reader = command.ExecuteReader();
 
-                if(reader.Read())
+                if (reader.Read())
                 {
                     // check status
                     temp = Convert.ToString(reader["status"]);
@@ -92,7 +92,7 @@ namespace AvertiFestivalApplication
                     {
                         return 1;
                     }
-                    else 
+                    else
                     {
                         return 3;
                     }
@@ -104,14 +104,14 @@ namespace AvertiFestivalApplication
             }
             catch
             {
-                return(-1);
+                return (-1);
             }
             finally
             {
                 connection.Close();
             }
         }
-        
+
         /// <summary>
         /// Gets a persons personalId from a rfid tag
         /// </summary>
@@ -120,15 +120,15 @@ namespace AvertiFestivalApplication
         public int CheckRFID(string rFID)
         {
             String sql = ("SELECT * FROM person WHERE rfid = '" + rFID + "'");
-            MySqlCommand command = new MySqlCommand(sql, connection); 
-            
-             try
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
             {
                 connection.Open();
 
                 MySqlDataReader reader = command.ExecuteReader();
 
-                if(reader.Read())
+                if (reader.Read())
                 {
                     return Convert.ToInt32(reader["personalID"]);
                 }
@@ -145,7 +145,7 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
-          
+
         }
 
         /// <summary>
@@ -156,8 +156,8 @@ namespace AvertiFestivalApplication
         /// <returns></returns>
         public int PasswordLogin(int personalID, string password)
         {
-            
-            String sql = ("SELECT * FROM person WHERE personalID = " + personalID 
+
+            String sql = ("SELECT * FROM person WHERE personalID = " + personalID
                 + " AND password = '" + password + "'"); // password = 8 chars
             MySqlCommand command = new MySqlCommand(sql, connection);
 
@@ -177,7 +177,7 @@ namespace AvertiFestivalApplication
                     return -1;
                 }
             }
-            catch(Exception )
+            catch (Exception)
             {
                 return -1;
             }
@@ -191,9 +191,9 @@ namespace AvertiFestivalApplication
         {
 
 
-            String sql = ("UPDATE person SET rfid = '"+ rFID+"', status = 'arrived'  WHERE personalID = "
+            String sql = ("UPDATE person SET rfid = '" + rFID + "', status = 'arrived'  WHERE personalID = "
                 + "(SELECT personalID FROM transaction WHERE transactionID = " +
-                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR)+"))"); 
+                "(SELECT transactionID FROM tickets WHERE ticketNr = " + Convert.ToInt32(ticketNR) + "))");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
             try
@@ -215,7 +215,7 @@ namespace AvertiFestivalApplication
         }
         public bool UnassignRFID(string rFID)
         {
-            String sql = ("UPDATE person SET rfid = NULL, status = 'left' WHERE rfid = '"  + rFID + "'");
+            String sql = ("UPDATE person SET rfid = NULL, status = 'left' WHERE rfid = '" + rFID + "'");
             MySqlCommand command = new MySqlCommand(sql, connection);
 
             try
@@ -234,6 +234,40 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
             return false;
+
+
+        }
+
+        public string GetPersonDescription(int personalID)
+        {
+            String sql = ("SELECT description FROM person WHERE personalID = '" + personalID + "'");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+                
+                if (reader.Read())
+                {
+                    
+                    return Convert.ToString(reader[0]).Trim();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
 
 
         }
@@ -266,7 +300,7 @@ namespace AvertiFestivalApplication
             {
                 connection.Close();
             }
-            
+
         }
         public int personalID(string rFID)
         {
@@ -483,7 +517,7 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        public List<Article> NameArticle ( int ArticleID)
+        public List<Article> NameArticle(int ArticleID)
         {
             String sql = ("SELECT * FROM kindofarticle where ArticleID = " + ArticleID);
             MySqlCommand command = new MySqlCommand(sql, connection);
@@ -572,7 +606,7 @@ namespace AvertiFestivalApplication
 
         }
         //gets a list of 
-        public List<Article> InfoArticle( int ArticleID )
+        public List<Article> InfoArticle(int ArticleID)
         {
             String sql = ("SELECT * FROM article where ArticleID = " + ArticleID);
             MySqlCommand command = new MySqlCommand(sql, connection);
@@ -706,33 +740,11 @@ namespace AvertiFestivalApplication
         }
         public bool InsertToTransactionarticle(int transactionID, int KinOfArticleID,int ArticleID, int quantity)
         {
+<<<<<<< HEAD
             string quaryInsert = "INSERT INTO transactionarticle(transactionID, KinOfArticleID,ArticleID, quantity) VALUES('" + transactionID + "','" + KinOfArticleID + "','" + ArticleID+"','" + quantity + "')";
-            try
-            {
-            //open connection
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(quaryInsert, connection);
-            //Execute command
-            command.ExecuteNonQuery();
-            return true;
-            }
-                catch
-            {
-                return false;
-            }
-
-            finally
-            {
-                connection.Close();
-            }
-            //close connection
-            
-        }
-
-        public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime )
-        {
-         
-            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime.ToString() +"')";
+=======
+            string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
+>>>>>>> origin/master
             try
             {
                 //open connection
@@ -746,15 +758,42 @@ namespace AvertiFestivalApplication
             {
                 return false;
             }
-            finally { 
+
+            finally
+            {
+                connection.Close();
+            }
             //close connection
-            connection.Close();
+
+        }
+
+        public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime)
+        {
+
+            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime.ToString() + "')";
+            try
+            {
+                //open connection
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+                //Execute command
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                //close connection
+                connection.Close();
             }
         }
 
         public DataTable GetDatatable(string table, string where)
         {
-            String sql = "SELECT * FROM "+ table + " " + where;
+            String sql = "SELECT * FROM " + table + " " + where;
             MySqlDataAdapter a = new MySqlDataAdapter(sql, connection);
 
             try
@@ -836,6 +875,27 @@ namespace AvertiFestivalApplication
         public int GetNrOfEmptyCamping()
         {
             String sql = "SELECT COUNT(*) FROM camp WHERE reserved = 'Free'";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        public int getPeopleLeftFestival()
+        {
+            String sql = "SELECT COUNT(*) FROM person WHERE status = 'left'";
 
             MySqlCommand command = new MySqlCommand(sql, connection);
 
