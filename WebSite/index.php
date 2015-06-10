@@ -60,14 +60,16 @@
    		</div>
    		
    		<!--sign up form-->
-   		<div class="signup">
-      		<form>
+   		<div class="signup" >
+      		<form action="php/registration.php" method="POST">
       			<label for="email">Email</label>
       			<input type="text" id="email" name="email">
       			<label for="username">Username</label>
       			<input type="text" id="username" name="username">
+                        <label for="name">Name</label>
+      			<input type="text" id="password" name="name">
       			<label for="password">Password</label>
-      			<input type="text" id="password" name="password">
+      			<input type="password" id="password" name="password">
       				<div id="lower">
       					<input type="submit" value="Sign Up" onclick="window.location.href='profile.html'">
       					<input type="reset" value="Close" class="btnCloseSignUp">
@@ -81,7 +83,7 @@
       			<label for="username">Username</label>
       			<input type="text" id="username" name="username">
       			<label for="password">Password</label>
-      			<input type="password" id="password" name="password">
+      			<input type="text" id="password" name="password">
       				<div id="lower">
       					<input type="submit" value="Login">
       					<input type="reset" value="Close" class="btnCloseLogin">

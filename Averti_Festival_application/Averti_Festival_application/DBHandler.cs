@@ -321,7 +321,7 @@ namespace AvertiFestivalApplication
 
                 while (reader.Read())
                 {
-                    Event newevent = new Event(Convert.ToInt32(reader["minimumage"]), Convert.ToString(reader["date"]),
+                    Event newevent = new Event(Convert.ToInt32(reader["minimumage"]), Convert.ToString(reader["date"]).Trim(),
                         reader["location"].ToString(), Convert.ToInt32(reader["nrOfParticipants"]),
                         reader["eventname"].ToString(), Convert.ToInt32(reader["maxcamping"]), reader["description"].ToString());
                     eventid.Add(newevent);

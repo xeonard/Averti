@@ -25,7 +25,6 @@ namespace AvertiFestivalApplication
         DBHandler db = new DBHandler();
         List<Article> Namearticle;
         List<Article> SortArticles;
-        List<string>[] eventsq;
         List<Event> events = new List<Event>();
 
 
@@ -554,6 +553,14 @@ namespace AvertiFestivalApplication
         {
 
             this.tabNewEvent.Visible = !this.tabNewEvent.Visible;
+            this.tbxETEventName.Text = "";
+            this.tbxETLocation.Text = "";
+            this.tbxETMaxTickets.Text = "";
+            this.tbxETMaxCamp.Text = "";
+            this.richTbxETDescription.Clear();
+            this.tbxETdate.Value = DateTime.Now;
+            this.tbxETEventMinage.Text = "";
+            this.richTbxETDescription.Text = "";
 
             if (this.tabNewEvent.Visible == true)
             {
@@ -603,7 +610,7 @@ namespace AvertiFestivalApplication
                 int maxticket = Convert.ToInt32(this.tbxETMaxTickets.Text);
                 int maxcamp = Convert.ToInt32(this.tbxETMaxCamp.Text);
                 string descript = this.richTbxETDescription.Text;
-                string date = this.tbxETdate.Value.ToString();
+                string date = this.tbxETdate.Value.ToString("yyyy-MM-dd");
                 int minage = Convert.ToInt32(this.tbxETEventMinage.Text);
 
                 newEvent = new Event(minage, date, location, maxticket, name, maxcamp, descript);
@@ -616,14 +623,19 @@ namespace AvertiFestivalApplication
                 this.richTbxETDescription.Clear();
                 this.tbxETdate.Value = DateTime.Now;
                 this.tbxETEventMinage.Text = "";
+                this.richTbxETDescription.Text = "";
+                this.refreshEventsList();
+
             }
             catch (Exception)
             {
                 MessageBox.Show("all fields should be filled");
+                newEvent = null;
             }
             if (newEvent != null)
             {
                 MessageBox.Show("a new event has been created");
+
             }
             else
             {
@@ -635,7 +647,7 @@ namespace AvertiFestivalApplication
         {
             foreach (var item in events)
             {
-                if (this.listBoxEventSelect.SelectedItem == item.Name)
+                if (this.listBoxEventSelect.SelectedItem.ToString() == item.Name)
                 {
                     if (1 == db.deleteEvent(item.Name))
                     {
@@ -659,8 +671,8 @@ namespace AvertiFestivalApplication
                     this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
                     this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
                     this.richTbxETDescription.AppendText(item.Description);
-                    DateTime myDate = DateTime.ParseExact(item.Date.ToString(), "yyyy-MM-dd",
-                                       System.Globalization.CultureInfo.InvariantCulture);
+                    DateTime myDate = new DateTime();
+                    myDate = DateTime.ParseExact(item.Date, "yyyy-MM-dd", null);
                     this.tbxETdate.Value = myDate;
                     this.tbxETEventMinage.Text = item.Minage.ToString();
                 }

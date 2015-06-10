@@ -1,10 +1,10 @@
 <?php
 
     function connection(){
-        $host = "localhost";
-        $username = "root";
-        $password ="";
-        $db = "averti";
+        $host = "athena01.fhict.local";
+        $username = "dbi252284";
+        $password ="fCPIXLUNGi";
+        $db = "dbi252284";
     
         try {
             $conn = new PDO("mysql:host=$host;dbname=$db", $username, $password);
@@ -28,7 +28,7 @@
     
     function getarrayfromtable($username){//temperary method for profile using database from localhost
         $conn = connection();
-        $stmt = $conn->prepare("select * from person Where username = '$username'");
+        $stmt = $conn->prepare("select * from user Where uname = " . $username);
         $stmt->execute();
         $array = null;
         
@@ -37,13 +37,13 @@
         $array = array(
             'uname'    => $result['username'],
             'name'  => $result['name'],
+            'lastname'  => $result['lastname'],
             'email' => $result['email'],
             'phone' => $result['telephoneNumber'],
             'sex' => $result['Sex'],
             'address' => $result['address'],
             'wallet' => $result['walletBalance'],
             'bday' => $result['birthday'],
-            'paypall' => $result['paypalID'],
         );
         }
         return $array;

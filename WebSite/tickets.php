@@ -48,8 +48,10 @@
   				</tr>
   				<tr>
     				<td>Normal Ticket</td>
-    				<td>€55</td>
-    				<td>
+    				
+                                <form action="php/ticket.php"><td>€55</td>
+                                    <td>
+                                    
    						<select name="amount" class="small" style="margin-top: -4px;">
     						<option value="1">1</option>
     						<option value="2">2</option>
@@ -58,15 +60,18 @@
     						<option value="5">5</option>
     						<option value="6">6</option>
     					</select>
-    				</td>
-    				<td>
-    					<input type="submit" value="Buy" class="btnBuy">
-    				</td>
+                                    </td>
+                                    <td>
+                                    	<input type="submit" value="Buy" class="btnBuy">
+                                    </td>
+                                </form>
+
   				</tr>
   				<tr>
     				<td>Ticket+camping</td>
     				<td>€85</td>
-    				<td>
+                                <form action="php/camping.php">
+                                    <td>
    						<select name="amount" class="small" style="margin-top: -4px;">
     						<option value="1">1</option>
     						<option value="2">2</option>
@@ -75,10 +80,11 @@
     						<option value="5">5</option>
     						<option value="6">6</option>
     					</select>
-    				</td>
-    				<td>
+                                    </td>
+                                    <td>
     					<input type="submit" value="Buy" class="btnBuy">
-    				</td>
+                                    </td>
+                                </form>
   				</tr>
     		</table>
     	</div>

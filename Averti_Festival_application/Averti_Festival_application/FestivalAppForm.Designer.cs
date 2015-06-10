@@ -72,7 +72,6 @@
             this.tbxETEventMinage = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.tbxETEventName = new System.Windows.Forms.TextBox();
-            this.btnETDeleteEvent = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.btnETSave = new System.Windows.Forms.Button();
@@ -589,7 +588,6 @@
             this.tabNewEvent.Controls.Add(this.tbxETEventMinage);
             this.tabNewEvent.Controls.Add(this.label15);
             this.tabNewEvent.Controls.Add(this.tbxETEventName);
-            this.tabNewEvent.Controls.Add(this.btnETDeleteEvent);
             this.tabNewEvent.Controls.Add(this.btnCancel);
             this.tabNewEvent.Controls.Add(this.label3);
             this.tabNewEvent.Controls.Add(this.btnETSave);
@@ -635,20 +633,9 @@
             this.tbxETEventName.Size = new System.Drawing.Size(246, 20);
             this.tbxETEventName.TabIndex = 11;
             // 
-            // btnETDeleteEvent
-            // 
-            this.btnETDeleteEvent.Location = new System.Drawing.Point(294, 393);
-            this.btnETDeleteEvent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnETDeleteEvent.Name = "btnETDeleteEvent";
-            this.btnETDeleteEvent.Size = new System.Drawing.Size(101, 23);
-            this.btnETDeleteEvent.TabIndex = 10;
-            this.btnETDeleteEvent.Text = "Delete Event";
-            this.btnETDeleteEvent.UseVisualStyleBackColor = true;
-            this.btnETDeleteEvent.Click += new System.EventHandler(this.btnETDeleteEvent_Click_1);
-            // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(178, 393);
+            this.btnCancel.Location = new System.Drawing.Point(296, 393);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(101, 23);
@@ -871,7 +858,6 @@
         private System.Windows.Forms.TextBox tbxETMaxCamp;
         private System.Windows.Forms.TextBox tbxETMaxTickets;
         private System.Windows.Forms.TextBox tbxETEventName;
-        private System.Windows.Forms.Button btnETDeleteEvent;
         private System.Windows.Forms.Button btnETNewEvent;
         private System.Windows.Forms.Button btnETViewEvents;
         private System.Windows.Forms.DateTimePicker tbxETdate;
