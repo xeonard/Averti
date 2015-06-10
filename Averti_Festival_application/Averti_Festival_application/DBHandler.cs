@@ -422,6 +422,32 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+        public List<int> TwoArticleID()
+        {
+            String sql = ("SELECT articleID FROM article");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            List<int> articlesID = new List<int>();
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    articlesID.Add( Convert.ToInt32(reader[0]));
+                }
+                return articlesID;
+            }
+            catch
+            {
+                return articlesID;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
         public int KindOfArticleID()
         {
             int KindOfArticleID;
@@ -486,6 +512,65 @@ namespace AvertiFestivalApplication
             return list;
 
         }
+        public List<Article> AllInformaiton ()
+        {
+            String sql = ("SELECT * FROM kindofarticle");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+
+            List<Article> list = new List<Article>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                list.Add(new Article(Convert.ToInt32(reader["KinOfArticleID"]), Convert.ToInt32(reader["ArticleID"]), reader["Name"].ToString(), Convert.ToInt32(reader["Stock"]), Convert.ToDouble(reader["price"])));
+
+
+            }
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
+        public List<Article> NameAndSortArticle(int ArticleID)
+        {
+            String sql = ("SELECT a.SortArticle, k.Name FROM kindofarticle k INNER JOIN article a ON a.ArticleID = k.ArticleID AND a.ArticleID  = " + ArticleID);
+            
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+
+            List<Article> list = new List<Article>();
+
+
+            connection.Open();
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                list.Add(new Article(reader["SortArticle"].ToString(), reader["Name"].ToString()));
+
+
+            }
+            reader.Close();
+
+            //close Connection
+            connection.Close();
+
+            //return list to be displayed
+            return list;
+
+        }
         //gets a list of 
         public List<Article> InfoArticle( int ArticleID )
         {
@@ -503,7 +588,7 @@ namespace AvertiFestivalApplication
             while (reader.Read())
             {
 
-                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["soortArticle"].ToString()));
+                list.Add(new Article(Convert.ToInt32(reader["articleID"]), reader["SortArticle"].ToString()));
 
 
             }
@@ -619,9 +704,9 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        public bool InsertToTransactionarticle(int transactionID, int articleID, int quantity)
+        public bool InsertToTransactionarticle(int transactionID, int KinOfArticleID,int ArticleID, int quantity)
         {
-             string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
+            string quaryInsert = "INSERT INTO transactionarticle(transactionID, KinOfArticleID,ArticleID, quantity) VALUES('" + transactionID + "','" + KinOfArticleID + "','" + ArticleID+"','" + quantity + "')";
             try
             {
             //open connection

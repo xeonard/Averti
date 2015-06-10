@@ -18,6 +18,12 @@ namespace AvertiFestivalApplication
         public double Price { get; set; }
         public int KindOfArticleID { get; set; }
 
+        public Article( string SortArticle, string Name)
+        {
+            this.Name = Name;
+            this.SoortArticle = SortArticle;
+            this.ArticleID = ArticleID;
+        }
         public Article()
         {
 

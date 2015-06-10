@@ -351,8 +351,9 @@ namespace AvertiFestivalApplication
             int counter = 0;
             int KindOfArticleID = db.KindOfArticleID();
             lbOrder.Items.Clear();
+          
             int ArticleID = db.ArticleID();
-
+            
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
                 articles = db.SortArticle();
@@ -461,28 +462,44 @@ namespace AvertiFestivalApplication
 
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
+            int ArticleID = db.ArticleID();
             string s = tbxRFID.Text;
             int personalID = db.personalID(s);
             int transactionID = db.TransactionID();
             Double cost = 0;
-            int articleID = 0;
-            int ArticleID = db.ArticleID();
+            
             List<Article> listOfSortArticle = new List<Article>();
             listOfSortArticle = db.InfoArticle(ArticleID);
+            articles.Clear();
+            //List<Article> KindOfAtricleID = db.AllInformaitonOfKindOfArticleID();
+           
+            //foreach (var item in SortArticles)
+            //{
+            //    articles.AddRange(db.NameAndSortArticle(item.ArticleID));
+            //}
 
-            foreach (var item in articles)
+            //foreach (var item in articles)
+            //{
+            //        if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
+            //        {
+            //            //double costItem = item.Price;
+            //            //cost = costItem;
+            //            //KindOfAtricleID = item.KindOfArticleID;
+
+            //            //ArticleID = item.ArticleID;
+            //        }
+            //    }
+            foreach (var order in orders)
             {
-                if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
-                {
-                    double costItem = item.Price;
-                    cost = costItem;
+                 ArticleID = order.Article.ArticleID;
+                int kindofartichleID = order.Article.KindOfArticleID;
+                double costItem = order.Article.Price;
 
-                    articleID = item.ArticleID;
-                }
+                db.InsertToTransaction(transactionID, personalID, " article", costItem, DateTime.Now);
+                db.InsertToTransactionarticle(transactionID, kindofartichleID, ArticleID, Convert.ToInt32(NUDSTArticleAmount.Value));
             }
 
-            db.InsertToTransaction(transactionID, personalID, " article", cost, DateTime.Now);
-            db.InsertToTransactionarticle(transactionID, articleID, Convert.ToInt32(NUDSTArticleAmount.Value));
+              
             tbxRFID.Text = "";
             lbOrder.Items.Clear();
             lblSTNewWalletCredit.Text = "";
@@ -905,6 +922,11 @@ namespace AvertiFestivalApplication
         }
 
         private void tbxETdate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbxRFID_TextChanged(object sender, EventArgs e)
         {
 
         }
