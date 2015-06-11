@@ -26,7 +26,6 @@ C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
-<<<<<<< HEAD
 C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
 C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
 C:\Users\Dmytro Bunin\Documents\GitHub\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb

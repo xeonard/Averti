@@ -17,6 +17,7 @@ namespace AvertiFestivalApplication
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FestivalAppForm());
+            new PaypalParser();
             Application.Run(new LogInForm());
         }
     }

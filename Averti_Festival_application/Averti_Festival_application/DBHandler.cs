@@ -54,6 +54,72 @@ namespace AvertiFestivalApplication
             return names;
         }
 
+        #region Pyapalparser
+        /// <summary>
+        /// Get the organization's paypal id from the database
+        /// </summary>
+        /// <returns>
+        /// null if something goes wrong retrieving the information
+        /// </returns>
+        public String getOrganizationPPid()
+        {
+            String sql = ("SELECT paypalID FROM person WHERE description = 'admin'"); // assumes the admin has the organizations ppid
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    // check status
+                    return Convert.ToString(reader[0]);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        /// <summary>
+        /// A method
+        /// </summary>
+        /// <param name="ppid"> paypal id</param>
+        /// <param name="amount">amount of money deposited</param>
+        /// <returns>true if succesful and false if failed or if nothing changed in the db</returns>
+        public bool UpdateWallet(String ppid, String amount)
+        {
+            String sql = ("UPDATE `person` SET `walletBalance` = '" + amount + "' WHERE `person`.`paypalID` = " + ppid + ";");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                int updatedRows = command.ExecuteNonQuery();
+
+                return (updatedRows == 0);  // check if one row was updated and return it
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        #endregion
+
         /// <summary>
         /// To check the state of the ticket
         /// -1 if the ticket isn't found in the db.
@@ -740,11 +806,8 @@ namespace AvertiFestivalApplication
         }
         public bool InsertToTransactionarticle(int transactionID, int KinOfArticleID,int ArticleID, int quantity)
         {
-<<<<<<< HEAD
             string quaryInsert = "INSERT INTO transactionarticle(transactionID, KinOfArticleID,ArticleID, quantity) VALUES('" + transactionID + "','" + KinOfArticleID + "','" + ArticleID+"','" + quantity + "')";
-=======
-            string quaryInsert = "INSERT INTO transactionarticle(transactionID, articleID, quantity) VALUES('" + transactionID + "','" + articleID + "','" + quantity + "')";
->>>>>>> origin/master
+
             try
             {
                 //open connection

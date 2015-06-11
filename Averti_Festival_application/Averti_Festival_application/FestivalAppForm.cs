@@ -31,169 +31,119 @@ namespace AvertiFestivalApplication
         public FestivalAppForm()
         {
             InitializeComponent();
+
             refreshEventsList();
 
             RfidCheckin = new RFID();
-            RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
 
 
-            //TabControl.TabPages.Remove(tabSales);
-
-            //    //code for sales page
-            //    try
-            //    {
-            //        List <string > list = new List<string>(db.InfoArticle)
-
-            //        foreach (Article a in db.InfoArticle())
-            //        {
-            //            this.cbxNameArticles.Items.Add(a.Name);
-            //        }
-            //    }
-            //    catch(NullReferenceException)
-            //    {
-            //        MessageBox.Show("There is no Articles in database");
-            //    }
-
-            //    dataGridView1.DataSource = db.GetDatatable("event");
-            //    TabControl.TabPages.Remove(tabSales);
-
-            //dbView filling dropboxes
-
-            //event dropbox
-            try
-            {
-                //foreach (Article a in db.InfoArticle())
-                //{
-                //    this.cbxNameArticles.Items.Add(a.Name);
-                //}
-
-                foreach (string a in db.GetInfoTable("event", "eventID"))
-                {
-                    this.cbxDTSelectEvent.Items.Add(a);
-                }
-
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("There is no events in database");
-            }
-
-            //camp dropbox
-            try
-            {
-                foreach (string a in db.GetInfoTable("camp", "campID"))
-                {
-                    this.cbxDTSelectCampSpot.Items.Add(a);
-                }
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("There is no events in database");
-            }
-
-            //article dropbox
-            try
-            {
-                foreach (string a in db.GetInfoTable("article", "ArticleID"))
-                {
-                    this.cbxDTSelectArticle.Items.Add(a);
-                }
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("There is no Articles in database");
-            }
-
-            //sort dropbox
-            try
-            {
-                SortArticles = new List<Article>();
-                SortArticles = db.SortArticle();
-
-                foreach (var item in db.SortArticle())
-                {
-                    this.cbxSortArticle.Items.Add(item.SoortArticle);
-                }
-
-
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("There is no Articles in database");
-            }
-            //name dropbox
-            try
-            {
-
-                Namearticle = new List<Article>();
-                //List<Article> Namearticle2 = new List<Article>();
-                foreach (var item in Namearticle)
-                {
-                    int ArticleID = db.ArticleID();
-
-                    if (ArticleID == 1)
-                    {
-                        this.cbxNameArticles.Items.Add(item.Name);
-                    }
-                    else if (ArticleID == 2)
-                    {
-                        this.cbxNameArticles.Items.Add(item.Name);
-                    }
-
-                }
-                //Namearticle = db.NameArticle(ArticleID);
-                //Namearticle2 = db.NameArticle(ArticleID);
-                //foreach (var item in Namearticle)
-                //{
-                //    if (cbxSortArticle.SelectedText == "BBQ")
-                //    {
-                //        ArticleID = 1;
-
-                //        this.cbxNameArticles.Items.Add(item.Name);
-                //    }
-                //}
-
-                //foreach (var item in Namearticle2)
-                //{
-                //    if (cbxSortArticle.SelectedText == "Drink")
-                //{
-                //    ArticleID = 2;
-
-                //     this.cbxNameArticles.Items.Add(item.Name);
-
-                //}
-
-                //	}      
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("There is no Articles in database");
-            }
         }
 
-        public FestivalAppForm(String description)
-            : this() // call the normal constructor for this class
+        public FestivalAppForm(String description): this() // call the normal constructor for this class
         {
+
             // check id to see which tabs to remove
             switch (description)
             {
-                case "sales": TabControl.TabPages.Remove(tabEvent);
+                case "sales":
+                    TabControl.TabPages.Remove(tabEvent);
                     TabControl.TabPages.Remove(tabDBView);
                     TabControl.TabPages.Remove(tabCheckIn);
-                    TabControl.TabPages.Remove(tabOv);
+                    RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
+                    // Sales
+                    //sort dropbox
+                    try
+                    {
+                        SortArticles = new List<Article>();
+                        SortArticles = db.SortArticle();
+
+                        foreach (var item in db.SortArticle())
+                        {
+                            this.cbxSortArticle.Items.Add(item.SoortArticle);
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("There is no Articles in database");
+                    }
+                    //name dropbox
+                    try
+                    {
+                        Namearticle = new List<Article>();
+                        //List<Article> Namearticle2 = new List<Article>();
+                        foreach (var item in Namearticle)
+                        {
+                            int ArticleID = db.ArticleID();
+
+                            if (ArticleID == 1)
+                            {
+                                this.cbxNameArticles.Items.Add(item.Name);
+                            }
+                            else if (ArticleID == 2)
+                            {
+                                this.cbxNameArticles.Items.Add(item.Name);
+                            }
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("There is no Articles in database");
+                    }
                     break;
+
                 case "admin":
                     TabControl.TabPages.Remove(tabSales);
                     TabControl.TabPages.Remove(tabCheckIn);
+                    //dbView filling dropboxes
+                    //event dropbox
+                    try
+                    {
+                        foreach (string a in db.GetInfoTable("event", "eventID"))
+                        {
+                            this.cbxDTSelectEvent.Items.Add(a);
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("There is no campings in database");
+                    }
+                    //camp dropbox
+                    try
+                    {
+                        foreach (string a in db.GetInfoTable("camp", "campID"))
+                        {
+                            this.cbxDTSelectCampSpot.Items.Add(a);
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("There is no events in database");
+                    }
+                    //article dropbox
+                    try
+                    {
+                        foreach (string a in db.GetInfoTable("article", "ArticleID"))
+                        {
+                            this.cbxDTSelectArticle.Items.Add(a);
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("There is no Articles in database");
+                    }
                     break;
+
                 case "entrance": TabControl.TabPages.Remove(tabEvent);
                     TabControl.TabPages.Remove(tabDBView);
                     TabControl.TabPages.Remove(tabSales);
                     TabControl.TabPages.Remove(tabOv);
                     break;
 
-                default:
-                    TabControl.TabPages.Remove(tabSales); // how to remove a tab
+                default: // on default just leave the overview tab
+                    TabControl.TabPages.Remove(tabSales);
+                    TabControl.TabPages.Remove(tabEvent);
+                    TabControl.TabPages.Remove(tabDBView);
+                    TabControl.TabPages.Remove(tabCheckIn); 
                     break;
             }
 
@@ -205,6 +155,7 @@ namespace AvertiFestivalApplication
             Thread thread = new Thread(new ThreadStart(LogInThread));
             thread.Start();
         }
+
         #region Login / CheckIn
 
 
@@ -487,7 +438,7 @@ namespace AvertiFestivalApplication
             string s = tbxRFID.Text;
             int personalID = db.personalID(s);
             int transactionID = db.TransactionID();
-            Double cost = 0;
+            //Double cost = 0;
             
             List<Article> listOfSortArticle = new List<Article>();
             listOfSortArticle = db.InfoArticle(ArticleID);
@@ -708,7 +659,7 @@ namespace AvertiFestivalApplication
                     this.tbxETLocation.Text = item.Location;
                     this.tbxETMaxTickets.Text = item.Maxtickets.ToString();
                     this.tbxETMaxCamp.Text = item.Maxcamping.ToString();
-                    this.richTbxETDescription.AppendText(item.Description);
+                    this.richTbxETDescription.Text = item.Description;
                     DateTime myDate = new DateTime();
                     myDate = DateTime.ParseExact(item.Date, "yyyy-MM-dd", null);
                     this.tbxETdate.Value = myDate;

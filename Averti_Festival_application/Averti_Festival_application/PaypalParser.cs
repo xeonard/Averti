@@ -9,7 +9,8 @@ using System.IO;
 namespace AvertiFestivalApplication
 {
     /// <summary>
-    /// This class should be running on a seperate thread
+    /// This class continouosly check the paypal log file for updates. 
+    /// The file should be located under C:/Festival/PayPalLog.txt
     /// </summary>
     class PaypalParser
     {
@@ -28,7 +29,7 @@ namespace AvertiFestivalApplication
             if (organizationPayPal != null)
             {
                 //t = new Timer(15 * 60 * 1000); // execute the code every 15 minutes
-                t = new Timer(30 * 1000); // for testing, a 5 sec execution
+                t = new Timer(30 * 1000); // for testing, a 30 sec execution
                 t.Elapsed += new ElapsedEventHandler(timerAction);
                 t.Start();
             }
@@ -40,7 +41,7 @@ namespace AvertiFestivalApplication
             StreamReader sr = null;
             try
             {
-                fs = new FileStream("D:/Users/xeonard/Desktop/PayPal_Log.txt", FileMode.Open, FileAccess.Read);
+                fs = new FileStream("C:Festival/PayPal_Log.txt", FileMode.Open, FileAccess.Read);
                 sr = new StreamReader(fs);
                 String payment; //for storing each payment read
                 String[] ppidAndAmount = new String[2]; // for storing the paypalid and amount
@@ -69,8 +70,8 @@ namespace AvertiFestivalApplication
                         {
                             payment = sr.ReadLine();
                             ppidAndAmount = payment.Split(); // [0] is ppid and [1] is amount
-
-                            db.UpdateWallet(ppidAndAmount[0], ppidAndAmount[1]); // update it in the db
+                            // update the db
+                            db.UpdateWallet(ppidAndAmount[0], ppidAndAmount[1]); 
                         }
                     }
                 }
