@@ -25,23 +25,24 @@ namespace AvertiFestivalApplication
             db = new DBHandler();
             startDate = default(DateTime);
             endDate = default(DateTime);
-            organizationPayPal = db.getOrganizationPPid(); 
+            organizationPayPal = db.getOrganizationPPid();
             if (organizationPayPal != null)
             {
-                //t = new Timer(15 * 60 * 1000); // execute the code every 15 minutes
-                t = new Timer(30 * 1000); // for testing, a 30 sec execution
+                t = new Timer(15 * 60 * 1000); // execute the code every 15 minutes
+
                 t.Elapsed += new ElapsedEventHandler(timerAction);
                 t.Start();
             }
         }
 
-        public void timerAction(object sender, ElapsedEventArgs e)
+        public void timerAction(object sender, ElapsedEventArgs eea)
         {
             FileStream fs = null;
             StreamReader sr = null;
             try
             {
-                fs = new FileStream("C:Festival/PayPal_Log.txt", FileMode.Open, FileAccess.Read);
+                fs = new FileStream("‪../../../../PayPalLog/PayPal_Log.txt", FileMode.Open, FileAccess.Read);
+                //#NOTE need a more standarized path location!!
                 sr = new StreamReader(fs);
                 String payment; //for storing each payment read
                 String[] ppidAndAmount = new String[2]; // for storing the paypalid and amount
@@ -66,14 +67,16 @@ namespace AvertiFestivalApplication
                         endDate = currentEndDate;
 
                         //read depositor ppid and amount deposited, send to db
-                        for(int x = 0; x < depAmount; x++)
+                        for (int x = 0; x < depAmount; x++)
                         {
                             payment = sr.ReadLine();
                             ppidAndAmount = payment.Split(); // [0] is ppid and [1] is amount
                             // update the db
-                            db.UpdateWallet(ppidAndAmount[0], ppidAndAmount[1]); 
+                            db.UpdateWallet(ppidAndAmount[0], ppidAndAmount[1]);
+                            System.Console.Out.WriteLine("db updated");
                         }
                     }
+                    else { System.Console.Out.WriteLine("File already checked!"); }
                 }
             }
             catch(IndexOutOfRangeException)
@@ -81,16 +84,22 @@ namespace AvertiFestivalApplication
                 //Something went wrong reading the sender's ppid or amount #test
                 System.Console.Out.WriteLine("Something went wrong reading ppid or amount");
             }
-            catch
+            catch(Exception ex)
             {
-                //Think a better way to alert that something went wrong #test
-                System.Console.Out.WriteLine("Something went wrong somewhere");
+                //Is there a better way to alert the user?
+                System.Console.Out.WriteLine("Something went wrong somewhere\n" + ex.Message);
             }
             finally
             {
-                sr.Close();
+                //Check if the streamreader has been initiated and close it.
+                if(sr != null)
+                    sr.Close();
             }
         }
-            
+
+        //~PaypalParser()
+        //{
+        //    System.Console.Out.WriteLine("Exited paypal parser....");
+        //}
     }
 }

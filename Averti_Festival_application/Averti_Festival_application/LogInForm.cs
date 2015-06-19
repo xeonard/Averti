@@ -21,130 +21,103 @@ namespace AvertiFestivalApplication
         public LogInForm()
         {
             InitializeComponent();
-
             tbPass.UseSystemPasswordChar = true;
 
             db = new DBHandler();
+
             try
             {
                 RfidLogin = new RFID();
                 RfidLogin.open();
-                RfidLogin.waitForAttachment(1500);
+                RfidLogin.waitForAttachment(1000);
                 RfidLogin.Antenna = true;
                 RfidLogin.LED = true;
                 RfidLogin.Tag += new TagEventHandler(ProcessThisTag);
+                lblInfo.Text = ("RFID is connected");
             }
             catch (PhidgetException)
             {
-                MessageBox.Show("No RFID connection");
+                lblInfo.Text = ("No RFID connection");
             }
+        }
 
-
+        private void closeMe(LogInForm me)
+        {
+            this.Close();
         }
 
         private void ProcessThisTag(object sender, TagEventArgs e)
         {
-            this.tbxLoginID.Text = e.Tag;
-
-            if (this.tbxLoginID.Text != string.Empty)
+            System.Console.Out.WriteLine(e.Tag);
+            int id = db.personalID(e.Tag);
+            if (id != -1)
             {
-                btnLogin.Enabled = true;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)) == "visitor")
-            {
-                MessageBox.Show("Visitors have no access!");
+                lblInfo.Text = this.Login(id, false);
             }
             else
             {
-
-                if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
-                {
-                    try
-                    {
-                        Thread thread = new Thread(new ParameterizedThreadStart(FestivalThread));
-                        thread.Start(db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)));
-                        this.Close();
-
-                    }
-                    catch (Exception) { MessageBox.Show("Error with Login"); }
-
-                }
-                else
-                {
-                    MessageBox.Show("Login incorrect");
-                }
-
+                lblInfo.Text = "No such RFID found";
             }
         }
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
-            Application.Exit(); //was this really necessary?
-
+            Application.Exit();
         }
-        //thread with parameter
+
         public void FestivalThread(object description)
         {
-            Application.Run(new FestivalAppForm((String)description));
-        }
-        //normal thread
-        public static void FestivalThread()
-        {
-            Application.Run(new FestivalAppForm());
+            Application.Run(new FestivalAppForm((String)description, this.RfidLogin));
         }
 
         private void btnNormalLog_Click(object sender, EventArgs e)
         {
-            if (db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)) == "visitor")
-            {
-                MessageBox.Show("Visitors have no access");
+            this.lblInfo.Text = this.Login( Convert.ToInt32(tbPersID.Text) , true);
+        }
 
+        private String Login(int id, bool checkPass)
+        {
+            if (db.GetPersonDescription(id) == "visitor")
+            {
+                return ("Visitors have no access");
             }
             else
             {
-
-
-                if (db.PasswordLogin(Convert.ToInt32(tbPersID.Text), tbPass.Text) != -1)
+                if ((db.PasswordLogin(id, tbPass.Text) != -1) || !checkPass)
                 {
                     try
                     {
                         Thread thread = new Thread(new ParameterizedThreadStart(FestivalThread));
-                        thread.Start(db.GetPersonDescription(Convert.ToInt32(tbPersID.Text)));
+                        thread.Start((db.GetPersonDescription(id)).ToLower());
+
                         this.Close();
-
+                        return "Logged in";
                     }
-                    catch (Exception) { MessageBox.Show("Error with Login"); }
-
+                    catch (Exception) { return ("Error with Login"); }
                 }
                 else
                 {
-                    MessageBox.Show("Login incorrect");
+                    return ("Login incorrect");
                 }
-
             }
-
-
-
         }
 
-        private void LogInForm_Load(object sender, EventArgs e)
+        private void tbPass_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-
-        }
-
-        private void LogInForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //check if there is no rfid attached
-            if (RfidLogin.Attached)
+            if (e.KeyCode == Keys.Enter)
             {
-                RfidLogin.Antenna = false;
-                RfidLogin.LED = false;
-                RfidLogin.close();
+                this.lblInfo.Text = this.Login(Convert.ToInt32(tbPersID.Text), true);
             }
         }
+
+        private void tbPersID_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.lblInfo.Text = this.Login(Convert.ToInt32(tbPersID.Text), true);
+            }
+        }
+
 
     }
 }

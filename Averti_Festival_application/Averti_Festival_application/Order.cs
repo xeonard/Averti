@@ -8,30 +8,49 @@ namespace AvertiFestivalApplication
 {
     class Order
     {
-        private Article article;
+        private List<Article> articles;
         private int quantity;
         private int personalId;
+        private double cost;
 
-        public Article Article { get { return article; } set { article = value; } }
-
+        public List<Article> Articles { get { return articles; } set { articles = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
         public int PersonID { get { return personalId; } set { personalId = value; } }
+        public double Cost { get { return cost; } private set { cost = value; } }
+
 
         public Order()
         {
-
+            articles = new List<Article>();
+            cost = 0;
         }
 
-        public Order( Article article, int quantity)
+        public void AddToOrder(Article art, int quantity)
         {
+            foreach (Article a in articles)// check if it's already in the list
+            {
+                if (art.KindOfArticleID == a.KindOfArticleID)
+                {
+                    a.Stock += quantity;
+                    updateCost();
+                    return;
+                }
+            }
 
-            this.Article = article;
-            this.Quantity = quantity;
-
+            art.Stock = quantity;
+            articles.Add(art);
+            updateCost();
 
         }
 
+        private void updateCost()
+        {
+            Cost = 0;
 
-            
+            foreach (Article a in articles)
+            {
+                 cost += (a.Price * a.Stock);
+            }
+        }
     }
 }

@@ -18,12 +18,12 @@ namespace AvertiFestivalApplication
         double overallPrice = 0;
         double totalePrice = 0;
         List<Order> orders = new List<Order>();
+        Order currentOrder;
         List<Article> articles = new List<Article>();
         List<Article> NameArticles = new List<Article>();
         private RFID RfidCheckin;
         Event newEvent;
         DBHandler db = new DBHandler();
-        List<Article> Namearticle;
         List<Article> SortArticles;
         List<Event> events = new List<Event>();
 
@@ -31,58 +31,33 @@ namespace AvertiFestivalApplication
         public FestivalAppForm()
         {
             InitializeComponent();
-
             refreshEventsList();
-
-            RfidCheckin = new RFID();
-
-
+            this.RfidCheckin = new RFID();
         }
 
-        public FestivalAppForm(String description): this() // call the normal constructor for this class
+        public FestivalAppForm(String description, RFID rfid)
+            : this() // call the normal constructor for this class
         {
-
+            this.StopRFID(rfid);
             // check id to see which tabs to remove
             switch (description)
             {
                 case "sales":
-                    TabControl.TabPages.Remove(tabEvent);
-                    TabControl.TabPages.Remove(tabDBView);
-                    TabControl.TabPages.Remove(tabCheckIn);
-                    RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
+                    this.TabControl.TabPages.Remove(tabEvent);
+                    this.TabControl.TabPages.Remove(tabDBView);
+                    this.TabControl.TabPages.Remove(tabCheckIn);
+                    currentOrder = new Order();
+                    this.StartRFID(this.RfidCheckin);
+                    this.RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
                     // Sales
-                    //sort dropbox
+                    // Fill Sort dropbox
                     try
                     {
-                        SortArticles = new List<Article>();
-                        SortArticles = db.SortArticle();
+                        this.SortArticles = this.db.SortArticle();
 
-                        foreach (var item in db.SortArticle())
+                        foreach (var item in this.db.SortArticle())
                         {
                             this.cbxSortArticle.Items.Add(item.SoortArticle);
-                        }
-                    }
-                    catch (NullReferenceException)
-                    {
-                        MessageBox.Show("There is no Articles in database");
-                    }
-                    //name dropbox
-                    try
-                    {
-                        Namearticle = new List<Article>();
-                        //List<Article> Namearticle2 = new List<Article>();
-                        foreach (var item in Namearticle)
-                        {
-                            int ArticleID = db.ArticleID();
-
-                            if (ArticleID == 1)
-                            {
-                                this.cbxNameArticles.Items.Add(item.Name);
-                            }
-                            else if (ArticleID == 2)
-                            {
-                                this.cbxNameArticles.Items.Add(item.Name);
-                            }
                         }
                     }
                     catch (NullReferenceException)
@@ -92,10 +67,16 @@ namespace AvertiFestivalApplication
                     break;
 
                 case "admin":
+                    new PaypalParser();
+                    // #TODO uncomment
                     TabControl.TabPages.Remove(tabSales);
                     TabControl.TabPages.Remove(tabCheckIn);
-                    //dbView filling dropboxes
-                    //event dropbox
+
+                    // Fill the accounts list
+                    this.refreshAccountListBox();
+
+                    // dbView filling dropboxes
+                    // Event dropbox
                     try
                     {
                         foreach (string a in db.GetInfoTable("event", "eventID"))
@@ -107,7 +88,7 @@ namespace AvertiFestivalApplication
                     {
                         MessageBox.Show("There is no campings in database");
                     }
-                    //camp dropbox
+                    // Camp dropbox
                     try
                     {
                         foreach (string a in db.GetInfoTable("camp", "campID"))
@@ -119,10 +100,10 @@ namespace AvertiFestivalApplication
                     {
                         MessageBox.Show("There is no events in database");
                     }
-                    //article dropbox
+                    // Article dropbox
                     try
                     {
-                        foreach (string a in db.GetInfoTable("article", "ArticleID"))
+                        foreach (string a in db.GetInfoTable("kindofarticle", "Name"))
                         {
                             this.cbxDTSelectArticle.Items.Add(a);
                         }
@@ -133,25 +114,25 @@ namespace AvertiFestivalApplication
                     }
                     break;
 
-                case "entrance": TabControl.TabPages.Remove(tabEvent);
-                    TabControl.TabPages.Remove(tabDBView);
-                    TabControl.TabPages.Remove(tabSales);
-                    TabControl.TabPages.Remove(tabOv);
+                case "entrance":
+                    this.TabControl.TabPages.Remove(tabEvent);
+                    this.TabControl.TabPages.Remove(tabDBView);
+                    this.TabControl.TabPages.Remove(tabSales);
+                    this.TabControl.TabPages.Remove(tabOv);
                     break;
 
                 default: // on default just leave the overview tab
-                    TabControl.TabPages.Remove(tabSales);
-                    TabControl.TabPages.Remove(tabEvent);
-                    TabControl.TabPages.Remove(tabDBView);
-                    TabControl.TabPages.Remove(tabCheckIn); 
+                    this.TabControl.TabPages.Remove(tabSales);
+                    this.TabControl.TabPages.Remove(tabEvent);
+                    this.TabControl.TabPages.Remove(tabDBView);
+                    this.TabControl.TabPages.Remove(tabCheckIn);
                     break;
             }
-
         }
 
         private void FestivalAppForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StopRFID();
+            this.StopRFID(this.RfidCheckin);
             Thread thread = new Thread(new ThreadStart(LogInThread));
             thread.Start();
         }
@@ -159,8 +140,8 @@ namespace AvertiFestivalApplication
         #region Login / CheckIn
 
 
-        
-       
+
+
         private void btnCheckTicket_Click(object sender, EventArgs e)
         {
             switch (db.CheckTicket(this.tbxCheckInID.Text))
@@ -173,7 +154,7 @@ namespace AvertiFestivalApplication
                 case 1:
                     //  lbStatus.Text = "Ticket info: visitor hasnt arrived";
                     tabCheckIn.BackColor = Color.Green;
-                    StartRFID();
+                    StartRFID(this.RfidCheckin);
                     RfidCheckin.Tag += new TagEventHandler(ProcessThisTag);
                     RfidCheckin.Tag -= new TagEventHandler(RemoveThisTag);
                     break;
@@ -186,7 +167,7 @@ namespace AvertiFestivalApplication
                 case 3:
                     //  lbStatus.Text = "Ticket info: visitor left";
                     tabCheckIn.BackColor = Color.Green;
-                    StartRFID();
+                    StartRFID(this.RfidCheckin);
                     RfidCheckin.Tag -= new TagEventHandler(RemoveThisTag);
                     RfidCheckin.Tag += new TagEventHandler(ProcessThisTag);
 
@@ -199,15 +180,15 @@ namespace AvertiFestivalApplication
         {
             Application.Run(new LogInForm());
         }
-        private void StartRFID()
+        private void StartRFID(RFID rfid)
         {
             try
             {
-                this.StopRFID();
-                RfidCheckin.open();
-                RfidCheckin.waitForAttachment(1500);
-                RfidCheckin.Antenna = true;
-                RfidCheckin.LED = true;
+                this.StopRFID(rfid);
+                rfid.open();
+                rfid.waitForAttachment(1500);
+                rfid.Antenna = true;
+                rfid.LED = true;
 
             }
             catch (PhidgetException)
@@ -217,7 +198,7 @@ namespace AvertiFestivalApplication
         }
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            StartRFID();
+            StartRFID(this.RfidCheckin);
             lbUnassigned.Visible = false;
             tabCheckIn.BackColor = this.BackColor;
 
@@ -226,14 +207,14 @@ namespace AvertiFestivalApplication
 
 
         }
-        private void StopRFID()
+        private void StopRFID(RFID rfid)
         {
 
-            if (RfidCheckin.Attached)
+            if (rfid.Attached)
             {
-                RfidCheckin.Antenna = false;
-                RfidCheckin.LED = false;
-                RfidCheckin.close();
+                rfid.Antenna = false;
+                rfid.LED = false;
+                rfid.close();
             }
 
         }
@@ -262,17 +243,21 @@ namespace AvertiFestivalApplication
             }
             //this.StopRFID();
         }
+
         #endregion
 
         #region Sales
 
         private void ShowPersonWallet(Object sender, TagEventArgs e)
         {
-            string s = tbxRFID.Text;
+            string s = e.Tag;
+            tbxRFID.Text = e.Tag;
+
             double balance = db.WalletBalance(s);
             int personalID = db.personalID(s);
             int sumPriceOfOrders = db.SumOrders(personalID);
             double newBalance = balance - sumPriceOfOrders;
+            currentOrder.PersonID = personalID;
             if (newBalance > 2.5)
             {
                 this.lbWallet.Text = newBalance.ToString();
@@ -283,38 +268,12 @@ namespace AvertiFestivalApplication
                 this.lbWallet.Text = Convert.ToString(db.WalletBalance(s));
                 btnSTAddToOrder.Enabled = false;
                 btnSTCompleteOrder.Enabled = false;
-                MessageBox.Show(" You have not enough credit to by a article. You can charge your credit via our website");
+                MessageBox.Show(" You don't have enough credit to buy an article. You can charge your credit via our website");
                 tbxRFID.Text = "";
                 lbWallet.Text = "";
                 btnSTCompleteOrder.Enabled = true;
                 btnSTAddToOrder.Enabled = true;
             }
-        }
-
-        private void btnSTSeeDetails_Click(object sender, EventArgs e)
-        {
-            string s = tbxRFID.Text;
-            double balance = db.WalletBalance(s);
-            int personalID = db.personalID(s);
-            int sumPriceOfOrders = db.SumOrders(personalID);
-            double newBalance = balance - sumPriceOfOrders;
-            if (newBalance > 2.5)
-            {
-                this.lbWallet.Text = newBalance.ToString();
-            }
-
-            if (newBalance < 2.5)
-            {
-                this.lbWallet.Text = Convert.ToString(db.WalletBalance(s));
-                btnSTAddToOrder.Enabled = false;
-                btnSTCompleteOrder.Enabled = false;
-                MessageBox.Show(" You have not enough credit to by a article. You can charge your credit via our website");
-                tbxRFID.Text = "";
-                lbWallet.Text = "";
-                btnSTCompleteOrder.Enabled = true;
-                btnSTAddToOrder.Enabled = true;
-            }
-
         }
 
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
@@ -323,11 +282,12 @@ namespace AvertiFestivalApplication
             int counter = 0;
             int KindOfArticleID = db.KindOfArticleID();
             lbOrder.Items.Clear();
-          
+
             int ArticleID = db.ArticleID();
-            
+
             if (cbxSortArticle.SelectedItem != null && cbxNameArticles.SelectedItem != null && NUDSTArticleAmount.Value > 0)
             {
+                // check which article it is
                 articles = db.SortArticle();
                 if (cbxSortArticle.SelectedItem.ToString() == "BBQ")
                 {
@@ -340,52 +300,38 @@ namespace AvertiFestivalApplication
                 NameArticles = db.NameArticle(ArticleID);
 
 
-
                 foreach (var item in NameArticles)
                 {
                     foreach (var items in articles)
                         if (item.Name == cbxNameArticles.SelectedItem.ToString() && items.SoortArticle == cbxSortArticle.SelectedItem.ToString())
                         {
-
-                            Order order = new Order(item, Convert.ToInt32(NUDSTArticleAmount.Value));
-
-                            orders.Add(order);
-                            totalePrice = order.Article.Price * Convert.ToInt32(NUDSTArticleAmount.Value);
-                            overallPrice = overallPrice + totalePrice;
+                            currentOrder.AddToOrder(item, Convert.ToInt32(NUDSTArticleAmount.Value));
                         }
-
                 }
 
-
                 lbOrder.Items.Clear();
-
                 lbOrder.Items.Add("Your selected articles: ");
-                foreach (var orderitem in orders)
+                foreach (var orderitem in currentOrder.Articles)
                 {
                     counter++;
                     lbOrder.Items.Add("");
-                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.Article.SoortArticle + "( " + orderitem.Article.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Quantity) + "   Price:  €" + Convert.ToString(orderitem.Article.Price));
+                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.SoortArticle 
+                        + "( " + orderitem.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Stock) 
+                        + "   Price:  €" + Convert.ToString(orderitem.Price));
                     lbOrder.Items.Add("");
-
-
                     lbOrder.Items.Add("\n");
                 }
                 lbOrder.Items.Add("***********************");
                 lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(overallPrice));
                 lbOrder.Items.Add("\n");
-                if (overallPrice > Convert.ToInt32(lbWallet.Text))
+                if (currentOrder.Cost > Convert.ToInt32(lbWallet.Text))
                 {
                     btnSTCompleteOrder.Enabled = false;
                     MessageBox.Show("your credit is not enough to buy your orders");
-
                 }
-
-                double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
+                double newWalletCredit = Convert.ToInt32(lbWallet.Text) - currentOrder.Cost;
                 lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
-
-
             }
-
             else
             {
                 MessageBox.Show("Please choose an article or the quantity");
@@ -395,25 +341,22 @@ namespace AvertiFestivalApplication
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
             int result;
             if (int.TryParse(lbOrder.SelectedItem.ToString().Substring(0, 1), out result))
             {
                 int item = Convert.ToInt32(lbOrder.SelectedItem.ToString().Substring(0, 1)) - 1;
-                overallPrice = overallPrice - (orders[item].Article.Price * orders[item].Quantity);
-                totalePrice = totalePrice + (orders[item].Article.Price * orders[item].Quantity);
-                orders.RemoveAt(Convert.ToInt32(item));
+                currentOrder.Articles.RemoveAt(Convert.ToInt32(item));
                 lbOrder.Items.Clear();
                 lbOrder.Items.Add("Your selected articles: ");
                 int counter = 0;
-                foreach (var orderitem in orders)
+                foreach(var orderitem in currentOrder.Articles)
                 {
                     counter++;
                     lbOrder.Items.Add("");
-                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.Article.SoortArticle + "( " + orderitem.Article.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Quantity) + "   Price:  €" + Convert.ToString(orderitem.Article.Price));
+                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.SoortArticle 
+                        + "( " + orderitem.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Stock) 
+                        + "   Price:  €" + Convert.ToString(orderitem.Price));
                     lbOrder.Items.Add("");
-
-
                     lbOrder.Items.Add("\n");
                 }
                 lbOrder.Items.Add("***********************");
@@ -423,9 +366,7 @@ namespace AvertiFestivalApplication
                 {
                     btnSTCompleteOrder.Enabled = false;
                     MessageBox.Show("your credit is not enough to buy your orders");
-
                 }
-
                 double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
                 lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
                 btnSTCompleteOrder.Enabled = true;
@@ -434,49 +375,32 @@ namespace AvertiFestivalApplication
 
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
-            int ArticleID = db.ArticleID();
+            int articleID = db.ArticleID();
             string s = tbxRFID.Text;
             int personalID = db.personalID(s);
             int transactionID = db.TransactionID();
-            //Double cost = 0;
-            
+
             List<Article> listOfSortArticle = new List<Article>();
-            listOfSortArticle = db.InfoArticle(ArticleID);
+            listOfSortArticle = db.InfoArticle(articleID);
             articles.Clear();
-            //List<Article> KindOfAtricleID = db.AllInformaitonOfKindOfArticleID();
-           
-            //foreach (var item in SortArticles)
-            //{
-            //    articles.AddRange(db.NameAndSortArticle(item.ArticleID));
-            //}
 
-            //foreach (var item in articles)
-            //{
-            //        if (item.Name == cbxNameArticles.SelectedItem.ToString() && item.SoortArticle == cbxSortArticle.SelectedItem.ToString())
-            //        {
-            //            //double costItem = item.Price;
-            //            //cost = costItem;
-            //            //KindOfAtricleID = item.KindOfArticleID;
+            db.InsertToTransaction(transactionID, personalID, "article", currentOrder.Cost, DateTime.Now);
 
-            //            //ArticleID = item.ArticleID;
-            //        }
-            //    }
-            foreach (var order in orders)
+            foreach(var article in currentOrder.Articles)
             {
-                 ArticleID = order.Article.ArticleID;
-                int kindofartichleID = order.Article.KindOfArticleID;
-                double costItem = order.Article.Price;
-
-                db.InsertToTransaction(transactionID, personalID, " article", costItem, DateTime.Now);
-                db.InsertToTransactionarticle(transactionID, kindofartichleID, ArticleID, Convert.ToInt32(NUDSTArticleAmount.Value));
+                articleID = article.ArticleID;
+                int kindofartichleID = article.KindOfArticleID;
+                db.InsertToTransactionarticle(transactionID, kindofartichleID, articleID, article.Stock);
             }
 
-              
+            if (!db.UpdateWallet(currentOrder.PersonID, currentOrder.Cost))
+                    MessageBox.Show("Error with updating wallet, order not complete!");
+            
+
             tbxRFID.Text = "";
             lbOrder.Items.Clear();
             lblSTNewWalletCredit.Text = "";
             lbWallet.Text = "";
-
         }
 
         private void btnSTCancel_Click(object sender, EventArgs e)
@@ -487,13 +411,11 @@ namespace AvertiFestivalApplication
             lbOrder.Items.Clear();
             lbWallet.Text = "";
             lblSTNewWalletCredit.Text = "";
-
-
+            currentOrder = new Order();
         }
 
         private void tabSales_Click(object sender, EventArgs e)
         {
-
             btnSTCompleteOrder.Enabled = false;
             btnSTAddToOrder.Enabled = false;
         }
@@ -505,27 +427,11 @@ namespace AvertiFestivalApplication
         private void refreshEventsList()
         {
             events = db.GetEvents();
-            //    TabControl.TabPages.Remove(tabSales);
             this.listBoxEventSelect.Items.Clear();
             foreach (var item in events)
             {
                 this.listBoxEventSelect.Items.Add(item.Name);
             }
-        }
-
-        private void cbxDTInfoType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cbxDTSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Filllistbox()
-        {
-
         }
 
         private void btnETSelectEvent_Click(object sender, EventArgs e)
@@ -540,7 +446,6 @@ namespace AvertiFestivalApplication
 
         private void btnETNewEvent_Click(object sender, EventArgs e)
         {
-
             this.tabNewEvent.Visible = !this.tabNewEvent.Visible;
             this.tbxETEventName.Text = "";
             this.tbxETLocation.Text = "";
@@ -560,23 +465,6 @@ namespace AvertiFestivalApplication
                 this.btnETNewEvent.Text = "New Event";
             }
         }
-
-        private void tabEvent_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void cmbxEventSelectEvent_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dtpETEventDate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void btnCancel_Click_1(object sender, EventArgs e)
         {
@@ -624,7 +512,6 @@ namespace AvertiFestivalApplication
             if (newEvent != null)
             {
                 MessageBox.Show("a new event has been created");
-
             }
             else
             {
@@ -645,6 +532,7 @@ namespace AvertiFestivalApplication
                     }
                 }
             }
+
             refreshEventsList();
         }
 
@@ -774,8 +662,8 @@ namespace AvertiFestivalApplication
                         try
                         {
                             //article table
-                            string where = "Where ArticleID = " + cbxDTSelectArticle.SelectedItem.ToString() + " ";
-                            dataGridView1.DataSource = db.GetDatatable("article", where);
+                            string where = "Where Name = '" + cbxDTSelectArticle.SelectedItem.ToString() + "' ";
+                            dataGridView1.DataSource = db.GetDatatable("kindofarticle", where);
                             break;
                         }
                         catch (NullReferenceException)
@@ -808,7 +696,6 @@ namespace AvertiFestivalApplication
                 btnSTAddToOrder.Enabled = true;
                 btnSTCompleteOrder.Enabled = true;
             }
-
             List<Article> NameOfarticle = new List<Article>();
 
             Article selectedSort = new Article("stub");
@@ -831,18 +718,6 @@ namespace AvertiFestivalApplication
                     this.cbxNameArticles.Items.Add(item.Name);
                 }
             }
-
-
-            //foreach (var item in Namearticle2)
-            //{
-            //    if (cbxSortArticle.SelectedText == "Drink")
-            //    {
-            //        ArticleID = 2;
-
-            //        this.cbxNameArticles.Items.Add(item.Name);
-
-            //    }
-            //}
         }
 
         private void cbxNameArticles_SelectedIndexChanged(object sender, EventArgs e)
@@ -863,6 +738,10 @@ namespace AvertiFestivalApplication
             }
         }
 
+        #endregion
+
+        #region Overview tab
+
         private void btnOvRefresh_Click(object sender, EventArgs e)
         {
             //Things to add to the listbox sold, ppl at the festival, open camp spots and stocks
@@ -879,7 +758,7 @@ namespace AvertiFestivalApplication
 
             // Get all the articles name and their stocks
 
-            ///#TODO Make an article list refresh method
+            SortArticles = db.SortArticle();
 
             NameArticles.Clear();
 
@@ -894,16 +773,139 @@ namespace AvertiFestivalApplication
             }
         }
 
-        private void tbxETdate_ValueChanged(object sender, EventArgs e)
-        {
+        #endregion 
 
+        #region Accounts
+
+        private void refreshAccountListBox()
+        {
+            lbxAccounts.Items.Clear();
+
+            foreach (int i in db.getNonVisitors())
+            {
+                lbxAccounts.Items.Add(i);
+            }
         }
 
-        private void tbxRFID_TextChanged(object sender, EventArgs e)
+        private void accountsClearInfo()
         {
+            lblAccPID.Text = "";
+            tbxAccName.Text = "";
+            tbxAccEmail.Text = "";
+            tbxAccPass.Text = "";
+        }
+
+        private void btnNewAccount_Click(object sender, EventArgs e)
+        {
+            String descr;
+
+            switch (cbxAccDesc.SelectedIndex)
+            {
+                case 0:
+                    descr = "sales";
+                    break;
+                case 1:
+                    descr = "entrance";
+                    break;
+                case 2:
+                    descr = "admin";
+                    break;
+                default:
+                    MessageBox.Show("Invalid department chosen");
+                    return;
+            }
+
+            String name = tbxAccName.Text;
+            String email = tbxAccEmail.Text;
+            String pass = tbxAccPass.Text;
+
+            if (!this.db.insertNewAccount(descr, name, email, pass))
+            {
+                MessageBox.Show("Failed creating new account");
+            }
+
+            this.refreshAccountListBox();
+        }
+
+        private void btnAccSave_Click(object sender, EventArgs e)
+        {
+            int pid = Convert.ToInt32(lblAccPID.Text);
+
+            String descr;
+
+            switch (cbxAccDesc.SelectedIndex)
+            {
+                case 0:
+                    descr = "sales";
+                    break;
+                case 1:
+                    descr = "entrance";
+                    break;
+                case 2:
+                    descr = "admin";
+                    break;
+                default:
+                    MessageBox.Show("Invalid department chosen");
+                    return;
+            }
+
+            String name = tbxAccName.Text;
+            String email = tbxAccEmail.Text;
+            String pass = tbxAccPass.Text;
+
+            if (!this.db.updateAccount(pid, descr, name, email, pass))
+            {
+                MessageBox.Show("Failed updating account");
+            }
+
+            this.refreshAccountListBox();
+        }
+
+        private void btnAccCancel_Click(object sender, EventArgs e)
+        {
+            this.accountsClearInfo();
+        }
+        
+        private void lbxAccounts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int pid = Convert.ToInt32(this.lbxAccounts.SelectedItem);
+
+            lblAccPID.Text = pid.ToString();
+
+            List<String> info = db.getAccountData(pid);
+            try
+            {
+                String descr = info[0];
+                String name = info[1];
+                String email = info[2];
+                String pass = info[3];
+
+                switch (descr)
+                {
+                    case "sales":
+                        cbxAccDesc.SelectedIndex = 0;
+                        break;
+                    case "entrance":
+                        cbxAccDesc.SelectedIndex = 1;
+                        break;
+                    case "admin":
+                        cbxAccDesc.SelectedIndex = 2;
+                        break;
+                }
+
+                tbxAccName.Text = name;
+                tbxAccEmail.Text = email;
+                tbxAccPass.Text = pass;
+            }
+            catch
+            {
+                MessageBox.Show("Something went wrong loading from the database");
+            }
+
 
         }
-    }
-}
 
         #endregion
+
+    }
+}

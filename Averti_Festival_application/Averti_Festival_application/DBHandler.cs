@@ -54,6 +54,8 @@ namespace AvertiFestivalApplication
             return names;
         }
 
+
+
         #region Pyapalparser
         /// <summary>
         /// Get the organization's paypal id from the database
@@ -91,15 +93,46 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
+
+        public String getPPid(int personalId)
+        {
+            String sql = "SELECT paypalID FROM person WHERE personalID = " + personalId + ";";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return reader[0].ToString();
+                }
+                else
+                {
+                    return String.Empty;
+                }
+            }
+            catch
+            {
+                return String.Empty;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         /// <summary>
         /// A method
         /// </summary>
         /// <param name="ppid"> paypal id</param>
         /// <param name="amount">amount of money deposited</param>
         /// <returns>true if succesful and false if failed or if nothing changed in the db</returns>
-        public bool UpdateWallet(String ppid, String amount)
+        public bool UpdateWallet(int personalID, double amount)
         {
-            String sql = ("UPDATE `person` SET `walletBalance` = '" + amount + "' WHERE `person`.`paypalID` = " + ppid + ";");
+            String sql = ("UPDATE `person` SET `walletBalance` = " + amount + " WHERE `person`.`personalID` = " + personalID + ";");
             MySqlCommand command = new MySqlCommand(sql, connection);
             try
             {
@@ -112,6 +145,179 @@ namespace AvertiFestivalApplication
             catch
             {
                 return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        /// <summary>
+        /// A method
+        /// </summary>
+        /// <param name="ppid"> paypal id</param>
+        /// <param name="amount">amount of money deposited</param>
+        /// <returns>true if succesful and false if failed or if nothing changed in the db</returns>
+        public bool UpdateWallet(String ppid, String amount)
+        {
+            String sql = ("UPDATE `person` SET `walletBalance` = " + amount + " WHERE `person`.`paypalID` = " + ppid + ";");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                int updatedRows = command.ExecuteNonQuery();
+
+                return (updatedRows == 0);  // check if one row was updated and return it
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region accounts 
+
+        private int getNextNewId(String description)
+        {
+            String sql = "SELECT MAX(personalID) FROM person WHERE description = '" + description + "';" ;
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch
+            {
+                return -1;
+            }
+            finally 
+            { 
+                connection.Close(); 
+            }
+        }
+
+        public bool insertNewAccount(String description, String name, String email, string pass)
+        {
+            int id = getNextNewId(description);
+
+            if( id == -1 )
+                return false;
+
+            String sql = "INSERT INTO `dbi252284`.`person`"
+                + "(`personalID`, `name`, `Sex`, `address`, `email`, `status`, `birthday`"
+                + ", `telephoneNumber`, `arrivalTime`, `departureTime`, `tiwitterAcc`"
+                + ", `paypalID`, `walletBalance`, `description`, `rfid`, `username`, `password`)"
+                + "VALUES ('"+ id +"', '" + name +"', NULL, NULL, '" + email + "'"
+                + ", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '" 
+                + description + "', NULL, '" + name + "', '"+ pass + "');";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        public bool updateAccount(int id, String description, String name, String email, string pass)
+        {
+            String sql = "UPDATE `dbi252284`.`person` SET `description` = '"
+                + description + "',`name`='" + name + ", `email`= "+ email
+                + "', `password`= '" + pass + "' WHERE `person`.`personalID` = " + id + ";";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally 
+            {
+                connection.Close();
+            }
+        }
+
+        public List<int> getNonVisitors()
+        {
+            List<int> ids = new List<int>();
+
+            String sql = "SELECT personalID FROM person WHERE description != 'visitor';";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ids.Add(Convert.ToInt32(reader[0]));
+                }
+
+                return ids;
+            }
+            catch
+            {
+                return ids;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public List<String> getAccountData(int personalID)
+        {
+            List<String> result = new List<String>();
+            String sql = "SELECT description, name, email, password FROM person WHERE personalID = " + personalID + ";";
+
+            MySqlCommand command = new MySqlCommand(sql, connection);
+
+            try
+            {
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result.Add(reader[0].ToString());
+                    result.Add(reader[1].ToString());
+                    result.Add(reader[2].ToString());
+                    result.Add(reader[3].ToString());
+                }
+
+                return result;
+            }
+            catch
+            {
+                return result;
             }
             finally
             {
@@ -389,13 +595,13 @@ namespace AvertiFestivalApplication
                 }
                 else
                 {
-                    return 0;
+                    return -1;
                 }
             }
 
             catch
             {
-                return 0;
+                return -1;
             }
             finally
             {
@@ -713,7 +919,7 @@ namespace AvertiFestivalApplication
             connection.Open();
 
             MySqlDataReader reader = command.ExecuteReader();
-
+            
             while (reader.Read())
             {
 
@@ -804,15 +1010,16 @@ namespace AvertiFestivalApplication
                 connection.Close();
             }
         }
-        public bool InsertToTransactionarticle(int transactionID, int KinOfArticleID,int ArticleID, int quantity)
+        public bool InsertToTransactionarticle(int transactionID, int kinOfArticleID,int articleID, int quantity)
         {
-            string quaryInsert = "INSERT INTO transactionarticle(transactionID, KinOfArticleID,ArticleID, quantity) VALUES('" + transactionID + "','" + KinOfArticleID + "','" + ArticleID+"','" + quantity + "')";
+            String sql = "INSERT INTO `transactionarticle`(`transactionID`, `KinOfArticleID`, `articleID`, `quantity`)"
+            + "VALUES (" + transactionID + "," + kinOfArticleID + "," + articleID + "," + quantity + ")";
 
             try
             {
                 //open connection
                 connection.Open();
-                MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+                MySqlCommand command = new MySqlCommand(sql, connection);
                 //Execute command
                 command.ExecuteNonQuery();
                 return true;
@@ -832,13 +1039,13 @@ namespace AvertiFestivalApplication
 
         public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime)
         {
-
-            string quaryInsert = "INSERT INTO transaction(transactionID, personalID, description, cost, dateTime) VALUES('" + transactionID + "', " + personalID + ",'" + description + "','" + cost + "', '" + dataTime.ToString() + "')";
+            string sql = "INSERT INTO `transaction`(`transactionID`, `personalID`, `description`, `cost`, `dateTime`)"
+            + "VALUES (" + transactionID + "," + personalID + ", " + description + "," + cost + "," + dataTime.ToString() + ")";
             try
             {
                 //open connection
                 connection.Open();
-                MySqlCommand command = new MySqlCommand(quaryInsert, connection);
+                MySqlCommand command = new MySqlCommand(sql, connection);
                 //Execute command
                 command.ExecuteNonQuery();
                 return true;
@@ -1029,5 +1236,6 @@ namespace AvertiFestivalApplication
             }
         }
         #endregion
+
     }
 }

@@ -8,19 +8,6 @@ C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\MySql.Data.dll
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
-D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
 C:\Users\Ruud\Documents\GitHub\Averti\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
@@ -60,3 +47,16 @@ C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_app
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
 C:\Users\farnaz 1\OneDrive\ei3s3\ProP\GitHubDocuments\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe.config
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.exe
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Averti_Festival_application.pdb
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\MySql.Data.dll
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.dll
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Debug\Phidget21.NET.xml
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.FestivalAppForm.resources
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.LogInForm.resources
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.Properties.Resources.resources
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csproj.GenerateResource.Cache
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.exe
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\Averti_Festival_application.pdb
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Debug\AvertiFestivalApplication.csprojResolveAssemblyReference.cache
