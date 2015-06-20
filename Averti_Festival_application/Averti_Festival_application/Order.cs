@@ -13,7 +13,7 @@ namespace AvertiFestivalApplication
         private int personalId;
         private double cost;
 
-        public List<Article> Articles { get { return articles; } set { articles = value; } }
+        public List<Article> Articles { get { return articles; } private set { articles = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
         public int PersonID { get { return personalId; } set { personalId = value; } }
         public double Cost { get { return cost; } private set { cost = value; } }
@@ -43,7 +43,7 @@ namespace AvertiFestivalApplication
 
         }
 
-        private void updateCost()
+        public void updateCost()
         {
             Cost = 0;
 

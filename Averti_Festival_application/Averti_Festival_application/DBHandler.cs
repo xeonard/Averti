@@ -127,12 +127,12 @@ namespace AvertiFestivalApplication
         /// <summary>
         /// A method
         /// </summary>
-        /// <param name="ppid"> paypal id</param>
+        /// <param name="personalId"> paypal id</param>
         /// <param name="amount">amount of money deposited</param>
         /// <returns>true if succesful and false if failed or if nothing changed in the db</returns>
-        public bool UpdateWallet(int personalID, double amount)
+        public bool UpdateWallet(int personalID, double cost)
         {
-            String sql = ("UPDATE `person` SET `walletBalance` = " + amount + " WHERE `person`.`personalID` = " + personalID + ";");
+            String sql = ("UPDATE `person` SET `walletBalance` = walletBalance - " + cost + " WHERE `person`.`personalID` = " + personalID + ";");
             MySqlCommand command = new MySqlCommand(sql, connection);
             try
             {
@@ -140,7 +140,7 @@ namespace AvertiFestivalApplication
 
                 int updatedRows = command.ExecuteNonQuery();
 
-                return (updatedRows == 0);  // check if one row was updated and return it
+                return (updatedRows > 0);
             }
             catch
             {
@@ -159,7 +159,7 @@ namespace AvertiFestivalApplication
         /// <returns>true if succesful and false if failed or if nothing changed in the db</returns>
         public bool UpdateWallet(String ppid, String amount)
         {
-            String sql = ("UPDATE `person` SET `walletBalance` = " + amount + " WHERE `person`.`paypalID` = " + ppid + ";");
+            String sql = ("UPDATE `person` SET `walletBalance` = walletBalance + " + amount + " WHERE `person`.`paypalID` = " + ppid + ";");
             MySqlCommand command = new MySqlCommand(sql, connection);
             try
             {
@@ -167,7 +167,7 @@ namespace AvertiFestivalApplication
 
                 int updatedRows = command.ExecuteNonQuery();
 
-                return (updatedRows == 0);  // check if one row was updated and return it
+                return (updatedRows == 1);  // check if one row was updated and return it
             }
             catch
             {
@@ -956,7 +956,7 @@ namespace AvertiFestivalApplication
                 if (reader.Read())
                 {
                     transactionID = Convert.ToInt32(reader[0]);
-                    return transactionID + 1;
+                    return transactionID + 10;
 
                 }
                 else
@@ -1040,7 +1040,7 @@ namespace AvertiFestivalApplication
         public bool InsertToTransaction(int transactionID, int personalID, string description, double cost, DateTime dataTime)
         {
             string sql = "INSERT INTO `transaction`(`transactionID`, `personalID`, `description`, `cost`, `dateTime`)"
-            + "VALUES (" + transactionID + "," + personalID + ", " + description + "," + cost + "," + dataTime.ToString() + ")";
+            + "VALUES ('" + transactionID + "'," + personalID + ", '" + description + "'," + cost + ",'" + dataTime.ToString() + "')";
             try
             {
                 //open connection
@@ -1237,5 +1237,30 @@ namespace AvertiFestivalApplication
         }
         #endregion
 
+
+        internal bool LowerArticleStock(int kindofartichleID, int amount)
+        {
+
+            String sql = ("UPDATE `kindofarticle` SET `Stock` = Stock - " 
+                + amount 
+                + " WHERE `kindofarticle`.`KinOfArticleID` = " + kindofartichleID + ";");
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            try
+            {
+                connection.Open();
+
+                int updatedRows = command.ExecuteNonQuery();
+
+                return (updatedRows == 1);  // check if one row was updated and return it
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

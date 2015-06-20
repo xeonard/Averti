@@ -15,9 +15,6 @@ namespace AvertiFestivalApplication
 {
     public partial class FestivalAppForm : Form
     {
-        double overallPrice = 0;
-        double totalePrice = 0;
-        List<Order> orders = new List<Order>();
         Order currentOrder;
         List<Article> articles = new List<Article>();
         List<Article> NameArticles = new List<Article>();
@@ -46,6 +43,7 @@ namespace AvertiFestivalApplication
                     this.TabControl.TabPages.Remove(tabEvent);
                     this.TabControl.TabPages.Remove(tabDBView);
                     this.TabControl.TabPages.Remove(tabCheckIn);
+                    this.TabControl.TabPages.Remove(tabAccounts);
                     currentOrder = new Order();
                     this.StartRFID(this.RfidCheckin);
                     this.RfidCheckin.Tag += new TagEventHandler(this.ShowPersonWallet);
@@ -119,6 +117,7 @@ namespace AvertiFestivalApplication
                     this.TabControl.TabPages.Remove(tabDBView);
                     this.TabControl.TabPages.Remove(tabSales);
                     this.TabControl.TabPages.Remove(tabOv);
+                    this.TabControl.TabPages.Remove(tabAccounts);
                     break;
 
                 default: // on default just leave the overview tab
@@ -126,6 +125,7 @@ namespace AvertiFestivalApplication
                     this.TabControl.TabPages.Remove(tabEvent);
                     this.TabControl.TabPages.Remove(tabDBView);
                     this.TabControl.TabPages.Remove(tabCheckIn);
+                    this.TabControl.TabPages.Remove(tabAccounts);
                     break;
             }
         }
@@ -309,28 +309,8 @@ namespace AvertiFestivalApplication
                         }
                 }
 
-                lbOrder.Items.Clear();
-                lbOrder.Items.Add("Your selected articles: ");
-                foreach (var orderitem in currentOrder.Articles)
-                {
-                    counter++;
-                    lbOrder.Items.Add("");
-                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.SoortArticle 
-                        + "( " + orderitem.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Stock) 
-                        + "   Price:  €" + Convert.ToString(orderitem.Price));
-                    lbOrder.Items.Add("");
-                    lbOrder.Items.Add("\n");
-                }
-                lbOrder.Items.Add("***********************");
-                lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(overallPrice));
-                lbOrder.Items.Add("\n");
-                if (currentOrder.Cost > Convert.ToInt32(lbWallet.Text))
-                {
-                    btnSTCompleteOrder.Enabled = false;
-                    MessageBox.Show("your credit is not enough to buy your orders");
-                }
-                double newWalletCredit = Convert.ToInt32(lbWallet.Text) - currentOrder.Cost;
-                lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
+                this.UpdateLbOrder();
+
             }
             else
             {
@@ -346,61 +326,71 @@ namespace AvertiFestivalApplication
             {
                 int item = Convert.ToInt32(lbOrder.SelectedItem.ToString().Substring(0, 1)) - 1;
                 currentOrder.Articles.RemoveAt(Convert.ToInt32(item));
-                lbOrder.Items.Clear();
-                lbOrder.Items.Add("Your selected articles: ");
-                int counter = 0;
-                foreach(var orderitem in currentOrder.Articles)
-                {
-                    counter++;
-                    lbOrder.Items.Add("");
-                    lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.SoortArticle 
-                        + "( " + orderitem.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Stock) 
-                        + "   Price:  €" + Convert.ToString(orderitem.Price));
-                    lbOrder.Items.Add("");
-                    lbOrder.Items.Add("\n");
-                }
-                lbOrder.Items.Add("***********************");
-                lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(overallPrice));
-                lbOrder.Items.Add("\n");
-                if (overallPrice > Convert.ToInt32(lbWallet.Text))
-                {
-                    btnSTCompleteOrder.Enabled = false;
-                    MessageBox.Show("your credit is not enough to buy your orders");
-                }
-                double newWalletCredit = Convert.ToInt32(lbWallet.Text) - overallPrice;
-                lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
+                currentOrder.updateCost();
+
+                this.UpdateLbOrder();
+
                 btnSTCompleteOrder.Enabled = true;
             }
+        }
+
+        private void UpdateLbOrder()
+        {
+            lbOrder.Items.Clear();
+            lbOrder.Items.Add("Your selected articles: ");
+            int counter = 0;
+            foreach (var orderitem in currentOrder.Articles)
+            {
+                counter++;
+                lbOrder.Items.Add("");
+                lbOrder.Items.Add(counter.ToString() + ":   " + orderitem.SoortArticle
+                    + "( " + orderitem.Name + " ) " + "Stock:  " + Convert.ToString(orderitem.Stock)
+                    + "   Price:  €" + Convert.ToString(orderitem.Price * orderitem.Stock));
+                lbOrder.Items.Add("");
+                lbOrder.Items.Add("\n");
+            }
+
+            lbOrder.Items.Add("***********************");
+            lbOrder.Items.Add("Totale Price:   € " + Convert.ToString(currentOrder.Cost));
+            lbOrder.Items.Add("\n");
+            if (currentOrder.Cost > Convert.ToInt32(lbWallet.Text))
+            {
+                btnSTCompleteOrder.Enabled = false;
+                MessageBox.Show("your credit is not enough to buy your orders");
+            }
+            double newWalletCredit = Convert.ToInt32(lbWallet.Text) - currentOrder.Cost;
+            lblSTNewWalletCredit.Text = "Your new balance is: " + Convert.ToString(newWalletCredit);
         }
 
         private void btnSTCompleteOrder_Click(object sender, EventArgs e)
         {
             int articleID = db.ArticleID();
-            string s = tbxRFID.Text;
-            int personalID = db.personalID(s);
             int transactionID = db.TransactionID();
 
             List<Article> listOfSortArticle = new List<Article>();
             listOfSortArticle = db.InfoArticle(articleID);
             articles.Clear();
 
-            db.InsertToTransaction(transactionID, personalID, "article", currentOrder.Cost, DateTime.Now);
+            db.InsertToTransaction(transactionID, currentOrder.PersonID, "article", currentOrder.Cost, DateTime.Now);
+
 
             foreach(var article in currentOrder.Articles)
             {
-                articleID = article.ArticleID;
-                int kindofartichleID = article.KindOfArticleID;
-                db.InsertToTransactionarticle(transactionID, kindofartichleID, articleID, article.Stock);
+                db.InsertToTransactionarticle(transactionID, article.KindOfArticleID, article.ArticleID, article.Stock);
+                db.LowerArticleStock(article.KindOfArticleID, article.Stock);
             }
 
             if (!db.UpdateWallet(currentOrder.PersonID, currentOrder.Cost))
-                    MessageBox.Show("Error with updating wallet, order not complete!");
+            {
+                MessageBox.Show("Error with updating wallet, order not complete!");
+            }
             
 
             tbxRFID.Text = "";
             lbOrder.Items.Clear();
             lblSTNewWalletCredit.Text = "";
             lbWallet.Text = "";
+            currentOrder = new Order();
         }
 
         private void btnSTCancel_Click(object sender, EventArgs e)
@@ -409,9 +399,9 @@ namespace AvertiFestivalApplication
             cbxNameArticles.Text = "";
             cbxSortArticle.Text = "";
             lbOrder.Items.Clear();
+            currentOrder = new Order();
             lbWallet.Text = "";
             lblSTNewWalletCredit.Text = "";
-            currentOrder = new Order();
         }
 
         private void tabSales_Click(object sender, EventArgs e)
