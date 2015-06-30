@@ -63,7 +63,6 @@
             this.tbPass.Name = "tbPass";
             this.tbPass.Size = new System.Drawing.Size(87, 20);
             this.tbPass.TabIndex = 2;
-            this.tbPass.Text = "password";
             this.tbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPass_KeyDown);
             // 
             // tbPersID
@@ -72,7 +71,6 @@
             this.tbPersID.Name = "tbPersID";
             this.tbPersID.Size = new System.Drawing.Size(87, 20);
             this.tbPersID.TabIndex = 1;
-            this.tbPersID.Text = "1";
             this.tbPersID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPersID_KeyDown);
             // 
             // label1

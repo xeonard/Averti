@@ -279,7 +279,6 @@ namespace AvertiFestivalApplication
         private void btnSTAddToOrder_Click(object sender, EventArgs e)
         {
 
-            int counter = 0;
             int KindOfArticleID = db.KindOfArticleID();
             lbOrder.Items.Clear();
 
@@ -819,7 +818,15 @@ namespace AvertiFestivalApplication
 
         private void btnAccSave_Click(object sender, EventArgs e)
         {
-            int pid = Convert.ToInt32(lblAccPID.Text);
+            int pid = -1;
+            try
+            {
+                pid = Convert.ToInt32(lblAccPID.Text);
+            }
+            catch
+            {
+
+            }
 
             String descr;
 

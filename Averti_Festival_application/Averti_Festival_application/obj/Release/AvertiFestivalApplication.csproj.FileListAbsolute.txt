@@ -1,6 +1,9 @@
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\Averti_Festival_application.exe.config
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\Averti_Festival_application.exe
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\Averti_Festival_application.pdb
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\MySql.Data.dll
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\Phidget21.NET.dll
+D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\bin\Release\Phidget21.NET.xml
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Release\AvertiFestivalApplication.FestivalAppForm.resources
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Release\AvertiFestivalApplication.LogInForm.resources
 D:\Users\xeonard\Sync\Averti\Averti_Festival_application\Averti_Festival_application\obj\Release\AvertiFestivalApplication.Properties.Resources.resources

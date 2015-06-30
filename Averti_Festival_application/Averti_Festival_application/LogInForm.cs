@@ -48,7 +48,6 @@ namespace AvertiFestivalApplication
 
         private void ProcessThisTag(object sender, TagEventArgs e)
         {
-            System.Console.Out.WriteLine(e.Tag);
             int id = db.personalID(e.Tag);
             if (id != -1)
             {

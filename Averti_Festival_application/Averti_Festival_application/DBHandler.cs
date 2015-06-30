@@ -184,7 +184,8 @@ namespace AvertiFestivalApplication
 
         private int getNextNewId(String description)
         {
-            String sql = "SELECT MAX(personalID) FROM person WHERE description = '" + description + "';" ;
+            //String sql = "SELECT MAX(personalID) FROM person WHERE description = '" + description + "';" ;
+            String sql = "SELECT MAX(personalID) FROM person;";
 
             MySqlCommand command = new MySqlCommand(sql, connection);
 
@@ -192,7 +193,7 @@ namespace AvertiFestivalApplication
             {
                 connection.Open();
 
-                return Convert.ToInt32(command.ExecuteScalar());
+                return (Convert.ToInt32(command.ExecuteScalar())+1);
             }
             catch
             {
@@ -241,7 +242,7 @@ namespace AvertiFestivalApplication
         public bool updateAccount(int id, String description, String name, String email, string pass)
         {
             String sql = "UPDATE `dbi252284`.`person` SET `description` = '"
-                + description + "',`name`='" + name + ", `email`= "+ email
+                + description + "',`name`='" + name + "', `email`= '"+ email
                 + "', `password`= '" + pass + "' WHERE `person`.`personalID` = " + id + ";";
 
             MySqlCommand command = new MySqlCommand(sql, connection);
